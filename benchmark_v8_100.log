@@ -1,0 +1,503 @@
+Agent V8 Benchmark
+Accuracy: 74.0%
+
+Q  1 [after_first ] CORRECT
+  Q: After the Danish Ministry of Defence and Security, who was the first to visit Iraq?
+  Predicted: Jack Straw
+  GT:        Jack Straw
+
+Q  2 [after_first ] CORRECT
+  Q: After the Cabinet Council of Ministers of Kazakhstan, who was the first to express the intention to negotiate with China?
+  Predicted: Citizen (North Korea)
+  GT:        Citizen (North Korea)
+
+Q  3 [first_last  ] CORRECT
+  Q: In which year did Taiwan's Ministry of National Defence and Security last make a request to China?
+  Predicted: 2010
+  GT:        2010
+
+Q  4 [first_last  ] CORRECT
+  Q: When did Kitti Wasinondh last express an intention to negotiate with Thailand?
+  Predicted: 2007-02-01
+  GT:        2007-02-01
+
+Q  5 [before_last ] CORRECT
+  Q: With whom did Catherine Ashton last wish to meet before Cambodia?
+  Predicted: Wen Jiabao
+  GT:        Wen Jiabao
+
+Q  6 [first_last  ] CORRECT
+  Q: Who was the first country that Ethiopia expressed optimism about?
+  Predicted: Djibouti
+  GT:        Djibouti
+
+Q  7 [first_last  ] CORRECT
+  Q: In which year did Iraq first negotiate with Gholamali Haddad Adel?
+  Predicted: 2005
+  GT:        2005
+
+Q  8 [before_after] WRONG
+  Q: Before Ethiopia, which country did Seyoum Mesfin express his intention to negotiate with?
+  Predicted: None
+  GT:        ['China', 'Sudan']
+
+Q  9 [equal_multi ] CORRECT
+  Q: Who visited China in the same month as Oleg Ostapenko?
+  Predicted: ['Abdulla Yameen', 'Airline (Bulgaria)', 'Barack Obama', 'Barnaby Joyce', 'Ibrahim Boubacar Keïta', 'Japan', 'Le Hong Anh', 'Media Personnel (International)', 'Vietnam', 'Vincent Gray', 'Xi Jinping']
+  GT:        ['Japan', 'Barnaby Joyce', 'Media Personnel (International)', 'Vietnam', 'Xi Jinping', 'Ibrahim Boubacar Keïta', 'Airline (Bulgaria)', 'Le Hong Anh', 'Vincent Gray', 'Abdulla Yameen', 'Barack Obama']
+
+Q 10 [equal       ] CORRECT
+  Q: Who signed an agreement with China in April 2005?
+  Predicted: ['Colombia', 'France', 'Iran', 'Japan', 'Kuomintang', 'South Korea']
+  GT:        ['Iran', 'Kuomintang', 'South Korea', 'Colombia', 'France', 'Japan']
+
+Q 11 [first_last  ] CORRECT
+  Q: In which year did the Somali criminal threaten China for the first time?
+  Predicted: 2009
+  GT:        2009
+
+Q 12 [before_after] WRONG
+  Q: Before 14 October 2015, who made Burundi suffer from conventional military forces?
+  Predicted: None
+  GT:        ['Al-Shabaab', 'Military (Burundi)']
+
+Q 13 [equal       ] CORRECT
+  Q: In 2005-01, who used small arms and light weapons to attack Thailand?
+  Predicted: ['Armed Gang (Thailand)', 'Citizen (Thailand)']
+  GT:        ['Armed Gang (Thailand)', 'Citizen (Thailand)']
+
+Q 14 [before_after] CORRECT
+  Q: Before 25 April 2005, who used conventional military force against Iraq?
+  Predicted: ['Activist (Iraq)', 'Air Force (Iran)', 'Air Force (Syria)', 'Bolivia', 'China', 'City Mayor (Iraq)', 'Commando (Iraq)', 'Congress (United States)', 'Defense / Security Ministry (United States)', 'Democratic Party', 'Extremist (Al Qaeda)', 'Extremist (Islamic State of Iraq and the Levant)', 'France', 'Iran', 'Islamic Preacher (Saudi Arabia)', 'Israeli Defense Forces', 'Legislature (Iraq)', 'Legislature (Turkey)', 'Mahdi Army', 'Middle East', 'Military (Lebanon)', 'Military (Russia)', 'Muslim (Sudan)', 'Naval (United States)', 'Party Member (Iraq)', 'Police (Israel)', 'Qatar', 'Royal Air Force', 'Sudan', 'United States Senate']
+  GT:        ['Iran', 'Commando (Iraq)']
+
+Q 15 [after_first ] CORRECT
+  Q: After Devlet Bahçeli, who was the first to want to negotiate with Iraq?
+  Predicted: Head of Government (Egypt)
+  GT:        Head of Government (Egypt)
+
+Q 16 [after_first ] CORRECT
+  Q: After Tony Blair, which country was the first to express an interest in cooperating with Iraq?
+  Predicted: Iran
+  GT:        Iran
+
+Q 17 [before_last ] WRONG
+  Q: Before the military of Taiwan, which country did China threaten last?
+  Predicted: Japan
+  GT:        Angela Merkel
+
+Q 18 [before_after] WRONG
+  Q: Who praised Kuwait before Nuri al-Maliki?
+  Predicted: ['Abdel Fattah Al-Sisi', 'Abdul-Karim Al-Arhabi', 'Abu Bakr Abdullah al-Qirbi', 'Adil Abdul-Mahdi', 'Ahmed Abdallah Sambi', 'Ahmed el-Tayeb', 'Ali Abdullah Saleh', 'Ali Jannati', 'Catherine Ashton', 'China', 'Ethiopia', 'Foreign Affairs (Austria)', 'Foreign Affairs (India)', 'Foreign Affairs (Zimbabwe)', 'Gibran Bassil', 'Head of Government (Egypt)', 'Iran', 'Iraq', 'Isaias Afewerki', 'Islam Karimov', 'Legislature (Iraq)', 'Macky Sall', 'Mahmoud Abbas', 'Mahmoud Ahmadinejad', 'Ministry (Egypt)', 'Ministry (Senegal)', 'Ministry (Venezuela)', 'Muhammad Naji al-Otari', 'Nabih Berri', 'Nasser Judeh', 'Secretariat (Gulf Cooperation Council)', 'Sudan', 'Supreme Council (Iraq)', 'UN Security Council', 'United Arab Emirates', 'Vietnam', 'Yemen', 'Zillur Rahman']
+  GT:        ['Presidential Family (United States)', 'Shaukat Aziz', 'Sudan', 'Pervez Musharraf', 'Saud bin Faisal bin Abdul-Aziz', 'Jack Straw', 'Japan']
+
+Q 19 [equal       ] CORRECT
+  Q: Who visited Malaysia on 14 January 2007?
+  Predicted: ['Association of Southeast Asian Nations', 'China']
+  GT:        ['China', 'Association of Southeast Asian Nations']
+
+Q 20 [equal       ] WRONG
+  Q: Which country condemned China in August 2013?
+  Predicted: ['Japan']
+  GT:        Japan
+
+Q 21 [equal       ] WRONG
+  Q: Who wanted to negotiate with Malaysia on 19 November 2015?
+  Predicted: ['Barack Obama']
+  GT:        Barack Obama
+
+Q 22 [equal       ] CORRECT
+  Q: Could you tell me the exact month when Agence France-Presse appealed to China?
+  Predicted: 2007-01
+  GT:        2007-01
+
+Q 23 [equal       ] CORRECT
+  Q: Could you tell me the specific month in which the citizens of Belgium formally signed an agreement with China?
+  Predicted: 2005-06
+  GT:        2005-06
+
+Q 24 [equal       ] WRONG
+  Q: In which month did United Arab Emirates receive the visit from China?
+  Predicted: 2012-08
+  GT:        2010-03
+
+Q 25 [equal       ] CORRECT
+  Q: When did Vasilis Skouris visit China?
+  Predicted: 2005-03-21
+  GT:        2005-03-21
+
+Q 26 [equal       ] CORRECT
+  Q: In which year did the citizens of Norway express their intention to meet with Iraq?
+  Predicted: 2014
+  GT:        2014
+
+Q 27 [after_first ] CORRECT
+  Q: After the Media Rights Group of Thailand, who was the first to denounce Thailand?
+  Predicted: National United Front for Democracy Against Dictatorship
+  GT:        National United Front for Democracy Against Dictatorship
+
+Q 28 [first_last  ] CORRECT
+  Q: In which month did the African Union last ask Ethiopia?
+  Predicted: 2008-12
+  GT:        2008-12
+
+Q 29 [before_after] WRONG
+  Q: Before 22 October 2008, which country did Malaysia make optimistic remarks about?
+  Predicted: ['Barack Obama', 'China', 'Indigenous People (Malaysia)', 'Iran', 'Moro Islamic Liberation Front', 'National Front Malaysia', 'Sheikh Ahmed Abdullah', 'South Korea', 'Thailand', 'United Arab Emirates', 'Vietnam']
+  GT:        ['Mahmoud Abbas', 'Thailand', 'Association of Southeast Asian Nations', 'Iran', 'Japan', 'Government (Palestinian Territory, Occupied)', 'Nonaligned Movement', 'Tony Blair', 'Iraq']
+
+Q 30 [equal       ] CORRECT
+  Q: Who paid a visit to Iraq in June 2011?
+  Predicted: ['Congress (United States)', 'Foreign Affairs (India)', 'Foreign Affairs (Italy)', 'Foreign Affairs (Syria)', 'Iran', 'Nuri al-Maliki']
+  GT:        ['Nuri al-Maliki', 'Iran', 'Congress (United States)', 'Foreign Affairs (Syria)', 'Foreign Affairs (Italy)', 'Foreign Affairs (India)']
+
+Q 31 [first_last  ] CORRECT
+  Q: In which year did Ismet Yilmaz visit Iraq for the first time?
+  Predicted: 2015
+  GT:        2015
+
+Q 32 [before_last ] WRONG
+  Q: Before Thailand, who last wanted to negotiate with the Governor of Thailand?
+  Predicted: None
+  GT:        Citizen (Thailand)
+
+Q 33 [first_last  ] CORRECT
+  Q: When did Jatuporn Prompan make his first appeal to Thailand?
+  Predicted: 2010-04-24
+  GT:        2010-04-24
+
+Q 34 [before_after] CORRECT
+  Q: Before Oman, with which country did Thailand formally sign an agreement?
+  Predicted: ['Association of Southeast Asian Nations', 'Bolivia', 'Cabinet / Council of Ministers / Advisors (Japan)', 'Cambodia', 'China', 'Finance / Economy / Commerce / Trade Ministry (Maldives)', 'France', 'Iran', 'Ireland', 'Japan', 'Laos', 'Malaysia', 'Maldives', 'Military (Cambodia)', 'Military Personnel (Thailand)', 'Qatar', 'Representatives (Cambodia)', 'South Korea', 'Tanzania', 'Timor-Leste', 'United Arab Emirates', 'Vietnam']
+  GT:        ['China', 'Malaysia']
+
+Q 35 [first_last  ] WRONG
+  Q: When did China last visit Henry M Paulson?
+  Predicted: 2015-12-31
+  GT:        2006-09-23
+
+Q 36 [before_after] WRONG
+  Q: Who did the Malaysian Foreign Ministry praise before Thailand?
+  Predicted: ['Association of Southeast Asian Nations', 'Iran']
+  GT:        ['Surakiart Sathirathai', 'Vietnam', 'Employee (Bangladesh)', 'Mahmoud Ahmadinejad', 'Laos', 'Barack Obama']
+
+Q 37 [before_after] WRONG
+  Q: Which country did China study before the religion of China?
+  Predicted: ['Angela Merkel', 'Anote Tong', 'Bank (China)', 'Ben Shalom Bernanke', 'Criminal (China)', 'Dissident (Australia)', 'Dissident (China)', 'France', 'Industry (China)', 'Iran', 'Japan', 'Kazakhstan', 'Maithripala Sirisena', 'Men (Japan)', 'South Korea', 'Straits Exchange Foundation', 'Sudan', 'Thailand', 'Transport (China)', 'UN Security Council']
+  GT:        Japan
+
+Q 38 [first_last  ] CORRECT
+  Q: In what year did Qin Gang last express his intention to negotiate with Ethiopia?
+  Predicted: 2009
+  GT:        2009
+
+Q 39 [first_last  ] WRONG
+  Q: In which year did the President of the Senate of Australia last visit Cambodia?
+  Predicted: 2012
+  GT:        2007
+
+Q 40 [equal       ] CORRECT
+  Q: In which year was China optimistic about the leader of Ukraine?
+  Predicted: 2010
+  GT:        2010
+
+Q 41 [equal       ] CORRECT
+  Q: Who wants to negotiate with China on 16 July 2009?
+  Predicted: ['Admiral (China)', 'Energy Department/Ministry (United States)']
+  GT:        ['Energy Department/Ministry (United States)', 'Admiral (China)']
+
+Q 42 [before_after] WRONG
+  Q: Before the Asian Disaster Preparedness Centre, who did Thailand make optimistic comments about?
+  Predicted: None
+  GT:        Citizen (Thailand)
+
+Q 43 [equal       ] CORRECT
+  Q: When did Thailand express its intention to cooperate with Donald Rumsfeld?
+  Predicted: 2005-06-06
+  GT:        2005-06-06
+
+Q 44 [before_last ] WRONG
+  Q: Before South Korea, with whom did Oman last wish to establish diplomatic cooperation?
+  Predicted: Iran
+  GT:        Qatar
+
+Q 45 [equal       ] CORRECT
+  Q: Who made optimistic remarks about Iraq in 2009?
+  Predicted: ['Barack Obama', 'China', 'Japan', 'Nuri al-Maliki', 'Supreme Council (Iraq)', 'Vietnam']
+  GT:        ['Barack Obama', 'Nuri al-Maliki', 'China', 'Japan', 'Supreme Council (Iraq)', 'Vietnam']
+
+Q 46 [before_after] CORRECT
+  Q: Who attacked Iraq with small arms and light weapons after 9 August 2006?
+  Predicted: ['Armed Rebel (Syria)', 'Iran', 'Israeli Defense Forces']
+  GT:        ['Iran', 'Armed Rebel (Syria)', 'Israeli Defense Forces']
+
+Q 47 [before_after] CORRECT
+  Q: Who did Iraq reject after the dissident of the People's Mujahedin of Iran?
+  Predicted: ['Bank (Iraq)', 'Barack Obama', 'Congress (United States)', 'Defense / Security Ministry (United States)', 'Iran', 'Kuwait', 'Legislature (Iraq)', 'Member of Parliament (Iraq)', 'Nuri al-Maliki', 'Student (Iraq)']
+  GT:        ['Barack Obama', 'Iran', 'Nuri al-Maliki', 'Member of Parliament (Iraq)', 'Defense / Security Ministry (United States)', 'Student (Iraq)', 'Congress (United States)', 'Bank (Iraq)']
+
+Q 48 [equal       ] WRONG
+  Q: On 7 August 2005, which country paid a visit to China?
+  Predicted: ['Japan']
+  GT:        Japan
+
+Q 49 [equal       ] CORRECT
+  Q: Who visited China in June 2010?
+  Predicted: ['Boris Vyacheslavovich Gryzlov', 'Cambodia', 'Dianne Feinstein', 'Dmitry Anatolyevich Medvedev', 'Foreign Affairs (South Korea)', 'Hui Liangyu', 'International Government Organizations', 'Iran', 'Japan', 'Joon Young Woo', 'Linda Lingle', 'Liu Yandong', 'Mahmoud Ahmadinejad', 'Ministry (Iran)', 'Sudan', 'UAE Armed Forces', 'Valdis Dombrovskis', 'Wen Jiabao']
+  GT:        ['Hui Liangyu', 'Iran', 'UAE Armed Forces', 'Foreign Affairs (South Korea)', 'Dmitry Anatolyevich Medvedev', 'Linda Lingle', 'Wen Jiabao', 'Mahmoud Ahmadinejad', 'Joon Young Woo', 'International Government Organizations', 'Ministry (Iran)', 'Boris Vyacheslavovich Gryzlov', 'Valdis Dombrovskis', 'Dianne Feinstein']
+
+Q 50 [before_after] WRONG
+  Q: Who criticised Chuck Hagel after China?
+  Predicted: ['Sergey Kuzhugetovich Shoygu']
+  GT:        Sergey Kuzhugetovich Shoygu
+
+Q 51 [first_last  ] CORRECT
+  Q: In which year did Federica Mogherini last express her intention to meet with China?
+  Predicted: 2015
+  GT:        2015
+
+Q 52 [before_last ] WRONG
+  Q: Which country receive China's visit from China last before Bruno Stagno Ugarte did?
+  Predicted: Domestic Affairs (Vietnam)
+  GT:        Sudan
+
+Q 53 [first_last  ] CORRECT
+  Q: In what year did Malaysia last investigate Thailand?
+  Predicted: 2008
+  GT:        2008
+
+Q 54 [equal       ] CORRECT
+  Q: In which month did the citizens of Thailand express their intention to meet with China?
+  Predicted: 2012-04
+  GT:        2012-04
+
+Q 55 [equal       ] CORRECT
+  Q: Which country negotiated with China in July 2006?
+  Predicted: ['Japan', 'South Korea']
+  GT:        ['South Korea', 'Japan']
+
+Q 56 [before_last ] CORRECT
+  Q: Before Kuwait, which country received the Government Delegation of North Korea's visit from the Government Delegation of North Korea last?
+  Predicted: South Korea
+  GT:        South Korea
+
+Q 57 [before_last ] CORRECT
+  Q: Before Zawahiri, who was the last person to condemn the citizens of Saudi Arabia?
+  Predicted: Royal Administration (Saudi Arabia)
+  GT:        Royal Administration (Saudi Arabia)
+
+Q 58 [first_last  ] WRONG
+  Q: In which year did the Thai Ministry of Justice/Ministry of Foreign Affairs first express its intention to engage in diplomatic cooperation with China?
+  Predicted: 2005
+  GT:        2015
+
+Q 59 [after_first ] CORRECT
+  Q: Who investigated China first after Segolene Royal?
+  Predicted: Hui Liangyu
+  GT:        Hui Liangyu
+
+Q 60 [before_after] CORRECT
+  Q: After 12 May 2011, which country did Cambodia denounce?
+  Predicted: ['Abhisit Vejjajiva', 'China', 'Thailand', 'Vietnam']
+  GT:        ['Vietnam', 'Abhisit Vejjajiva', 'China', 'Thailand']
+
+Q 61 [before_last ] WRONG
+  Q: Before the Sudanese police, who was the last to use unconventional force against Ethiopia?
+  Predicted: None
+  GT:        Armed Rebel (Somalia)
+
+Q 62 [equal       ] CORRECT
+  Q: Who used conventional military force against China in June 2014?
+  Predicted: ['East Turkistan Islamic Movement', 'Japan', 'Vietnam']
+  GT:        ['Vietnam', 'East Turkistan Islamic Movement', 'Japan']
+
+Q 63 [after_first ] CORRECT
+  Q: Who was the first to visit Norodom Sihanouk after China?
+  Predicted: Wen Jiabao
+  GT:        Wen Jiabao
+
+Q 64 [equal       ] WRONG
+  Q: In which year did Iraq commend the member of the Legislative Council of Iran?
+  Predicted: None
+  GT:        2013
+
+Q 65 [before_after] CORRECT
+  Q: To which country did Malaysia send an appeal after 2012-11-20?
+  Predicted: ['Barack Obama', 'China', 'Chuck Hagel', 'Citizen (Thailand)', 'Citizen (Unidentified State Actor)', 'Maldives', 'UN Security Council', 'Vietnam']
+  GT:        ['UN Security Council', 'Citizen (Unidentified State Actor)', 'Citizen (Thailand)', 'Barack Obama', 'Chuck Hagel', 'Maldives', 'Vietnam', 'China']
+
+Q 66 [equal       ] CORRECT
+  Q: In Aug, 2006, who wanted to negotiate with Kuwait?
+  Predicted: ['Ali Jannati', 'Government Delegation (Fiji)', 'Iran']
+  GT:        ['Iran', 'Government Delegation (Fiji)', 'Ali Jannati']
+
+Q 67 [first_last  ] CORRECT
+  Q: In what year did Ignacio Bunye first make pessimistic remarks about Iraq?
+  Predicted: 2006
+  GT:        2006
+
+Q 68 [equal       ] CORRECT
+  Q: Could you tell me the exact month when Teodoro Obiang Nguema Mbasogo visited Thailand?
+  Predicted: 2013-03
+  GT:        2013-03
+
+Q 69 [equal       ] CORRECT
+  Q: When did Hoang Tuan Anh praise China?
+  Predicted: 2009-09-01
+  GT:        2009-09-01
+
+Q 70 [equal       ] CORRECT
+  Q: In which year did the United States' Council of Advisors to the Cabinet threaten Thailand?
+  Predicted: 2014
+  GT:        2014
+
+Q 71 [equal_multi ] CORRECT
+  Q: In 2012, which country was the first to express interest in cooperation with Cambodia?
+  Predicted: Thailand
+  GT:        Thailand
+
+Q 72 [first_last  ] CORRECT
+  Q: In which year did the leader of Mongolia first negotiate with China?
+  Predicted: 2005
+  GT:        2005
+
+Q 73 [equal_multi ] WRONG
+  Q: Who did Ethiopia use conventional military force against on the same day as the Hizbul Islam fighter?
+  Predicted: None
+  GT:        Al-Shabaab
+
+Q 74 [first_last  ] CORRECT
+  Q: In what year did China last appeal to Iraq?
+  Predicted: 2005
+  GT:        2005
+
+Q 75 [before_after] WRONG
+  Q: Who negotiated with the Thai military after Thailand?
+  Predicted: ['"Antony Harold Curties ""Tony"" Windsor"', '"Austin ""Jack"" Warner"', '"Nicholas ""Nick"" Xenophon"', 'A.K. Antony', 'AB Lithuanian Gas', 'ASEAN Defense Ministers', 'Aam Aadmi Party', 'Abdel Fattah Al-Sisi', 'Abdel Ilah Al-Khatib', 'Abdelilah Benkirane', 'Abdelkader Messahel', 'Abdirahman Mohamed Farole', 'Abdoulaye Wade', 'Abdul Aziz', 'Abdul Aziz Abdul Ghani', 'Abdul Kalam', 'Abdul-Karim Al-Arhabi', 'Abdulla Yameen', 'Abdullah Gül', 'Abdullah ibn Husayn al-Ahmar', 'Abdulsalami Alhaji Abubakar', 'Abhisit Vejjajiva', 'Abu Bakr Abdullah al-Qirbi', 'Abu Sayyaf', 'Aceh', 'Achmad Sukarno', 'Activist (France)', 'Adil Abdul-Mahdi', 'Admiral (Cuba)', 'Admiral (India)', 'Aero Vodochody', 'Afghan National Army', 'Afonso Pedro Canga', 'African Union', 'Agapito Mba Mokuy', 'Agence France-Presse', 'Agriculture / Fishing / Forestry Ministry (Brazil)', 'Agriculture / Fishing / Forestry Ministry (Kyrgyzstan)', 'Agriculture / Fishing / Forestry Ministry (Laos)', 'Agustín Carstens', 'Ahmad Chalabi', 'Ahmad Shuja Pasha', 'Ahmed Abdallah Sambi', 'Ahmed bin Daghr', 'Ai Weiwei', 'Aigars Kalvitis', 'Air Force (Iran)', 'Al-Shabaab', 'Al-Walid Bin-Talal Bin-Abd-al-Aziz', 'Aladdin Boroujerdi', 'Alan Johnson', 'Alan Wilson', 'Alberto Fernández', 'Alberto Gonzales', 'Aleksander Kwasniewski', 'Ales Rebícek', 'Alexander Stubb', 'Alexander Vasilyevich Bortnikov', 'Alexander Vershbow', 'Alexandr Vondra', 'Alexei Miller', 'Alexis Tsipras', 'Algirdas Butkevičius', 'Ali Abdullah Saleh', 'Ali Baqeri', 'Ali Bongo Ondimba', 'Ali Mahmoud Abdel Rasoul', 'Ali Muhammad Mujawar', 'Alik L. Alik', 'Alliance for European Integration', 'Amin Hassan Omer', 'Amina Mohamed', 'Amit Shah', 'Amy Klobuchar', 'Anand Panyarachun', 'Anatoly Antonov', 'Andrej Kiska', 'Andrew Robathan', 'Andrzej Lepper', 'Angela Merkel', 'Angelo Sodano', 'Angola', 'Anguel Marin', 'Anna Fotyga', 'Annick Girardin', 'Antanas Valionis', 'Ante Kotromanović', 'Antonio Paulo Kassoma', 'Antonis Samaras', 'Anyim Pius Anyim', 'Archbishop (Poland)', 'Argentine Industrial Union', 'Aristide Sokambi', 'Armando Loaiza', 'Armed Band (Somalia)', 'Armed Force (Revolutionary Armed Forces of Colombia)', 'Armed Gang (India)', 'Armed Rebel (Mali)', 'Armed Rebel (Niger)', 'Armed Rebel (Nigeria)', 'Armed Rebel (Pakistan)', 'Armed Rebel (Russia)', 'Armed Rebel (Yemen)', 'Armed Separatist (China)', 'Army Personnel (Bangladesh)', 'Arsen Avakov', 'Arseniy Yatsenyuk', 'Arturas Paulauskas', 'Ashraf Ghani Ahmadzai', 'Assemblies (France)', 'Associated Press', 'Association of Southeast Asian Nations', 'Augusto Pinochet', 'Azali Assouman', 'Aïchatou Mindaoudou Souleymane', 'Badr al-Din Mahmoud', 'Baghdadi Ali Mahmudi', 'Ballard Power Systems', 'Bandar bin Sultan', 'Bank (China)', 'Bank (Egypt)', 'Bank (Iraq)', 'Barack Obama', 'Barclays PLC', 'Barisan Revolusi Nasional', 'Belize', 'Benazir Bhutto', 'Benedict XVI', 'Benjamin Netanyahu', 'Benjamin William Mkapa', 'Benny Gantz', 'Berhane Abrehe', 'Bernard Makuza', 'Bernardino Leon', 'Bertie Ahern', 'Bhutan', 'Bill Richardson', 'Binyamin Ben-Eliezer', 'Bloc Yulia Tymoshenko', 'Bob Graham', 'Boediono', 'Bogdan Klich', 'Boko Haram', 'Bolivia', 'Boris Vyacheslavovich Gryzlov', 'Borys Tarasyuk', 'Bosniak Party', 'Branko Crvenkovski', 'Bratislav Gasic', 'Brice Hortefeux', 'Brigitte Girardin', 'Bruno Stagno Ugarte', 'Burundi', 'Business (Africa)', 'Business (Argentina)', 'Business (Bahrain)', 'Business (Canada)', 'Business (Croatia)', 'Business (Germany)', 'Business (Hungary)', 'Business (Indonesia)', 'Business (Iran)', 'Business (Iraq)', 'Business (Lebanon)', 'Business (Netherlands)', 'Business (Poland)', 'Business (Portugal)', 'Business (South Korea)', 'Business (Taiwan)', 'Business (Uruguay)', 'Business (Zimbabwe)', 'Businessperson (Africa)', 'Businessperson (Australia)', 'Businessperson (Bulgaria)', 'Businessperson (China)', 'Businessperson (Czech Republic)', 'Businessperson (Italy)', 'Businessperson (Kenya)', 'Businessperson (Malaysia)', 'Businessperson (Sweden)', 'Businessperson (Turkey)', 'Cabinet / Council of Ministers / Advisors (Australia)', 'Cabinet / Council of Ministers / Advisors (Czech Republic)', 'Cabinet / Council of Ministers / Advisors (Denmark)', 'Cabinet / Council of Ministers / Advisors (Holy See (Vatican City State))', 'Cabinet / Council of Ministers / Advisors (Jordan)', 'Cabinet / Council of Ministers / Advisors (Kazakhstan)', 'Cabinet / Council of Ministers / Advisors (Somalia)', 'Cabinet / Council of Ministers / Advisors (United States)', 'Cambodia', 'Campbell Newman', 'Cao Duc Phat', 'Carlo Azeglio Ciampi', 'Carlos M. Hernández López', 'Carly Fiorina', 'Catherine Ashton', 'Central Bank of West African States', 'Central Intelligence Agency', 'Central Reserve Police Force', 'Chaiwat Sinsuwong', 'Chandi Raj Dhakal', 'Chang Song Taek', 'Charles Margai', 'Charles Mwando Nsimba', 'Chaudhry Nisar Ali Khan', 'Chen Bingde', 'Chen Deming', 'Chen Zhili', 'Chevron', 'Chiang Kai-shek', 'China', 'Chongwadai', 'Chris Bowen', 'Chris Evans', 'Chris Huhne', 'Christian (Central African Republic)', 'Christian (United States)', 'Christina B. Rocca', 'Christine Lagarde', 'Chu Sang-song', 'Chuck Hagel', 'Chung Sye Kyun', 'Ciro Ramírez', 'Citizen (Australia)', 'Citizen (Tanzania)', 'City Mayor (Australia)', 'City Mayor (China)', 'City Mayor (Greece)', 'City Mayor (Iraq)', 'City Mayor (Philippines)', 'Civil Aviation Department (India)', 'Civil Guard', 'Cleric (Pakistan)', 'Colombia', 'Committee of Public Accounts', 'Communist Party (Russia)', 'Communist Party of Bohemia and Moravia', 'Comoros', 'Company - Owner or Operator (Egypt)', 'Company - Owner or Operator (Iran)', 'Company - Owner or Operator (Italy)', 'Company - Owner or Operator (Oman)', 'Company - Owner or Operator (Slovakia)', 'Congress (Brazil)', 'Congress (United States)', 'Constitutionalist Liberal Party', 'Coordination of Democratic Forces', 'Council for National Security', 'Council of Representatives', 'Court Judge (Iraq)', 'Court Judge (Malaysia)', 'Court Judge (United Kingdom)', 'Criminal (Australia)', 'Criminal (Brazil)', 'Criminal (El Salvador)', 'Criminal (Guatemala)', 'Criminal (Israel)', 'Criminal (Jordan)', 'Criminal (Mexico)', 'Criminal (Somalia)', 'Cristina Fernández de Kirchner', 'Cyril Svoboda', 'Dahir Riyale Kahin', 'Daily Trust', 'Daniel Arap Moi', 'Daniel Mitov', 'Daniel Ortega', 'Daniel Scioli', 'David Bakradze', 'David Bartlett', 'David Blunkett', 'David Shear', 'Defense / Security Ministry (Chile)', 'Defense / Security Ministry (Libya)', 'Defense / Security Ministry (Macedonia)', 'Defense / Security Ministry (Slovakia)', 'Defense / Security Ministry (Spain)', 'Defense / Security Ministry (United States)', 'Defense Attorney (Iraq)', 'Democratic Left', 'Democratic Party', 'Democratic Party (Serbia)', 'Democratic Union of Hungarians in Romania', 'Detainee (South Sudan)', 'Devlet Bahçeli', 'Dianne Feinstein', 'Director General (China)', 'Displaced Families (Iraq)', 'Dissident (China)', 'Djibouti', 'Dmitry Anatolyevich Medvedev', 'Dmitry Olegovich Rogozin', 'Doctors Without Borders', 'Domestic Affairs (Germany)', 'Domestic Affairs (Nigeria)', 'Domestic Affairs (Romania)', 'Domestic Affairs (Spain)', 'Domestic Affairs (Sri Lanka)', 'Dominican Republic', 'Don McKinnon', 'Donald Rumsfeld', 'Douglas Alexander', 'Dragan Jočić', 'Dragan Šutanovac', 'Driss Jettou', 'Dubai International Financial Centre', 'East African Community', 'Economist (Iran)', 'Edgars Rinkevics', 'Edison Lobão', 'Eduardo Montealegre', 'Eduardo Sigal', 'Education (Pakistan)', 'Education (United States)', 'Education Ministry (Bangladesh)', 'Education Ministry (Czech Republic)', 'Edward Fenech Adami', 'Edward Natapei', 'Election Commission (India)', 'Election Commission (Nepal)', 'Eli Yishai', 'Elias Murr', 'Elizabeth Dipuo Peters', 'Elizabeth II', 'Elmar Mammadyarov', 'Elrick James Martial Irastorza', 'Embraer', 'Emma Bonino', 'Emperor Akihito', 'Employee (Iraq)', 'Energy Department/Ministry (Armenia)', 'Energy Department/Ministry (Iran)', 'Energy Department/Ministry (Kuwait)', 'Energy Department/Ministry (Lebanon)', 'Energy Department/Ministry (Russia)', 'Energy Department/Ministry (United States)', 'Eni S.p.a.', 'Envoy (France)', 'Envoy (Germany)', 'Envoy (Malawi)', 'Envoy (Morocco)', 'Envoy (Sudan)', 'Envoy (United Arab Emirates)', 'Envoy (United States)', 'Eric Chu', 'Eritrea', 'Ernst & Young', 'Erste Bank', 'Eshaq Jahangiri', 'Ethiopia', 'European Central Bank', 'Evo Morales', 'Fan Changlong', 'Fang Fenghui', 'Farouk al-Sharaa', 'Fausto Ortiz', 'Federica Mogherini', 'Fiji Sun', 'Finance / Economy / Commerce / Trade Ministry (Canada)', 'Finance / Economy / Commerce / Trade Ministry (Japan)', 'Finance / Economy / Commerce / Trade Ministry (Trinidad and Tobago)', 'Finance / Economy / Commerce / Trade Ministry (Vietnam)', 'Foreign Affairs (Argentina)', 'Foreign Affairs (Austria)', 'Foreign Affairs (Belarus)', 'Foreign Affairs (Belgium)', 'Foreign Affairs (Cape Verde)', 'Foreign Affairs (Denmark)', 'Foreign Affairs (Ethiopia)', 'Foreign Affairs (France)', 'Foreign Affairs (Gabon)', 'Foreign Affairs (Hungary)', 'Foreign Affairs (India)', 'Foreign Affairs (Israel)', 'Foreign Affairs (Italy)', 'Foreign Affairs (Latin America)', 'Foreign Affairs (Lebanon)', 'Foreign Affairs (Macedonia)', 'Foreign Affairs (Malaysia)', 'Foreign Affairs (Mauritania)', 'Foreign Affairs (Namibia)', 'Foreign Affairs (Nepal)', 'Foreign Affairs (Portugal)', 'Foreign Affairs (Romania)', 'Foreign Affairs (Senegal)', 'Foreign Affairs (Slovakia)', 'Foreign Affairs (South Africa)', 'Foreign Affairs (South Korea)', 'Foreign Affairs (Syria)', 'Foreign Affairs (Venezuela)', 'Foreign Affairs (Zimbabwe)', 'Fotis Kouvelis', 'Foued Mebazaa', 'France', 'Francis Muthaura', 'Francis Ole Kaparo', 'Frank Bainimarama', 'Franklin Drilon', 'Frantisek Kasický', 'François Bozizé', 'Free Democratic Party', 'Garibaldi Alves', 'Gary Roughead', 'Gazeta Wyborcza', 'Gazprom', 'Geir H. Haarde', 'Gennady Andreyevich Zyuganov', 'George Yeo', 'Georgios Papandreou', 'Gerd Mueller', 'Gerhard Schröder', 'Gholam Reza Aghazadeh', 'Gholamali Haddad Adel', 'Gideon Gono', 'Gilberto Kassab', 'Gjorge Ivanov', 'Gladys Berejiklian', 'Godfrey Chidyausiku', 'Godwin Osagie Abbe', 'Gordon Darcy Lilo', 'Government (Belarus)', 'Government (Burundi)', "Government (Cote d'Ivoire)", 'Government (Croatia)', 'Government (Ecuador)', 'Government (France)', 'Government (Georgia)', 'Government (Germany)', 'Government (Italy)', 'Government (Namibia)', 'Government (Nigeria)', 'Government (Pakistan)', 'Government (Palestinian Territory, Occupied)', 'Government (Poland)', 'Government (Qatar)', 'Government (South Africa)', 'Government (Sudan)', 'Government (Trinidad and Tobago)', 'Government Affiliated Bank (Nigeria)', 'Government Delegation (Liberia)', 'Government Lawyer/Representative (Romania)', 'Government Official (Egypt)', 'Government Official (Georgia)', 'Government Official (Greece)', 'Government Official (Japan)', 'Government Official (Libya)', 'Government Official (Mexico)', 'Government Official (Mongolia)', 'Government Official (Russia)', 'Government Official (Rwanda)', 'Government Official (United Kingdom)', 'Government Official (Vietnam)', 'Government Official (Zimbabwe)', 'Governor (Djibouti)', 'Governor (India)', 'Governor (Japan)', 'Governor (Malaysia)', 'Governor (Yemen)', 'Grand Duke Henri', 'Grand National Party', 'Grigol Vashadze', 'Guatemala', 'Guenther Oettinger', 'Guerrilla (Colombia)', 'Guerrilla (Cuba)', 'Guillermo Moreno', 'Gulbuddin Hekmatyar', 'Gurbanguly Berdymukhammedov', 'Guy Ryder', 'Habib Essid', 'Haider Al-Abadi', 'Hamrokhon Zarifi', 'Hannah Tetteh', 'Hannes Swoboda', 'Hans-Rudolf Merz', 'Hashim Thaçi', 'Hawiye (ethnic)', 'Head of Government (Bahrain)', 'Head of Government (Bangladesh)', 'Head of Government (Belarus)', 'Head of Government (Brazil)', 'Head of Government (Burkina Faso)', 'Head of Government (Burundi)', 'Head of Government (Cameroon)', 'Head of Government (Chad)', 'Head of Government (Colombia)', 'Head of Government (Cuba)', 'Head of Government (Cyprus)', 'Head of Government (Egypt)', 'Head of Government (Ethiopia)', 'Head of Government (Gabon)', 'Head of Government (Gambia)', 'Head of Government (Germany)', 'Head of Government (Ghana)', 'Head of Government (Greece)', 'Head of Government (Grenada)', 'Head of Government (India)', 'Head of Government (Kenya)', 'Head of Government (Lesotho)', 'Head of Government (Mongolia)', 'Head of Government (Nigeria)', 'Head of Government (Pakistan)', 'Head of Government (Peru)', 'Head of Government (Portugal)', 'Head of Government (Qatar)', 'Head of Government (Slovenia)', 'Head of Government (South Korea)', 'Head of Government (Sri Lanka)', 'Head of Government (Sweden)', 'Head of Government (Taiwan)', 'Head of Government (Timor-Leste)', 'Head of Government (Togo)', 'Head of Government (Turkmenistan)', 'Head of Government (Ukraine)', 'Head of Government (Uruguay)', 'Health Ministry (China)', 'Health Ministry (Netherlands)', 'Health Ministry (Romania)', 'Heinz Fischer', 'Henry M. Paulson', 'Herman Van Rompuy', 'Hernán Andrade', 'High Commission (Sudan)', 'High Commission (United Kingdom)', 'High Commission for Refugees', 'High Ranking Military Personnel (Cuba)', 'High Ranking Military Personnel (India)', 'High Ranking Military Personnel (Japan)', 'High Ranking Military Personnel (Jordan)', 'High Ranking Military Personnel (Pakistan)', 'High Ranking Military Personnel (Tajikistan)', 'Hilmi Özkök', 'Hisham Qandil', 'Holy See', 'House of Representatives (Indonesia)', 'House of Representatives (Japan)', 'House of Representatives (Myanmar)', 'Hui Liangyu', 'Hunter (Nigeria)', 'ITAR TASS', 'Ian Paisley', 'Ibrahim Boubacar Keïta', 'Igor Ivanovich Shuvalov', 'Independent Party', 'Indigenous People (Ethiopia)', 'Indigenous People (United States)', 'Industrial / Textiles / Mining Ministry (Vietnam)', 'Industry (China)', 'Industry (India)', 'Industry (Romania)', 'Industry (Turkey)', 'Information / Communication / Transparency Ministry (Iraq)', 'Information / Communication / Transparency Ministry (Russia)', 'Information Ministry (India)', 'Insurgency (Sudan)', 'Insurgent (Afghanistan)', 'Intellectual (Somalia)', 'Intelligence (Sudan)', 'Intelligence Chief (Egypt)', 'Intelligence and Security Committee', 'Inter-Services Intelligence', 'Interim Government (Egypt)', 'Interim Government (Somalia)', 'Interim Leader (Iraq)', 'Interim Leader (Tunisia)', 'Internal Security Operations Command', 'International Federation of Human Rights', 'International Federation of Red Cross and Red Crescent Societies', 'International Government Organizations', 'International Monetary Fund', 'Irakli Alasania', 'Iran', 'Iraq', 'Iraqi Communist Party', 'Iraqi National List', 'Ireland', 'Isaias Afewerki', 'Islam Karimov', 'Islamic Courts Union', 'Islamic Militant (Palestinian Territory, Occupied)', 'Islamic Preacher (Iran)', 'Islamic Preacher (Pakistan)', 'Islamic Republic of Iran Broadcasting', 'Ismaïl Omar Guelleh', 'Israeli Defense Forces', 'Iurie Leanca', 'Ivan Gasparovic', 'Jack Lang', 'Jack Straw', 'Jacob J. Lew', 'Jakaya Mrisho Kikwete', 'Jakup Krasniqi', 'James Baker', 'James Kabarebe', 'James Wolfensohn', 'Jan Fischer', 'Janez Jansa', 'Janez Susnik', 'Japan', 'Japan Restoration Party', 'Japan Self-Defense Forces', 'Jatuporn Prompan', 'Javier Solana', 'Jawad al-Bulani', 'Jean Eyeghe Ndong', 'Jens Stoltenberg', 'Jesse Chacón', 'Jim Marurai', 'Jirí Rusnok', 'John Baird', 'John Brennan', 'John Dramani Mahama', 'John Garang', 'John Githongo', 'John Major', 'Johnnason Liu', 'Joint Chiefs of Staff (United States)', 'Jonah David Jang', 'Jonathan Moyo', 'Joon Young Woo', 'Joschka Fischer', 'José Alencar Gomes da Silva', 'José Guillermo Rodríguez', 'José Miguel Insulza', 'José Ramón Balaguer Cabrera', 'Joyce Anelay', 'Juan Carlos I', 'Juan José Daboub', 'Juha Sipilä', 'Julia Gillard', 'Julian Paul Assange', 'Julie Bishop', 'Justice Department/Ministery (India)', 'Justice Department/Ministery (Romania)', 'Justice Department/Ministery (Senegal)', 'Justice Department/Ministery (Serbia)', 'Justice and Development Party', 'Jusuf Kalla', 'János Áder', 'Jürgen Trittin', 'Kamalesh Sharma', 'Kamla Persad-Bissessar', 'Kaoru Yosano', 'Karin Enström', 'Karl Erjavec', 'Kazakhstan', 'Kemal Unakitan', 'Khandu Wangchuk', 'Kim Hwang Sik', 'Kim Kye Gwan', 'Kingunge Ngombale Mwiru', 'Klaus Johannis', 'Koichiro Matsuura', 'Konstantinos Karamanlis', 'Kostyantyn Gryshchenko', 'Kuomintang', 'Kurier', 'Kuwait', 'Labor Union (Brazil)', 'Labor Union (Croatia)', 'Labor Union (Czech Republic)', 'Labor Union (New Zealand)', 'Labor Union (Nigeria)', 'Labor Union (Peru)', 'Labor Union (Zimbabwe)', 'Labor and Employment Ministry (Bahrain)', 'Labor and Employment Ministry (Kazakhstan)', 'Laila Freivalds', 'Lal Krishna Advani', 'Lal Singh', 'Landowner (United States)', 'Laos', 'Lapo Pistelli', 'Lawmaker (Hong Kong)', 'Lawmaker (Japan)', 'Lawmaker (Moldova)', 'Lawmaker (United Kingdom)', 'Lawrence Cannon', 'Lawrence Gonzi', 'Lawrence Springborg', 'Lawyer/Attorney (Argentina)', 'Lawyer/Attorney (Australia)', 'Lawyer/Attorney (Cambodia)', 'Lawyer/Attorney (Kenya)', 'Lawyer/Attorney (Malaysia)', 'Lawyer/Attorney (Romania)', 'Lawyer/Attorney (Uganda)', 'Lawyer/Attorney (United Kingdom)', 'Lawyer/Attorney (United States)', 'Le Hong Anh', 'Lee Myung Bak', 'Legislature (Czech Republic)', 'Legislature (Iraq)', 'Legislature (Pakistan)', 'Legislature (Romania)', 'Legislature (Switzerland)', 'Legislature (Syria)', 'Legislature (Tanzania)', 'Legislature (Turkey)', 'Lien Chan', 'Likud', 'Liu Yandong', 'Liu Zhenmin', 'Louise Lake-Tack', 'Lubomír Galko', 'Lucy Kibaki', 'Luka Bebic', 'Lulzim Basha', 'M.R. Sharma', 'Ma Ying Jeou', 'Macky Sall', 'Magomedsalam Magomedov', 'Mahamadou Issoufou', 'Mahdi Army', 'Mahmoud Abbas', 'Mahmoud Ahmadinejad', "Main Opposition (Cote d'Ivoire)", 'Main Opposition (Gabon)', 'Main Opposition (Georgia)', 'Main Opposition (Slovakia)', 'Main Opposition (South Africa)', 'Mainland Affairs Council', 'Maithripala Sirisena', 'Majid Takht Ravanchi', 'Makhdoom Shah Mahmood Qureshi', 'Malawi', 'Malaysia', 'Maldives', 'Mao Zedong', 'Marcio Cuevas', 'Mario Monti', 'Mark Simmonds', 'Marta Lomas', 'Martin Bursík', 'Martin Indyk', 'María Ángela Holguín', 'Massoud Barzani', 'Maumoon Abdul Gayoom', 'Mauritania', 'Maxime Verhagen', 'Media (Africa)', 'Media (Palestinian Territory, Occupied)', 'Media Personnel (Australia)', 'Media Personnel (China)', 'Media Personnel (International)', 'Media Personnel (Iran)', 'Medical Association (Nigeria)', 'Medical Personnel (India)', 'Medical Personnel (Nigeria)', 'Mehr News Agency', 'Member of Legislative (Govt) (Algeria)', 'Member of Legislative (Govt) (France)', 'Member of Legislative (Govt) (Iran)', 'Member of Legislative (Govt) (Lebanon)', 'Member of Legislative (Govt) (South Korea)', 'Member of Parliament (Australia)', 'Member of Parliament (France)', 'Member of Parliament (India)', 'Member of Parliament (Iraq)', 'Member of Parliament (Kyrgyzstan)', 'Member of Parliament (Slovakia)', 'Member of Parliament (South Africa)', 'Mexico', 'Michael Bernard Mukasey', 'Michael D. Higgins', 'Michael Sata', 'Middle East', 'Miguel Ángel Osorio Chong', 'Mike Ozekhome', 'Mikhail Sergeyevich Gorbachev', 'Mikhail Yefimovich Fradkov', 'Mikulas Dzurinda', 'Milen Velchev', 'Militant (Nigeria)', 'Militant (Somalia)', 'Militant (Taliban)', 'Military (Bolivia)', 'Military (Guinea)', 'Military (Lebanon)', 'Military (Madagascar)', 'Military (Myanmar)', 'Military (Philippines)', 'Military (Russia)', 'Military (Ukraine)', "Military Personnel (Cote d'Ivoire)", 'Military Personnel (France)', 'Military Personnel (India)', 'Military Personnel (Libya)', 'Military Personnel (Philippines)', 'Military Personnel (Serbia)', 'Military Personnel - Special (Afghanistan)', 'Military Personnel - Special (India)', 'Military Personnel - Special (Sierra Leone)', 'Military Ruler (Myanmar)', 'Militia (Al-Mustaqbal)', 'Milo Djukanovic', 'Minister Bogollagama', 'Minister Kachornprasart', 'Minister Patnaik', 'Ministry (Afghanistan)', 'Ministry (Belgium)', 'Ministry (Brazil)', 'Ministry (Czech Republic)', 'Ministry (Djibouti)', 'Ministry (Egypt)', 'Ministry (Honduras)', 'Ministry (Hungary)', 'Ministry (International)', 'Ministry (Iran)', 'Ministry (Jordan)', 'Ministry (Kosovo)', 'Ministry (Morocco)', 'Ministry (Oman)', 'Ministry (Poland)', 'Ministry (Romania)', 'Ministry (Senegal)', 'Ministry (Sierra Leone)', 'Ministry (South Korea)', 'Ministry (Sri Lanka)', 'Ministry (Sudan)', 'Ministry (Tunisia)', 'Ministry (Vietnam)', 'Ministry of International Cooperation (Egypt)', 'Ministry of Public Security (China)', 'Ministry of Public Security (Laos)', 'Ministry of Public Security (Vietnam)', 'Ministry of Tourism (Angola)', 'Miro Cerar', 'Miroslava Nemcová', 'Mitsubishi', 'Mladjan Dinkic', 'Mohamed El Ghazi', 'Mohamed Ibn Chambas', 'Mohamed Ould Abdel Aziz', 'Mohamed Ould Boilil', 'Mohamed Rukara', 'Mohamed al-Dairi', 'Mohammad Abbasi', 'Moro Islamic Liberation Front', 'Morteza Sarmadi', 'Motloheloa Phooko', 'Moussa Dadis Camara', 'Moussa Faki Mahamat', 'Movement for Democratic Change', 'Mswati III', 'Muhammad Naji al-Otari', 'Muhammad Salem al-Ghabban', 'Muhammad Sayyid Tantawy', 'Muhammad VI', 'Muhammad bin Nayef', 'Muhammadu Buhari', 'Mulatu Teshome', 'Murli Deora', 'Mwai Kibaki', 'Nabih Berri', 'Nabil Shaath', 'Naftali Bennett', 'Nahas Angula', 'Najem Gharsalli', 'Nasser Judeh', 'National Action Party', 'National Alliance (Iraq)', 'National Assembly of Pakistan', 'National Board of Revenue (Bangladesh)', 'National Congress (Iraq)', 'National Congress (Sudan)', 'National Front (Myanmar)', 'National Liberal Party', 'National Liberation Army', 'National Security Advisor (Iraq)', 'National Security Advisor (Saudi Arabia)', 'National Transitional Council', 'National United Front for Democracy Against Dictatorship', 'Naval (United States)', 'Nawzad Hadi', 'Nebojša Medojević', 'Nelson Azevedo Jobim', 'New Alliance Party', 'New Democracy', 'New Serbia', 'News Editor (United States)', 'Nhial Deng Nhial', 'Nicos Anastasiades', 'Niger', 'Noppadon Pattama', 'North America', 'Northern Ireland', 'Noureddine Zerhouni', 'Nuri al-Maliki', 'Okada Katsuya', 'Olugbenga Ashiru', 'Oluṣẹgun Ọbasanjọ', 'Oman', 'Omar Halleslevens', 'Omar Suleiman', 'Ombudsman (Australia)', 'Ondrej Liska', 'Opposition Supporter (Pakistan)', 'Opposition Supporter (Slovakia)', 'Opposition Supporter (Yemen)', 'Organization of Petroleum Exporting Countries', 'Osman Mohammed Omar', 'Other Authorities / Officials (Brazil)', 'Other Authorities / Officials (Chad)', 'Other Authorities / Officials (Egypt)', 'Other Authorities / Officials (El Salvador)', 'Other Authorities / Officials (Greece)', 'Other Authorities / Officials (Guatemala)', 'Other Authorities / Officials (Jordan)', 'Other Authorities / Officials (Kazakhstan)', 'Other Authorities / Officials (Libya)', 'Other Authorities / Officials (Mali)', 'Other Authorities / Officials (Malta)', 'Other Authorities / Officials (Mauritania)', 'Other Authorities / Officials (Mexico)', 'Other Authorities / Officials (Nepal)', 'Other Authorities / Officials (New Zealand)', 'Other Authorities / Officials (Nigeria)', 'Other Authorities / Officials (Romania)', 'Other Authorities / Officials (Russia)', 'Other Authorities / Officials (Senegal)', 'Other Authorities / Officials (Sierra Leone)', 'Other Authorities / Officials (Somalia)', 'Other Authorities / Officials (Turkey)', 'Ougoureh Kifleh Ahmed', 'Our Ukraine', 'Paddy Ashdown', "Pakistan People's Party", 'Pakistan administered Kashmir', 'Panhellenic Socialist Movement', 'Party Alliance (Nepal)', 'Party Member (Bangladesh)', 'Party Member (Brazil)', 'Party Member (Czech Republic)', 'Party Member (Iraq)', 'Party Member (Turkey)', 'Party Member (United Kingdom)', 'Party Member (Vietnam)', 'Party President (Cyprus)', 'Party President (Germany)', 'Party President (Italy)', 'Party President (Uri Party)', 'Party President (Vietnam)', 'Patrick Herminie', 'Patrick Manning', 'Pavol Hrusovský', 'Pedro Manuel Mamede Passos Coelho', 'Pemex', 'People Associated with the Opposition (Australia)', 'People Associated with the Opposition (Brazil)', 'People Associated with the Opposition (Czech Republic)', 'People Associated with the Opposition (Egypt)', 'People Associated with the Opposition (Madagascar)', 'People Associated with the Opposition (Mauritania)', 'People First Party Korea', "People's Movement for Democratic Change", 'Pervez Musharraf', 'Peter Costello', 'Peter Kazimír', "Peter O'Neill", 'Peter Pace', 'Peter Szijjarto', 'Pham Binh Minh', 'Philip Hammond', 'Philip Ruddock', 'Philipp Rösler', 'Police (Australia)', 'Police (Austria)', 'Police (Egypt)', 'Police (Hong Kong)', 'Police (Indonesia)', 'Police (Israel)', 'Police (Jordan)', 'Police (Kenya)', 'Police (Madagascar)', 'Police (Malaysia)', 'Police (New Zealand)', 'Police (Peru)', 'Police (Philippines)', 'Police (Saudi Arabia)', 'Police (Slovakia)', 'Police (Sudan)', 'Political Parties (Afghanistan)', 'Political Parties (Egypt)', 'Political Parties (Lebanon)', 'Political Parties (Nepal)', 'Pope Tawadros II', 'Popular Congress', 'Population (Georgia)', 'Portia Simpson Miller', 'Portugal', 'Prachanda', 'President of the Senate (Morocco)', 'Presidential Candidate (Afghanistan)', 'Presidential Candidate (Iraq)', 'Presidential Candidate (Nigeria)', 'Prime Minister Bhattarai', 'Prime Minister Chaudhry', 'Prime Minister Qarase', 'Professor (South Korea)', 'Protester (Belarus)', 'Protester (Honduras)', 'Protester (India)', 'Protester (Indonesia)', 'Protester (Lebanon)', 'Public Prosecutor (Brazil)', 'Public Sector (India)', 'Qatar', 'R.K. Singh', 'Rachid Sabbagh', 'Radoslaw Sikorski', 'Rafael Antonio Bielsa', 'Rafael Correa', 'Rafael Seguis', 'Rafiq Hariri', 'Raheel Sharif', 'Raj Thackeray', 'Ralph Gonzalez Recto', 'Ramtane Lamamra', 'Rand Paul', 'Randy David', 'Rasa Juknevičienė', 'Rashid Gumarovich Nurgaliyev', 'Rashid Qureshi', 'Raymond Tshibanda', 'Raúl Castro', "Rebel Commander (Cote d'Ivoire)", 'Rebel Commander (India)', 'Rebel Group (Burundi)', 'Rebel Group (Libya)', 'Redha Malek', 'Refugee (Colombia)', "Refugee (Cote d'Ivoire)", 'Rehman Malik', 'Rene Mario Figueroa', 'Representatives (Cambodia)', 'Representatives (Ethiopia)', 'Representatives (France)', 'Representatives (Kyrgyzstan)', 'Representatives (Lithuania)', 'Representatives (Malaysia)', 'Representatives (North Korea)', 'Representatives (Poland)', 'Representatives (Russia)', 'Representatives (Sudan)', 'Representatives (Tanzania)', 'Representatives (Vietnam)', 'Representatives (Yemen)', 'Republic of South Ossetia', 'Resistance Movement (Yemen)', 'Ricardo Alarcón de Quesada', 'Richard Boucher', 'Richard Sulík', 'Rio Tinto', 'Robert Hill', 'Robert M. Kimmitt', 'Robert Wexler', 'Roberta Anastase', 'Roberto Castelli', 'Roberto Micheletti', 'Rodolfo Anibal Garcia', 'Rodolphe Adada', 'Roh Moo Hyun', 'Romania', 'Ronald Kirk', 'Ronnie Shikapwasha', 'Rose Mukantabana', 'Royal Administration (Australia)', 'Royal Administration (Bangladesh)', 'Royal Administration (Cameroon)', 'Royal Administration (Iraq)', 'Royal Administration (Jordan)', 'Royal Administration (Nigeria)', 'Royal Administration (Pakistan)', 'Royal Administration (Romania)', 'Royal Administration (Saudi Arabia)', 'Royal Administration (Spain)', 'Royal Dutch Shell', 'Royal Thai Police', 'Roza Otunbayeva', 'Ruling Coalition (Pakistan)', 'Ruling Party (France)', 'Rupiah Banda', 'Russ Feingold', 'Said Barkat', 'Salah-al-Din Al-Bashir', 'Sali Berisha', 'Salvador Sánchez Cerén', 'Sam Nda-Isaiah', 'Sambo Dasuki', 'Sami Hafez Anan', 'Samsung', 'Samuel Schmid', 'Santos Edelmar Lopez', 'Saud bin Faisal bin Abdul-Aziz', 'Savvas Tsitouridis', 'Scientist (China)', 'Secretariat (Nigeria)', 'Secretariat (Vietnam)', 'Secretary of State for the Home Department', 'Security Council of the Russian Federation', 'Sedki Sobhi', 'Segolene Royal', 'Selmo Cikotic', 'Senate (Italy)', 'Senate (Uzbekistan)', 'Senate of Burundi', 'Sengoku Yoshito', 'Separatist (Aceh)', 'Separatist (India)', 'Separatist (Indonesia)', 'Separatist Leader (Kosovo)', 'Sergei Ivanovich Shmatkó', 'Sergey Bagapsh', 'Sergey Kuzhugetovich Shoygu', 'Sergey Vladilenovich Kiriyenko', 'Serik Akhmetov', 'Settler (Israel)', 'Seyoum Mesfin', 'Seyran Ohanyan', 'Shamsi Vuai Nahodha', 'Shaukat Aziz', 'Sheikh Ahmed Abdullah', 'Sheikh Hamad bin Isa al Khalifah', 'Sheikh Hamad bin Khalifa al-Thani', 'Sheikh Jabir al Ahmad al Jabir al Sabah', 'Sher Bahadur Deuba', 'Sherali Khayrulloyev', 'Shigeru Ishiba', 'Shimon Peres', 'Shinsuke Sugiyama', 'Shiv Sena', 'Shivraj Patil', 'Shivraj Singh Chouhan', 'Shivshankar Menon', 'Shura Council', 'Sidi Ould Cheikh Abdallahi', 'Silvia Cartwright', 'Sim Daepyung', 'Simon Lalong', 'Sir David Richards', 'Sir Mark Stanhope', 'Sir Richard Dannatt', 'Social Democratic Party (Iceland)', 'Solidarity', 'Solomon Passy', 'Somsavat Lengsava', 'Sondhi Limthongkul', 'South Africa', 'South Korea', 'South Sudan', 'Space Agency (Iran)', 'Staffan de Mistura', 'State Duma (North Korea)', 'State Oil Company of Azerbaijan Republic', 'State Peace and Development', 'Stephen Hadley', 'Stephen Rapp', 'Stephen W. Bosworth', 'Stora Enso', 'Straits Exchange Foundation', 'Student (Iran)', 'Student (Iraq)', 'Student (Senegal)', 'Sudan', 'Sun Jianguo', 'Supreme Council (Iraq)', 'Supreme Electoral Court', 'Surakiart Sathirathai', 'Surya Bahadur Thapa', 'Syarhey Sidorski', 'Sérgio de Oliveira Cabral Santos Filho', 'Taavi Rõivas', 'Tahirul Qadri', 'Taiwan Affairs Office', 'Takahiro Yokomichi', 'Tanzania', 'Tariq Aziz', 'Tatarstan', 'Teodoro Obiang Nguema Mbasogo', 'Terje Roed Larsen', 'The Hague', 'Theresa May', 'Thongsing Thammavong', 'Tie Banh', 'Timor-Leste', 'Tom Marsters', 'Tomás Borec', 'Tony Blair', 'Tony Tan Keng Yam', 'Toomas Hendrik Ilves', 'Trade Official (South Korea)', 'Trade Union Congress', 'Transitional Darfur Regional Authority', 'Transparency International', 'Transportation Ministry/Department (Australia)', 'Treasury/Finance Ministry (Egypt)', 'Treasury/Finance Ministry (Italy)', 'Treasury/Finance Ministry (Japan)', 'Treasury/Finance Ministry (Mali)', 'Treasury/Finance Ministry (Slovakia)', 'Treasury/Finance Ministry (Syria)', 'Trinidad and Tobago', 'Tsai Ing-wen', 'Tsakhiagiyn Elbegdorj', 'Tzipi Livni', 'U.S. Forces Korea', 'UAE Armed Forces', 'UN Security Council', 'USAID', 'Uhuru Muigai Kenyatta', "Umaru Musa Yar'Adua", 'Undersecretary (Iraq)', 'Undersecretary (Italy)', 'Undersecretary (United Arab Emirates)', 'Undersecretary (United States)', 'Unified Buddhist Church of Vietnam', 'United Arab Emirates', 'United Nations Interim Administration in Kosovo', 'United Progressive Alliance', 'United Self-Defense Forces of Colombia', 'United States Senate', 'Universal Church of the Kingdom of God', 'Uri Ariel', 'Uyunqimg', 'VARIG', 'Valdas Adamkus', 'Valentin Sobolev', 'Valery Dmitrievich Zorkin', 'Verkhovna Rada', 'Vietnam', 'Viktor Basargin', 'Viktor Orban', 'Vincent C. Siew', 'Vincent Cable', 'Vitali Klitschko', 'Vivianne Blanlot', 'Vladimir Padrino Lopez', 'Vlado Buckovski', 'Vlastimil Picek', 'Votorantim Group', 'Vuk Jeremić', 'Wang Yi', 'Wen Jiabao', 'Wendy Sherman', 'Werner Faymann', 'William E. Ward', 'William J. Fallon', 'William Ruto', 'Willies Mchunu', 'Winston Peters', 'Wolfgang Schüssel', 'Xi Jinping', 'Xu Caihou', 'Yair Lapid', 'Yang Hyong Sop', 'Yannis Stournaras', 'Yasuo Fukuda', 'Yemen', 'Yerlan Idrisov', 'Yoon Jeung Hyun', 'Yoshihiko Noda', 'Yossi Beilin', 'Yu Zhengsheng', 'Yunus Qanuni', 'Yuriy Lutsenko', 'Yuriy Yekhanurov', 'Yuthasak Sasiprapha', 'Zahid Hamid', 'Zhang Deguang', 'Zhang Dejiang', 'Zine El Abidine Ben Ali', 'Zurab Nogaideli']
+  GT:        ['National United Front for Democracy Against Dictatorship', 'Abhisit Vejjajiva', 'Worachai Hema', 'Protester (Thailand)']
+
+Q 76 [equal       ] CORRECT
+  Q: In which month did the Prime Minister of Peru visit China?
+  Predicted: 2010-03
+  GT:        2010-03
+
+Q 77 [first_last  ] WRONG
+  Q: In what year did the Ethiopian police last use conventional military force against Ethiopia?
+  Predicted: 2015
+  GT:        2005
+
+Q 78 [before_after] CORRECT
+  Q: After Sankei, who was investigated by the Lawyer/Attorney of South Korea?
+  Predicted: ['Business (South Korea)', 'Criminal (South Korea)', 'Grand National Party']
+  GT:        ['Criminal (South Korea)', 'Business (South Korea)', 'Grand National Party']
+
+Q 79 [equal       ] CORRECT
+  Q: In which month did Ali Tayyebnia make optimistic remarks about China?
+  Predicted: 2014-04
+  GT:        2014-04
+
+Q 80 [before_last ] CORRECT
+  Q: Before the Governor of Japan, who was the last to condemn China?
+  Predicted: Ai Weiwei
+  GT:        Ai Weiwei
+
+Q 81 [before_last ] CORRECT
+  Q: Before the royal administration of Saudi Arabia, which country did China praise last?
+  Predicted: Malaysia
+  GT:        Malaysia
+
+Q 82 [first_last  ] CORRECT
+  Q: Could you tell me the exact month when the leader of Ghana first expressed his intention to negotiate with China?
+  Predicted: 2010-09
+  GT:        2010-09
+
+Q 83 [before_after] CORRECT
+  Q: Which country was accused by Ethiopia after 2012?
+  Predicted: ['Activist (Ethiopia)', 'Al-Shabaab', 'Eritrea', 'Government (Qatar)', 'Qatar', 'Sudan']
+  GT:        ['Government (Qatar)', 'Activist (Ethiopia)', 'Qatar', 'Al-Shabaab', 'Eritrea', 'Sudan']
+
+Q 84 [equal       ] CORRECT
+  Q: Who was negotiating with China in 2012?
+  Predicted: ['Ali Baqeri', 'Association of Southeast Asian Nations', 'Cabinet / Council of Ministers / Advisors (United States)', 'Dissident (China)', 'European Central Bank', 'Foreign Affairs (France)', 'France', 'Iran', 'Japan', 'Ma Ying Jeou', 'South Korea', 'Sudan', 'Vietnam']
+  GT:        ['Iran', 'Dissident (China)', 'Association of Southeast Asian Nations', 'Ali Baqeri', 'Vietnam', 'Sudan', 'South Korea', 'European Central Bank', 'France', 'Foreign Affairs (France)', 'Ma Ying Jeou', 'Cabinet / Council of Ministers / Advisors (United States)', 'Japan']
+
+Q 85 [first_last  ] CORRECT
+  Q: When did Maumoon Abdul Gayoom last visit China?
+  Predicted: 2007-07-08
+  GT:        2007-07-08
+
+Q 86 [equal       ] CORRECT
+  Q: Who wanted to meet with Thailand in May 2009?
+  Predicted: ['Anupong Paochinda', 'Business (South Korea)', 'Cabinet / Council of Ministers / Advisors (Thailand)', 'Cambodia', 'Children (Thailand)', 'Citizen (Thailand)', 'Men (United States)', 'South Korea', 'Student (Thailand)', 'Vietnam']
+  GT:        ['Student (Thailand)', 'Vietnam', 'Children (Thailand)', 'South Korea', 'Citizen (Thailand)', 'Cabinet / Council of Ministers / Advisors (Thailand)', 'Men (United States)', 'Cambodia']
+
+Q 87 [before_last ] CORRECT
+  Q: Who was the last person to visit Antonis Samaras before China?
+  Predicted: Head of Government (Egypt)
+  GT:        Head of Government (Egypt)
+
+Q 88 [first_last  ] CORRECT
+  Q: In what month did Donald Rumsfeld last threaten Iraq?
+  Predicted: 2005-06
+  GT:        2005-06
+
+Q 89 [first_last  ] CORRECT
+  Q: When was the first visit of Burundi to China?
+  Predicted: 2006-06-14
+  GT:        2006-06-14
+
+Q 90 [first_last  ] CORRECT
+  Q: When was the last time Huang Ju visited China?
+  Predicted: 2007-05-24
+  GT:        2007-05-24
+
+Q 91 [equal       ] CORRECT
+  Q: When did South Sudan formally sign an agreement with Djibouti?
+  Predicted: 2012-02-03
+  GT:        2012-02-03
+
+Q 92 [first_last  ] CORRECT
+  Q: Could you tell me the exact month when the head of the Egyptian government first visited Iraq?
+  Predicted: 2011-08
+  GT:        2011-08
+
+Q 93 [before_after] CORRECT
+  Q: Who criticised the citizens of Saudi Arabia before Zawahiri?
+  Predicted: ['Al-Azhar University', 'Armed Gang (Saudi Arabia)', 'Barack Obama', 'Boko Haram', 'Citizen (United Kingdom)', 'Doctors Without Borders', 'Employee (Saudi Arabia)', 'Human Rights Watch', 'Iran', 'Iraq', 'Islamic Preacher (Saudi Arabia)', 'Justice and Development Party', 'Media Personnel (Iran)', 'Middle East', 'New Patriotic Party', 'Nuri al-Maliki', 'Police (Saudi Arabia)', 'Royal Administration (Saudi Arabia)', 'Saudi Army', 'Shura Council', "Umaru Musa Yar'Adua"]
+  GT:        ['Iran', 'Islamic Preacher (Saudi Arabia)', 'Royal Administration (Saudi Arabia)']
+
+Q 94 [before_last ] WRONG
+  Q: Who was the last person to visit Malaysia before the leader of Turkmenistan?
+  Predicted: Laos
+  GT:        Ma Ying Jeou
+
+Q 95 [before_after] WRONG
+  Q: Who hosted the visit of Yang Hyong Sop before Cambodia did?
+  Predicted: None
+  GT:        ['South Africa', 'China', 'Angola', 'Norodom Sihanouk']
+
+Q 96 [after_first ] CORRECT
+  Q: Who was the first to sign formal agreements with South Africa after Malaysia?
+  Predicted: Lesotho
+  GT:        Lesotho
+
+Q 97 [first_last  ] CORRECT
+  Q: When did the Saudi Arabian Defence Forces first use small arms and light weapons against Ethiopia?
+  Predicted: 2011-03-11
+  GT:        2011-03-11
+
+Q 98 [before_after] CORRECT
+  Q: After 27 June 2008, who made Djibouti suffer from conventional military forces?
+  Predicted: ['African Union', 'Al-Shabaab', 'Eritrea']
+  GT:        ['Al-Shabaab', 'Eritrea', 'African Union']
+
+Q 99 [equal       ] CORRECT
+  Q: Who made a telephone call to the Inquirer on 23 April 2009?
+  Predicted: ['Edgard Arevalo', 'Police (Philippines)']
+  GT:        ['Edgard Arevalo', 'Police (Philippines)']
+
+Q100 [first_last  ] CORRECT
+  Q: In which month did China first make negative remarks about the Association of Southeast Asian Nations?
+  Predicted: 2010-09
+  GT:        2010-09
+
