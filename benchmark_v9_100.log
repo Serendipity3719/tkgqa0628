@@ -1,5 +1,5 @@
-Agent V8 Benchmark
-Accuracy: 79.0%
+Agent V9 Benchmark (EPS enabled)
+Accuracy: 82.0%
 
 Q  1 [after_first ] CORRECT
   Q: After the Danish Ministry of Defence and Security, who was the first to visit Iraq?
@@ -81,14 +81,14 @@ Q 16 [after_first ] CORRECT
   Predicted: Iran
   GT:        Iran
 
-Q 17 [before_last ] WRONG
+Q 17 [before_last ] CORRECT
   Q: Before the military of Taiwan, which country did China threaten last?
-  Predicted: Japan
+  Predicted: Angela Merkel
   GT:        Angela Merkel
 
 Q 18 [before_after] WRONG
   Q: Who praised Kuwait before Nuri al-Maliki?
-  Predicted: ['Abdel Fattah Al-Sisi', 'Abdul-Karim Al-Arhabi', 'Abu Bakr Abdullah al-Qirbi', 'Adil Abdul-Mahdi', 'Ahmed Abdallah Sambi', 'Ahmed el-Tayeb', 'Ali Abdullah Saleh', 'Ali Jannati', 'Catherine Ashton', 'China', 'Ethiopia', 'Foreign Affairs (Austria)', 'Foreign Affairs (India)', 'Foreign Affairs (Zimbabwe)', 'Gibran Bassil', 'Head of Government (Egypt)', 'Iran', 'Iraq', 'Isaias Afewerki', 'Islam Karimov', 'Legislature (Iraq)', 'Macky Sall', 'Mahmoud Abbas', 'Mahmoud Ahmadinejad', 'Ministry (Egypt)', 'Ministry (Senegal)', 'Ministry (Venezuela)', 'Muhammad Naji al-Otari', 'Nabih Berri', 'Nasser Judeh', 'Secretariat (Gulf Cooperation Council)', 'Sudan', 'Supreme Council (Iraq)', 'UN Security Council', 'United Arab Emirates', 'Vietnam', 'Yemen', 'Zillur Rahman']
+  Predicted: ['Abdel Fattah Al-Sisi', 'Adil Abdul-Mahdi', 'Ahmed Abdallah Sambi', 'Ahmed el-Tayeb', 'Ali Abdullah Saleh', 'Catherine Ashton', 'China', 'Ethiopia', 'Foreign Affairs (Austria)', 'Foreign Affairs (India)', 'Foreign Affairs (Zimbabwe)', 'Head of Government (Egypt)', 'Iran', 'Iraq', 'Isaias Afewerki', 'Islam Karimov', 'Legislature (Iraq)', 'Macky Sall', 'Mahmoud Abbas', 'Mahmoud Ahmadinejad', 'Ministry (Egypt)', 'Ministry (Senegal)', 'Ministry (Venezuela)', 'Nabih Berri', 'Nasser Judeh', 'Sudan', 'UN Security Council', 'United Arab Emirates', 'Vietnam', 'Yemen']
   GT:        ['Presidential Family (United States)', 'Shaukat Aziz', 'Sudan', 'Pervez Musharraf', 'Saud bin Faisal bin Abdul-Aziz', 'Jack Straw', 'Japan']
 
 Q 19 [equal       ] CORRECT
@@ -168,7 +168,7 @@ Q 33 [first_last  ] CORRECT
 
 Q 34 [before_after] CORRECT
   Q: Before Oman, with which country did Thailand formally sign an agreement?
-  Predicted: ['Association of Southeast Asian Nations', 'Bolivia', 'Cabinet / Council of Ministers / Advisors (Japan)', 'Cambodia', 'China', 'Finance / Economy / Commerce / Trade Ministry (Maldives)', 'France', 'Iran', 'Ireland', 'Japan', 'Laos', 'Malaysia', 'Maldives', 'Military (Cambodia)', 'Military Personnel (Thailand)', 'Qatar', 'Representatives (Cambodia)', 'South Korea', 'Tanzania', 'Timor-Leste', 'United Arab Emirates', 'Vietnam']
+  Predicted: ['Association of Southeast Asian Nations', 'Bolivia', 'Cambodia', 'China', 'France', 'Iran', 'Ireland', 'Japan', 'Laos', 'Malaysia', 'Maldives', 'Qatar', 'South Korea', 'Tanzania', 'Timor-Leste']
   GT:        ['China', 'Malaysia']
 
 Q 35 [first_last  ] WRONG
@@ -183,7 +183,7 @@ Q 36 [before_after] WRONG
 
 Q 37 [before_after] CORRECT
   Q: Which country did China study before the religion of China?
-  Predicted: ['Angela Merkel', 'Anote Tong', 'Bank (China)', 'Ben Shalom Bernanke', 'Criminal (China)', 'Dissident (Australia)', 'Dissident (China)', 'France', 'Industry (China)', 'Iran', 'Japan', 'Kazakhstan', 'Maithripala Sirisena', 'Men (Japan)', 'South Korea', 'Straits Exchange Foundation', 'Sudan', 'Thailand', 'Transport (China)', 'UN Security Council']
+  Predicted: ['Angela Merkel', 'Anote Tong', 'Bank (China)', 'Criminal (China)', 'Dissident (Australia)', 'France', 'Industry (China)', 'Iran', 'Japan', 'Kazakhstan', 'Men (Japan)', 'South Korea', 'Sudan', 'Thailand', 'UN Security Council']
   GT:        Japan
 
 Q 38 [first_last  ] CORRECT
@@ -206,9 +206,9 @@ Q 41 [equal       ] CORRECT
   Predicted: ['Admiral (China)', 'Energy Department/Ministry (United States)']
   GT:        ['Energy Department/Ministry (United States)', 'Admiral (China)']
 
-Q 42 [before_after] WRONG
+Q 42 [before_after] CORRECT
   Q: Before the Asian Disaster Preparedness Centre, who did Thailand make optimistic comments about?
-  Predicted: None
+  Predicted: ['Association of Southeast Asian Nations', 'Cambodia', 'China', 'Citizen (Thailand)', 'Ethnic Group (Thailand)', 'France', 'Japan', 'Laos', 'Malaysia', 'Member of Parliament (Thailand)', 'South Korea', 'UN Security Council', 'Vietnam']
   GT:        Citizen (Thailand)
 
 Q 43 [equal       ] CORRECT
@@ -218,7 +218,7 @@ Q 43 [equal       ] CORRECT
 
 Q 44 [before_last ] WRONG
   Q: Before South Korea, with whom did Oman last wish to establish diplomatic cooperation?
-  Predicted: Iran
+  Predicted: China
   GT:        Qatar
 
 Q 45 [equal       ] CORRECT
@@ -258,7 +258,7 @@ Q 51 [first_last  ] CORRECT
 
 Q 52 [before_last ] WRONG
   Q: Which country receive China's visit from China last before Bruno Stagno Ugarte did?
-  Predicted: Domestic Affairs (Vietnam)
+  Predicted: Japan
   GT:        Sudan
 
 Q 53 [first_last  ] CORRECT
@@ -316,9 +316,9 @@ Q 63 [after_first ] CORRECT
   Predicted: Wen Jiabao
   GT:        Wen Jiabao
 
-Q 64 [equal       ] WRONG
+Q 64 [equal       ] CORRECT
   Q: In which year did Iraq commend the member of the Legislative Council of Iran?
-  Predicted: None
+  Predicted: 2013
   GT:        2013
 
 Q 65 [before_after] CORRECT
@@ -373,7 +373,7 @@ Q 74 [first_last  ] CORRECT
 
 Q 75 [before_after] WRONG
   Q: Who negotiated with the Thai military after Thailand?
-  Predicted: ['"Antony Harold Curties ""Tony"" Windsor"', '"Nicholas ""Nick"" Xenophon"', 'A.K. Antony', 'Abdel Fattah Al-Sisi', 'Abdelilah Benkirane', 'Abdirahman Mohamed Farole', 'Abdoulaye Wade', 'Abdul Aziz', 'Abdul Kalam', 'Abdul-Karim Al-Arhabi', 'Abdullah Gül', 'Abhisit Vejjajiva', 'Abu Bakr Abdullah al-Qirbi', 'Abu Sayyaf', 'Aceh', 'Adil Abdul-Mahdi', 'African Union', 'Agence France-Presse', 'Ahmed Abdallah Sambi', 'Aigars Kalvitis', 'Al-Shabaab', 'Aladdin Boroujerdi', 'Alberto Fernández', 'Alberto Gonzales', 'Aleksander Kwasniewski', 'Alexander Stubb', 'Alexander Vasilyevich Bortnikov', 'Alexander Vershbow', 'Alexei Miller', 'Alexis Tsipras', 'Algirdas Butkevičius', 'Ali Abdullah Saleh', 'Ali Baqeri', 'Ali Bongo Ondimba', 'Ali Muhammad Mujawar', 'Amina Mohamed', 'Amit Shah', 'Amy Klobuchar', 'Anand Panyarachun', 'Andrej Kiska', 'Angela Merkel', 'Angola', 'Annick Girardin', 'Antonio Paulo Kassoma', 'Antonis Samaras', 'Anyim Pius Anyim', 'Armando Loaiza', 'Armed Rebel (Mali)', 'Armed Rebel (Nigeria)', 'Armed Rebel (Pakistan)']
+  Predicted: ['"Antony Harold Curties ""Tony"" Windsor"', '"Nicholas ""Nick"" Xenophon"', 'A.K. Antony', 'Abdel Fattah Al-Sisi', 'Abdelilah Benkirane', 'Abdirahman Mohamed Farole', 'Abdoulaye Wade', 'Abdul Aziz', 'Abdul Kalam', 'Abdul-Karim Al-Arhabi', 'Abdullah Gül', 'Abhisit Vejjajiva', 'Abu Bakr Abdullah al-Qirbi', 'Abu Sayyaf', 'Aceh', 'Adil Abdul-Mahdi', 'African Union', 'Agence France-Presse', 'Ahmed Abdallah Sambi', 'Aigars Kalvitis', 'Al-Shabaab', 'Aladdin Boroujerdi', 'Alberto Fernández', 'Alberto Gonzales', 'Aleksander Kwasniewski', 'Alexander Stubb', 'Alexander Vasilyevich Bortnikov', 'Alexander Vershbow', 'Alexei Miller', 'Alexis Tsipras']
   GT:        ['National United Front for Democracy Against Dictatorship', 'Abhisit Vejjajiva', 'Worachai Hema', 'Protester (Thailand)']
 
 Q 76 [equal       ] CORRECT
@@ -463,7 +463,7 @@ Q 92 [first_last  ] CORRECT
 
 Q 93 [before_after] CORRECT
   Q: Who criticised the citizens of Saudi Arabia before Zawahiri?
-  Predicted: ['Al-Azhar University', 'Armed Gang (Saudi Arabia)', 'Barack Obama', 'Boko Haram', 'Citizen (United Kingdom)', 'Doctors Without Borders', 'Employee (Saudi Arabia)', 'Human Rights Watch', 'Iran', 'Iraq', 'Islamic Preacher (Saudi Arabia)', 'Justice and Development Party', 'Media Personnel (Iran)', 'Middle East', 'New Patriotic Party', 'Nuri al-Maliki', 'Police (Saudi Arabia)', 'Royal Administration (Saudi Arabia)', 'Saudi Army', 'Shura Council', "Umaru Musa Yar'Adua"]
+  Predicted: ['Al-Azhar University', 'Barack Obama', 'Doctors Without Borders', 'Employee (Saudi Arabia)', 'Human Rights Watch', 'Iran', 'Iraq', 'Islamic Preacher (Saudi Arabia)', 'Justice and Development Party', 'Media Personnel (Iran)', 'Nuri al-Maliki', 'Police (Saudi Arabia)', 'Royal Administration (Saudi Arabia)', 'Shura Council']
   GT:        ['Iran', 'Islamic Preacher (Saudi Arabia)', 'Royal Administration (Saudi Arabia)']
 
 Q 94 [before_last ] WRONG
