@@ -1,0 +1,97 @@
+{
+  "n": 100,
+  "routing_mode": "oracle",
+  "routing_accuracy": 0.97,
+  "routing_confusion": {
+    "after_first->after_first": 8,
+    "before_after->before_after": 20,
+    "before_last->before_last": 12,
+    "equal->equal": 31,
+    "equal->equal_multi": 3,
+    "first_last->first_last": 26
+  },
+  "e2e_accuracy": 0.85,
+  "per_qtype": {
+    "after_first": {
+      "n": 8,
+      "acc": 0.875,
+      "routing_acc": 1.0
+    },
+    "before_after": {
+      "n": 20,
+      "acc": 0.75,
+      "routing_acc": 1.0
+    },
+    "before_last": {
+      "n": 12,
+      "acc": 0.5833333333333334,
+      "routing_acc": 1.0
+    },
+    "equal": {
+      "n": 31,
+      "acc": 0.9032258064516129,
+      "routing_acc": 1.0
+    },
+    "equal_multi": {
+      "n": 3,
+      "acc": 0.6666666666666666,
+      "routing_acc": 0.0
+    },
+    "first_last": {
+      "n": 26,
+      "acc": 1.0,
+      "routing_acc": 1.0
+    }
+  },
+  "navigation_efficiency": {
+    "all": {
+      "avg_steps": 7.08,
+      "avg_tool_calls": 7.08,
+      "avg_evidence_calls": 1.9,
+      "avg_backtracks": 0.07
+    },
+    "correct": {
+      "avg_steps": 6.670588235294118,
+      "avg_tool_calls": 6.670588235294118,
+      "avg_evidence_calls": 1.6470588235294117,
+      "avg_backtracks": 0.023529411764705882
+    },
+    "incorrect": {
+      "avg_steps": 9.4,
+      "avg_tool_calls": 9.4,
+      "avg_evidence_calls": 3.3333333333333335,
+      "avg_backtracks": 0.3333333333333333
+    }
+  },
+  "failure_taxonomy": {
+    "routing_error": 1,
+    "entity_resolution_error": 0,
+    "relation_error": 0,
+    "temporal_reasoning_error": 11,
+    "execution_error": 0,
+    "unknown": 3
+  },
+  "failure_by_qtype": {
+    "before_last": {
+      "temporal_reasoning_error": 5
+    },
+    "equal": {
+      "unknown": 3
+    },
+    "before_after": {
+      "temporal_reasoning_error": 5
+    },
+    "equal_multi": {
+      "routing_error": 1
+    },
+    "after_first": {
+      "temporal_reasoning_error": 1
+    }
+  },
+  "pipeline_decomposition": {
+    "routing_loss": 0.030000000000000027,
+    "navigation_loss_given_correct_routing": 0.14432989690721654,
+    "e2e_accuracy": 0.85,
+    "note": "e2e ≈ routing_acc * nav_acc_given_routing (近似, 受 routing_mode 影响)"
+  }
+}

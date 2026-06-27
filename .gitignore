@@ -18,11 +18,8 @@ env/
 *.swo
 *~
 
-# OS files
-.DS_Store
-Thumbs.db
+# Generated KG projection (rebuild from data/ via build.py)
+database/
 
-# Python cache
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+# Secrets
+.env

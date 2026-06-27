@@ -1,0 +1,2297 @@
+[
+ {
+  "quid": 3000000,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Jack_Straw"
+  ],
+  "gold": [
+   "Jack Straw"
+  ],
+  "info": "dir=< t0=2006-01-05",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": "Danish Ministry of Defence and Security",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000001,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Citizen_(North_Korea)"
+  ],
+  "gold": [
+   "Citizen (North Korea)"
+  ],
+  "info": "dir=< t0=2010-02-20",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": "Cabinet Council of Ministers of Kazakhstan",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000002,
+  "qtype": "first_last",
+  "ok": false,
+  "pred": null,
+  "gold": [
+   "2010"
+  ],
+  "info": "fl-empty",
+  "facets": {
+   "subject": "Taiwan's Ministry of National Defence and Security",
+   "object": "China",
+   "relation_codes": [
+    "Demand"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000003,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2007-02-01",
+  "gold": [
+   "2007-02-01"
+  ],
+  "info": "dir=> n=2",
+  "facets": {
+   "subject": "Kitti Wasinondh",
+   "object": "Thailand",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000004,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Wen_Jiabao"
+  ],
+  "gold": [
+   "Wen Jiabao"
+  ],
+  "info": "dir=> t0=2012-07-10",
+  "facets": {
+   "subject": "Catherine Ashton",
+   "object": "?",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": "Cambodia",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000005,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": [
+   "Djibouti"
+  ],
+  "gold": [
+   "Djibouti"
+  ],
+  "info": "dir=> n=9",
+  "facets": {
+   "subject": "Ethiopia",
+   "object": "?",
+   "relation_codes": [
+    "Make_optimistic_comment"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000006,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2005",
+  "gold": [
+   "2005"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Iraq",
+   "object": "Gholamali Haddad Adel",
+   "relation_codes": [
+    "Engage_in_negotiation"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000007,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "China",
+   "Sudan"
+  ],
+  "gold": [
+   "China",
+   "Sudan"
+  ],
+  "info": "dir=> t0=2014-03-04 side=before",
+  "facets": {
+   "subject": "Seyoum Mesfin",
+   "object": "?",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": "Ethiopia",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000008,
+  "qtype": "equal_multi",
+  "ok": true,
+  "pred": [
+   "Abdulla_Yameen",
+   "Airline_(Bulgaria)",
+   "Barack_Obama",
+   "Barnaby_Joyce",
+   "Ibrahim_Boubacar_Keïta",
+   "Japan",
+   "Le_Hong_Anh",
+   "Media_Personnel_(International)",
+   "Vietnam",
+   "Vincent_Gray",
+   "Xi_Jinping"
+  ],
+  "gold": [
+   "Japan",
+   "Barnaby Joyce",
+   "Media Personnel (International)",
+   "Vietnam",
+   "Xi Jinping",
+   "Ibrahim Boubacar Keïta",
+   "Airline (Bulgaria)",
+   "Le Hong Anh",
+   "Vincent Gray",
+   "Abdulla Yameen",
+   "Barack Obama"
+  ],
+  "info": "dir=< t=2014-09",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": "Oleg Ostapenko",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000009,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Colombia",
+   "France",
+   "Iran",
+   "Japan",
+   "Kuomintang",
+   "South_Korea"
+  ],
+  "gold": [
+   "Iran",
+   "Kuomintang",
+   "South Korea",
+   "Colombia",
+   "France",
+   "Japan"
+  ],
+  "info": "dir=< t=2005-04",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Sign_formal_agreement"
+   ],
+   "pivot": null,
+   "time": "2005-04"
+  }
+ },
+ {
+  "quid": 3000010,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2009",
+  "gold": [
+   "2009"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Somali criminal",
+   "object": "China",
+   "relation_codes": [
+    "Threaten"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000011,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Al-Shabaab",
+   "Military_(Burundi)"
+  ],
+  "gold": [
+   "Al-Shabaab",
+   "Military (Burundi)"
+  ],
+  "info": "dir=< t0=2015-10-14 side=before",
+  "facets": {
+   "subject": "?",
+   "object": "Burundi",
+   "relation_codes": [
+    "Use_conventional_military_force"
+   ],
+   "pivot": null,
+   "time": "2015-10-14"
+  }
+ },
+ {
+  "quid": 3000012,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Armed_Gang_(Thailand)",
+   "Citizen_(Thailand)"
+  ],
+  "gold": [
+   "Armed Gang (Thailand)",
+   "Citizen (Thailand)"
+  ],
+  "info": "dir=< t=2005-01",
+  "facets": {
+   "subject": "?",
+   "object": "Thailand",
+   "relation_codes": [
+    "fight_with_small_arms_and_light_weapons"
+   ],
+   "pivot": null,
+   "time": "2005-01"
+  }
+ },
+ {
+  "quid": 3000013,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Commando_(Iraq)",
+   "Iran"
+  ],
+  "gold": [
+   "Iran",
+   "Commando (Iraq)"
+  ],
+  "info": "dir=< t0=2005-04-25 side=before",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Use_conventional_military_force"
+   ],
+   "pivot": null,
+   "time": "2005-04-25"
+  }
+ },
+ {
+  "quid": 3000014,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Head_of_Government_(Egypt)"
+  ],
+  "gold": [
+   "Head of Government (Egypt)"
+  ],
+  "info": "dir=< t0=2012-08-15",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": "Devlet Bahçeli",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000015,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Iran"
+  ],
+  "gold": [
+   "Iran"
+  ],
+  "info": "dir=< t0=2006-05-24",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Express_intent_to_cooperate"
+   ],
+   "pivot": "Tony Blair",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000016,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Angela_Merkel"
+  ],
+  "gold": [
+   "Angela Merkel"
+  ],
+  "info": "dir=> t0=2007-10-31",
+  "facets": {
+   "subject": "China",
+   "object": "?",
+   "relation_codes": [
+    "Threaten"
+   ],
+   "pivot": "military of Taiwan",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000017,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Jack_Straw",
+   "Japan",
+   "Pervez_Musharraf",
+   "Presidential_Family_(United_States)",
+   "Saud_bin_Faisal_bin_Abdul-Aziz",
+   "Shaukat_Aziz",
+   "Sudan"
+  ],
+  "gold": [
+   "Presidential Family (United States)",
+   "Shaukat Aziz",
+   "Sudan",
+   "Pervez Musharraf",
+   "Saud bin Faisal bin Abdul-Aziz",
+   "Jack Straw",
+   "Japan"
+  ],
+  "info": "dir=< t0=2006-07-05 side=before",
+  "facets": {
+   "subject": "?",
+   "object": "Kuwait",
+   "relation_codes": [
+    "Praise_or_endorse"
+   ],
+   "pivot": "Nuri al-Maliki",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000018,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Association_of_Southeast_Asian_Nations",
+   "China"
+  ],
+  "gold": [
+   "China",
+   "Association of Southeast Asian Nations"
+  ],
+  "info": "dir=< t=2007-01-14",
+  "facets": {
+   "subject": "?",
+   "object": "Malaysia",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": "2007-01-14"
+  }
+ },
+ {
+  "quid": 3000019,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Japan"
+  ],
+  "gold": [
+   "Japan"
+  ],
+  "info": "dir=< t=2013-08",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": null,
+   "time": "2013-08"
+  }
+ },
+ {
+  "quid": 3000020,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Barack_Obama"
+  ],
+  "gold": [
+   "Barack Obama"
+  ],
+  "info": "dir=< t=2015-11-19",
+  "facets": {
+   "subject": "?",
+   "object": "Malaysia",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": "2015-11-19"
+  }
+ },
+ {
+  "quid": 3000021,
+  "qtype": "equal",
+  "ok": false,
+  "pred": [],
+  "gold": [
+   "2007-01"
+  ],
+  "info": "equal-time-empty",
+  "facets": {
+   "subject": "Agence France-Presse",
+   "object": "China",
+   "relation_codes": [
+    "Appeal_for_diplomatic_cooperation_(such_as_policy_support)"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000022,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2005-06"
+  ],
+  "gold": [
+   "2005-06"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "citizens of Belgium",
+   "object": "China",
+   "relation_codes": [
+    "Sign_formal_agreement"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000023,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2010-03"
+  ],
+  "gold": [
+   "2010-03"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "United Arab Emirates",
+   "object": "China",
+   "relation_codes": [
+    "Host_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000024,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2005-03-21"
+  ],
+  "gold": [
+   "2005-03-21"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Vasilis Skouris",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000025,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2014"
+  ],
+  "gold": [
+   "2014"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "citizens of Norway",
+   "object": "Iraq",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000026,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "National_United_Front_for_Democracy_Against_Dictatorship"
+  ],
+  "gold": [
+   "National United Front for Democracy Against Dictatorship"
+  ],
+  "info": "dir=< t0=2010-04-09",
+  "facets": {
+   "subject": "?",
+   "object": "Thailand",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": "Media Rights Group of Thailand",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000027,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2008-12",
+  "gold": [
+   "2008-12"
+  ],
+  "info": "dir=> n=3",
+  "facets": {
+   "subject": "African Union",
+   "object": "Ethiopia",
+   "relation_codes": [
+    "Make_an_appeal_or_request"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000028,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Association_of_Southeast_Asian_Nations",
+   "Government_(Palestinian_Territory,_Occupied)",
+   "Iran",
+   "Iraq",
+   "Japan",
+   "Mahmoud_Abbas",
+   "Nonaligned_Movement",
+   "Thailand",
+   "Tony_Blair"
+  ],
+  "gold": [
+   "Mahmoud Abbas",
+   "Thailand",
+   "Association of Southeast Asian Nations",
+   "Iran",
+   "Japan",
+   "Government (Palestinian Territory, Occupied)",
+   "Nonaligned Movement",
+   "Tony Blair",
+   "Iraq"
+  ],
+  "info": "dir=> t0=2008-10-22 side=before",
+  "facets": {
+   "subject": "Malaysia",
+   "object": "?",
+   "relation_codes": [
+    "Make_optimistic_comment"
+   ],
+   "pivot": null,
+   "time": "2008-10-22"
+  }
+ },
+ {
+  "quid": 3000029,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Congress_(United_States)",
+   "Foreign_Affairs_(India)",
+   "Foreign_Affairs_(Italy)",
+   "Foreign_Affairs_(Syria)",
+   "Iran",
+   "Nuri_al-Maliki"
+  ],
+  "gold": [
+   "Nuri al-Maliki",
+   "Iran",
+   "Congress (United States)",
+   "Foreign Affairs (Syria)",
+   "Foreign Affairs (Italy)",
+   "Foreign Affairs (India)"
+  ],
+  "info": "dir=< t=2011-06",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": "2011-06"
+  }
+ },
+ {
+  "quid": 3000030,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2015",
+  "gold": [
+   "2015"
+  ],
+  "info": "dir=> n=3",
+  "facets": {
+   "subject": "Ismet Yilmaz",
+   "object": "Iraq",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000031,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Citizen_(Thailand)"
+  ],
+  "gold": [
+   "Citizen (Thailand)"
+  ],
+  "info": "dir=< t0=2013-10-17",
+  "facets": {
+   "subject": "?",
+   "object": "Governor of Thailand",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": "Thailand",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000032,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2010-04-24",
+  "gold": [
+   "2010-04-24"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Jatuporn Prompan",
+   "object": "Thailand",
+   "relation_codes": [
+    "Make_an_appeal_or_request"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000033,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "China",
+   "Malaysia"
+  ],
+  "gold": [
+   "China",
+   "Malaysia"
+  ],
+  "info": "dir=> t0=2005-03-03 side=before",
+  "facets": {
+   "subject": "Thailand",
+   "object": "?",
+   "relation_codes": [
+    "Sign_formal_agreement"
+   ],
+   "pivot": "Oman",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000034,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2006-09-23",
+  "gold": [
+   "2006-09-23"
+  ],
+  "info": "dir=> n=3",
+  "facets": {
+   "subject": "China",
+   "object": "Henry M Paulson",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000035,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Barack_Obama",
+   "Employee_(Bangladesh)",
+   "Laos",
+   "Mahmoud_Ahmadinejad",
+   "Surakiart_Sathirathai",
+   "Vietnam"
+  ],
+  "gold": [
+   "Surakiart Sathirathai",
+   "Vietnam",
+   "Employee (Bangladesh)",
+   "Mahmoud Ahmadinejad",
+   "Laos",
+   "Barack Obama"
+  ],
+  "info": "dir=> t0=2009-05-18 side=before",
+  "facets": {
+   "subject": "?",
+   "object": "Malaysian Foreign Ministry",
+   "relation_codes": [
+    "Praise_or_endorse"
+   ],
+   "pivot": "Thailand",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000036,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Japan"
+  ],
+  "gold": [
+   "Japan"
+  ],
+  "info": "dir=> t0=2005-06-09 side=before",
+  "facets": {
+   "subject": "China",
+   "object": "?",
+   "relation_codes": [
+    "Investigate"
+   ],
+   "pivot": "religion of China",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000037,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2009",
+  "gold": [
+   "2009"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Qin Gang",
+   "object": "Ethiopia",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000038,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2007",
+  "gold": [
+   "2007"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "President of the Senate of Australia",
+   "object": "Cambodia",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000039,
+  "qtype": "equal",
+  "ok": false,
+  "pred": [],
+  "gold": [
+   "2010"
+  ],
+  "info": "equal-time-empty",
+  "facets": {
+   "subject": "China",
+   "object": "Ukraine",
+   "relation_codes": [
+    "Make_optimistic_comment"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000040,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Admiral_(China)",
+   "Energy_Department/Ministry_(United_States)"
+  ],
+  "gold": [
+   "Energy Department/Ministry (United States)",
+   "Admiral (China)"
+  ],
+  "info": "dir=< t=2009-07-16",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": "2009-07-16"
+  }
+ },
+ {
+  "quid": 3000041,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Citizen_(Thailand)"
+  ],
+  "gold": [
+   "Citizen (Thailand)"
+  ],
+  "info": "dir=> t0=2005-01-21 side=before",
+  "facets": {
+   "subject": "Thailand",
+   "object": "?",
+   "relation_codes": [
+    "Make_optimistic_comment"
+   ],
+   "pivot": "Asian Disaster Preparedness Centre",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000042,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2005-06-06"
+  ],
+  "gold": [
+   "2005-06-06"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Thailand",
+   "object": "Donald Rumsfeld",
+   "relation_codes": [
+    "Express_intent_to_cooperate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000043,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Qatar"
+  ],
+  "gold": [
+   "Qatar"
+  ],
+  "info": "dir=> t0=2012-01-15",
+  "facets": {
+   "subject": "Oman",
+   "object": "?",
+   "relation_codes": [
+    "Express_intent_to_engage_in_diplomatic_cooperation_(such_as_policy_support)"
+   ],
+   "pivot": "South Korea",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000044,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Barack_Obama",
+   "China",
+   "Japan",
+   "Nuri_al-Maliki",
+   "Supreme_Council_(Iraq)",
+   "Vietnam"
+  ],
+  "gold": [
+   "Barack Obama",
+   "Nuri al-Maliki",
+   "China",
+   "Japan",
+   "Supreme Council (Iraq)",
+   "Vietnam"
+  ],
+  "info": "dir=< t=2009",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Make_optimistic_comment"
+   ],
+   "pivot": null,
+   "time": "2009"
+  }
+ },
+ {
+  "quid": 3000045,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Armed_Rebel_(Syria)",
+   "Iran",
+   "Israeli_Defense_Forces"
+  ],
+  "gold": [
+   "Iran",
+   "Armed Rebel (Syria)",
+   "Israeli Defense Forces"
+  ],
+  "info": "dir=< t0=2006-08-09 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "fight_with_small_arms_and_light_weapons"
+   ],
+   "pivot": null,
+   "time": "2006-08-09"
+  }
+ },
+ {
+  "quid": 3000046,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Bank_(Iraq)",
+   "Barack_Obama",
+   "Congress_(United_States)",
+   "Defense_/_Security_Ministry_(United_States)",
+   "Iran",
+   "Member_of_Parliament_(Iraq)",
+   "Nuri_al-Maliki",
+   "Student_(Iraq)"
+  ],
+  "gold": [
+   "Barack Obama",
+   "Iran",
+   "Nuri al-Maliki",
+   "Member of Parliament (Iraq)",
+   "Defense / Security Ministry (United States)",
+   "Student (Iraq)",
+   "Congress (United States)",
+   "Bank (Iraq)"
+  ],
+  "info": "dir=> t0=2008-12-27 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Iraq",
+   "relation_codes": [
+    "Reject"
+   ],
+   "pivot": "dissident of the People's Mujahedin of Iran",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000047,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Japan"
+  ],
+  "gold": [
+   "Japan"
+  ],
+  "info": "dir=< t=2005-08-07",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": "2005-08-07"
+  }
+ },
+ {
+  "quid": 3000048,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Boris_Vyacheslavovich_Gryzlov",
+   "Dianne_Feinstein",
+   "Dmitry_Anatolyevich_Medvedev",
+   "Foreign_Affairs_(South_Korea)",
+   "Hui_Liangyu",
+   "International_Government_Organizations",
+   "Iran",
+   "Joon_Young_Woo",
+   "Linda_Lingle",
+   "Mahmoud_Ahmadinejad",
+   "Ministry_(Iran)",
+   "UAE_Armed_Forces",
+   "Valdis_Dombrovskis",
+   "Wen_Jiabao"
+  ],
+  "gold": [
+   "Hui Liangyu",
+   "Iran",
+   "UAE Armed Forces",
+   "Foreign Affairs (South Korea)",
+   "Dmitry Anatolyevich Medvedev",
+   "Linda Lingle",
+   "Wen Jiabao",
+   "Mahmoud Ahmadinejad",
+   "Joon Young Woo",
+   "International Government Organizations",
+   "Ministry (Iran)",
+   "Boris Vyacheslavovich Gryzlov",
+   "Valdis Dombrovskis",
+   "Dianne Feinstein"
+  ],
+  "info": "dir=< t=2010-06",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": "2010-06"
+  }
+ },
+ {
+  "quid": 3000049,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Sergey_Kuzhugetovich_Shoygu"
+  ],
+  "gold": [
+   "Sergey Kuzhugetovich Shoygu"
+  ],
+  "info": "dir=< t0=2014-06-02 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Chuck Hagel",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": "China",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000050,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2015",
+  "gold": [
+   "2015"
+  ],
+  "info": "dir=> n=3",
+  "facets": {
+   "subject": "Federica Mogherini",
+   "object": "China",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000051,
+  "qtype": "before_last",
+  "ok": false,
+  "pred": [
+   "Head_of_Government_(Portugal)"
+  ],
+  "gold": [
+   "Sudan"
+  ],
+  "info": "dir=> t0=2007-07-04",
+  "facets": {
+   "subject": "China",
+   "object": "?",
+   "relation_codes": [
+    "Host_a_visit"
+   ],
+   "pivot": "Bruno Stagno Ugarte",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000052,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2008",
+  "gold": [
+   "2008"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Malaysia",
+   "object": "Thailand",
+   "relation_codes": [
+    "Investigate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000053,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2012-04"
+  ],
+  "gold": [
+   "2012-04"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "citizens of Thailand",
+   "object": "China",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000054,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Japan",
+   "South_Korea"
+  ],
+  "gold": [
+   "South Korea",
+   "Japan"
+  ],
+  "info": "dir=< t=2006-07",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Engage_in_negotiation"
+   ],
+   "pivot": null,
+   "time": "2006-07"
+  }
+ },
+ {
+  "quid": 3000055,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "South_Korea"
+  ],
+  "gold": [
+   "South Korea"
+  ],
+  "info": "dir=< t0=2014-06-04",
+  "facets": {
+   "subject": "Government Delegation of North Korea",
+   "object": "?",
+   "relation_codes": [
+    "Host_a_visit"
+   ],
+   "pivot": "Kuwait",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000056,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Royal_Administration_(Saudi_Arabia)"
+  ],
+  "gold": [
+   "Royal Administration (Saudi Arabia)"
+  ],
+  "info": "dir=< t0=2008-12-01",
+  "facets": {
+   "subject": "?",
+   "object": "citizens of Saudi Arabia",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": "Zawahiri",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000057,
+  "qtype": "first_last",
+  "ok": false,
+  "pred": null,
+  "gold": [
+   "2015"
+  ],
+  "info": "anchor-unresolved:Thai Ministry of Justice/Ministry of Foreign Affairs",
+  "facets": {
+   "subject": "Thai Ministry of Justice/Ministry of Foreign Affairs",
+   "object": "China",
+   "relation_codes": [
+    "Express_intent_to_engage_in_diplomatic_cooperation_(such_as_policy_support)"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000058,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Hui_Liangyu"
+  ],
+  "gold": [
+   "Hui Liangyu"
+  ],
+  "info": "dir=< t0=2007-01-08",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Investigate"
+   ],
+   "pivot": "Segolene Royal",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000059,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Abhisit_Vejjajiva",
+   "China",
+   "Thailand",
+   "Vietnam"
+  ],
+  "gold": [
+   "Vietnam",
+   "Abhisit Vejjajiva",
+   "China",
+   "Thailand"
+  ],
+  "info": "dir=> t0=2011-05-12 side=after",
+  "facets": {
+   "subject": "Cambodia",
+   "object": "?",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": null,
+   "time": "2011-05-12"
+  }
+ },
+ {
+  "quid": 3000060,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Armed_Rebel_(Somalia)"
+  ],
+  "gold": [
+   "Armed Rebel (Somalia)"
+  ],
+  "info": "dir=< t0=2008-12-16",
+  "facets": {
+   "subject": "?",
+   "object": "Ethiopia",
+   "relation_codes": [
+    "Use_unconventional_violence"
+   ],
+   "pivot": "Sudanese police",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000061,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "East_Turkistan_Islamic_Movement",
+   "Japan",
+   "Vietnam"
+  ],
+  "gold": [
+   "Vietnam",
+   "East Turkistan Islamic Movement",
+   "Japan"
+  ],
+  "info": "dir=< t=2014-06",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Use_conventional_military_force"
+   ],
+   "pivot": null,
+   "time": "2014-06"
+  }
+ },
+ {
+  "quid": 3000062,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Wen_Jiabao"
+  ],
+  "gold": [
+   "Wen Jiabao"
+  ],
+  "info": "dir=< t0=2005-04-23",
+  "facets": {
+   "subject": "?",
+   "object": "Norodom Sihanouk",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": "China",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000063,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2013"
+  ],
+  "gold": [
+   "2013"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Iraq",
+   "object": "member of the Legislative Council of Iran",
+   "relation_codes": [
+    "Praise_or_endorse"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000064,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Barack_Obama",
+   "China",
+   "Chuck_Hagel",
+   "Citizen_(Thailand)",
+   "Citizen_(Unidentified_State_Actor)",
+   "Maldives",
+   "UN_Security_Council",
+   "Vietnam"
+  ],
+  "gold": [
+   "UN Security Council",
+   "Citizen (Unidentified State Actor)",
+   "Citizen (Thailand)",
+   "Barack Obama",
+   "Chuck Hagel",
+   "Maldives",
+   "Vietnam",
+   "China"
+  ],
+  "info": "dir=> t0=2012-11-20 side=after",
+  "facets": {
+   "subject": "Malaysia",
+   "object": "?",
+   "relation_codes": [
+    "Make_an_appeal_or_request"
+   ],
+   "pivot": null,
+   "time": "2012-11-20"
+  }
+ },
+ {
+  "quid": 3000065,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Ali_Jannati",
+   "Government_Delegation_(Fiji)",
+   "Iran"
+  ],
+  "gold": [
+   "Iran",
+   "Government Delegation (Fiji)",
+   "Ali Jannati"
+  ],
+  "info": "dir=< t=2006-08",
+  "facets": {
+   "subject": "?",
+   "object": "Kuwait",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": "2006-08"
+  }
+ },
+ {
+  "quid": 3000066,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2006",
+  "gold": [
+   "2006"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Ignacio Bunye",
+   "object": "Iraq",
+   "relation_codes": [
+    "Make_pessimistic_comment"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000067,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2013-03"
+  ],
+  "gold": [
+   "2013-03"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Teodoro Obiang Nguema Mbasogo",
+   "object": "Thailand",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000068,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2009-09-01"
+  ],
+  "gold": [
+   "2009-09-01"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Hoang Tuan Anh",
+   "object": "China",
+   "relation_codes": [
+    "Praise_or_endorse"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000069,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2014"
+  ],
+  "gold": [
+   "2014"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "United States' Council of Advisors to the Cabinet",
+   "object": "Thailand",
+   "relation_codes": [
+    "Threaten"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000070,
+  "qtype": "equal_multi",
+  "ok": true,
+  "pred": [
+   "Thailand"
+  ],
+  "gold": [
+   "Thailand"
+  ],
+  "info": "dir=< t=2012 pos",
+  "facets": {
+   "subject": "?",
+   "object": "Cambodia",
+   "relation_codes": [
+    "Express_intent_to_cooperate"
+   ],
+   "pivot": null,
+   "time": "2012"
+  }
+ },
+ {
+  "quid": 3000071,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2005",
+  "gold": [
+   "2005"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "leader of Mongolia",
+   "object": "China",
+   "relation_codes": [
+    "Engage_in_negotiation"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000072,
+  "qtype": "equal_multi",
+  "ok": true,
+  "pred": [
+   "Al-Shabaab"
+  ],
+  "gold": [
+   "Al-Shabaab"
+  ],
+  "info": "dir=> t=2010-03-16",
+  "facets": {
+   "subject": "Ethiopia",
+   "object": "?",
+   "relation_codes": [
+    "Use_conventional_military_force"
+   ],
+   "pivot": "Hizbul Islam fighter",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000073,
+  "qtype": "first_last",
+  "ok": false,
+  "pred": null,
+  "gold": [
+   "2005"
+  ],
+  "info": "fl-empty",
+  "facets": {
+   "subject": "China",
+   "object": "Iraq",
+   "relation_codes": [
+    "Appeal_for_diplomatic_cooperation_(such_as_policy_support)"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000074,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Abhisit_Vejjajiva",
+   "National_United_Front_for_Democracy_Against_Dictatorship",
+   "Protester_(Thailand)",
+   "Worachai_Hema"
+  ],
+  "gold": [
+   "National United Front for Democracy Against Dictatorship",
+   "Abhisit Vejjajiva",
+   "Worachai Hema",
+   "Protester (Thailand)"
+  ],
+  "info": "dir=< t0=2011-01-05 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Thai military",
+   "relation_codes": [
+    "Engage_in_negotiation"
+   ],
+   "pivot": "Thailand",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000075,
+  "qtype": "equal",
+  "ok": false,
+  "pred": [
+   "2005-06"
+  ],
+  "gold": [
+   "2010-03"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Prime Minister of Peru",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000076,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2005",
+  "gold": [
+   "2005"
+  ],
+  "info": "dir=> n=3",
+  "facets": {
+   "subject": "Ethiopian police",
+   "object": "Ethiopia",
+   "relation_codes": [
+    "Use_conventional_military_force"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000077,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Business_(South_Korea)",
+   "Criminal_(South_Korea)",
+   "Grand_National_Party"
+  ],
+  "gold": [
+   "Criminal (South Korea)",
+   "Business (South Korea)",
+   "Grand National Party"
+  ],
+  "info": "dir=> t0=2014-10-02 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Lawyer/Attorney of South Korea",
+   "relation_codes": [
+    "Investigate"
+   ],
+   "pivot": "Sankei",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000078,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2014-04"
+  ],
+  "gold": [
+   "2014-04"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "Ali Tayyebnia",
+   "object": "China",
+   "relation_codes": [
+    "Make_optimistic_comment"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000079,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Ai_Weiwei"
+  ],
+  "gold": [
+   "Ai Weiwei"
+  ],
+  "info": "dir=< t0=2012-10-11",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": "Governor of Japan",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000080,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Malaysia"
+  ],
+  "gold": [
+   "Malaysia"
+  ],
+  "info": "dir=> t0=2014-03-14",
+  "facets": {
+   "subject": "China",
+   "object": "?",
+   "relation_codes": [
+    "Praise_or_endorse"
+   ],
+   "pivot": "royal administration of Saudi Arabia",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000081,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2010-09",
+  "gold": [
+   "2010-09"
+  ],
+  "info": "dir=> n=2",
+  "facets": {
+   "subject": "leader of Ghana",
+   "object": "China",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000082,
+  "qtype": "before_after",
+  "ok": false,
+  "pred": [
+   "Afar_Revolutionary_Democratic_Unity_Front",
+   "Al-Shabaab",
+   "Eritrea",
+   "Media_Rights_Group_(Ethiopia)",
+   "Royal_Administration_(Saudi_Arabia)"
+  ],
+  "gold": [
+   "Government (Qatar)",
+   "Activist (Ethiopia)",
+   "Qatar",
+   "Al-Shabaab",
+   "Eritrea",
+   "Sudan"
+  ],
+  "info": "dir=< t0=2012 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Ethiopia",
+   "relation_codes": [
+    "Accuse"
+   ],
+   "pivot": null,
+   "time": "2012"
+  }
+ },
+ {
+  "quid": 3000083,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Ali_Baqeri",
+   "Association_of_Southeast_Asian_Nations",
+   "Cabinet_/_Council_of_Ministers_/_Advisors_(United_States)",
+   "Dissident_(China)",
+   "European_Central_Bank",
+   "Foreign_Affairs_(France)",
+   "France",
+   "Iran",
+   "Japan",
+   "Ma_Ying_Jeou",
+   "South_Korea",
+   "Sudan",
+   "Vietnam"
+  ],
+  "gold": [
+   "Iran",
+   "Dissident (China)",
+   "Association of Southeast Asian Nations",
+   "Ali Baqeri",
+   "Vietnam",
+   "Sudan",
+   "South Korea",
+   "European Central Bank",
+   "France",
+   "Foreign Affairs (France)",
+   "Ma Ying Jeou",
+   "Cabinet / Council of Ministers / Advisors (United States)",
+   "Japan"
+  ],
+  "info": "dir=< t=2012",
+  "facets": {
+   "subject": "?",
+   "object": "China",
+   "relation_codes": [
+    "Engage_in_negotiation"
+   ],
+   "pivot": null,
+   "time": "2012"
+  }
+ },
+ {
+  "quid": 3000084,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2007-07-08",
+  "gold": [
+   "2007-07-08"
+  ],
+  "info": "dir=> n=4",
+  "facets": {
+   "subject": "Maumoon Abdul Gayoom",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000085,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Cabinet_/_Council_of_Ministers_/_Advisors_(Thailand)",
+   "Cambodia",
+   "Children_(Thailand)",
+   "Citizen_(Thailand)",
+   "Men_(United_States)",
+   "South_Korea",
+   "Student_(Thailand)",
+   "Vietnam"
+  ],
+  "gold": [
+   "Student (Thailand)",
+   "Vietnam",
+   "Children (Thailand)",
+   "South Korea",
+   "Citizen (Thailand)",
+   "Cabinet / Council of Ministers / Advisors (Thailand)",
+   "Men (United States)",
+   "Cambodia"
+  ],
+  "info": "dir=< t=2009-05",
+  "facets": {
+   "subject": "?",
+   "object": "Thailand",
+   "relation_codes": [
+    "Express_intent_to_meet_or_negotiate"
+   ],
+   "pivot": null,
+   "time": "2009-05"
+  }
+ },
+ {
+  "quid": 3000086,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Head_of_Government_(Egypt)"
+  ],
+  "gold": [
+   "Head of Government (Egypt)"
+  ],
+  "info": "dir=< t0=2014-11-18",
+  "facets": {
+   "subject": "?",
+   "object": "Antonis Samaras",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": "China",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000087,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2005-06",
+  "gold": [
+   "2005-06"
+  ],
+  "info": "dir=> n=4",
+  "facets": {
+   "subject": "Donald Rumsfeld",
+   "object": "Iraq",
+   "relation_codes": [
+    "Threaten"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000088,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2006-06-14",
+  "gold": [
+   "2006-06-14"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Burundi",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000089,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2007-05-24",
+  "gold": [
+   "2007-05-24"
+  ],
+  "info": "dir=> n=3",
+  "facets": {
+   "subject": "Huang Ju",
+   "object": "China",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000090,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "2012-02-03"
+  ],
+  "gold": [
+   "2012-02-03"
+  ],
+  "info": "time-equal dir=>",
+  "facets": {
+   "subject": "South Sudan",
+   "object": "Djibouti",
+   "relation_codes": [
+    "Sign_formal_agreement"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000091,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2011-08",
+  "gold": [
+   "2011-08"
+  ],
+  "info": "dir=> n=4",
+  "facets": {
+   "subject": "head of the Egyptian government",
+   "object": "Iraq",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000092,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Iran",
+   "Islamic_Preacher_(Saudi_Arabia)",
+   "Royal_Administration_(Saudi_Arabia)"
+  ],
+  "gold": [
+   "Iran",
+   "Islamic Preacher (Saudi Arabia)",
+   "Royal Administration (Saudi Arabia)"
+  ],
+  "info": "dir=< t0=2008-12-01 side=before",
+  "facets": {
+   "subject": "?",
+   "object": "citizens of Saudi Arabia",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": "Zawahiri",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000093,
+  "qtype": "before_last",
+  "ok": true,
+  "pred": [
+   "Ma_Ying_Jeou"
+  ],
+  "gold": [
+   "Ma Ying Jeou"
+  ],
+  "info": "dir=< t0=2011-12-08",
+  "facets": {
+   "subject": "?",
+   "object": "Malaysia",
+   "relation_codes": [
+    "Make_a_visit"
+   ],
+   "pivot": "leader of Turkmenistan",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000094,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "Angola",
+   "China",
+   "Norodom_Sihanouk",
+   "South_Africa"
+  ],
+  "gold": [
+   "South Africa",
+   "China",
+   "Angola",
+   "Norodom Sihanouk"
+  ],
+  "info": "dir=< t0=2012-10-20 side=before",
+  "facets": {
+   "subject": "?",
+   "object": "Yang Hyong Sop",
+   "relation_codes": [
+    "Host_a_visit"
+   ],
+   "pivot": "Cambodia",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000095,
+  "qtype": "after_first",
+  "ok": true,
+  "pred": [
+   "Lesotho"
+  ],
+  "gold": [
+   "Lesotho"
+  ],
+  "info": "dir=< t0=2005-07-26",
+  "facets": {
+   "subject": "?",
+   "object": "South Africa",
+   "relation_codes": [
+    "Sign_formal_agreement"
+   ],
+   "pivot": "Malaysia",
+   "time": null
+  }
+ },
+ {
+  "quid": 3000096,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2011-03-11",
+  "gold": [
+   "2011-03-11"
+  ],
+  "info": "dir=> n=1",
+  "facets": {
+   "subject": "Saudi Arabian Defence Forces",
+   "object": "Ethiopia",
+   "relation_codes": [
+    "fight_with_small_arms_and_light_weapons"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ },
+ {
+  "quid": 3000097,
+  "qtype": "before_after",
+  "ok": true,
+  "pred": [
+   "African_Union",
+   "Al-Shabaab",
+   "Eritrea"
+  ],
+  "gold": [
+   "Al-Shabaab",
+   "Eritrea",
+   "African Union"
+  ],
+  "info": "dir=< t0=2008-06-27 side=after",
+  "facets": {
+   "subject": "?",
+   "object": "Djibouti",
+   "relation_codes": [
+    "Use_conventional_military_force"
+   ],
+   "pivot": null,
+   "time": "2008-06-27"
+  }
+ },
+ {
+  "quid": 3000098,
+  "qtype": "equal",
+  "ok": true,
+  "pred": [
+   "Edgard_Arevalo",
+   "Police_(Philippines)"
+  ],
+  "gold": [
+   "Edgard Arevalo",
+   "Police (Philippines)"
+  ],
+  "info": "dir=< t=2009-04-23",
+  "facets": {
+   "subject": "?",
+   "object": "Inquirer",
+   "relation_codes": [
+    "Discuss_by_telephone"
+   ],
+   "pivot": null,
+   "time": "2009-04-23"
+  }
+ },
+ {
+  "quid": 3000099,
+  "qtype": "first_last",
+  "ok": true,
+  "pred": "2010-09",
+  "gold": [
+   "2010-09"
+  ],
+  "info": "dir=> n=2",
+  "facets": {
+   "subject": "China",
+   "object": "Association of Southeast Asian Nations",
+   "relation_codes": [
+    "Criticize_or_denounce"
+   ],
+   "pivot": null,
+   "time": null
+  }
+ }
+]

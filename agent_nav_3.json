@@ -1,0 +1,170 @@
+[
+ {
+  "quid": 3000000,
+  "qtype": "after_first",
+  "ok": false,
+  "cmds": 12,
+  "final": "知识库中无相关事实**",
+  "gold": [
+   "Jack Straw"
+  ],
+  "trace": [
+   {
+    "cmd": "cat skills/_shared/NAVIGATION.md",
+    "obs": "# 共享导航原语 (所有 qtype skill 都依赖)\n\n你在导航一个时序知识图谱的文件系统知识库 `database/`。本文件是所有技能共用的底层操作手册。\n\n## 数据源布局\n\n```\ndatabase/\n  _catalog.tsv     实体规范名 -> 安全目录路径。列: name \\t dir_path \\t count \\t min_date \\t max_date\n  _relations.txt   全部 251 个关系编码 + 频次 (按频次降序)。列: code \\t freq\n  entities/<桶>/<安全名>/data.txt   该实体全部事件, 已按日期升序\n```\n\n`data.txt` 每行 (以本实体为视角): `日期 \\t 方向 \\t 关系 \\t 对方`\n- 方向 `>` = 本实体是 head (本实体 → 对方)\n- 方向 `<` = 本实体是 tail (对方 → 本实体)\n- 日期 `YYYY-MM-DD`, **字典序即时间序**。双向冗余: 每条事实在 head 与 tail 两个目录各存一份。\n\n## 第 1 步: 关系映射 (先做, 最易错)\n\n把问句谓词映射到精确关系编码。先 grep, 再从输出里挑:\n```bash\ngrep -iE \"visit|appeal|request|negotiat|sign\" d"
+   },
+   {
+    "cmd": "cat skills/after_first/SKILL.md",
+    "obs": "---\nname: tkgqa-after-first\ndescription: 在枢轴 Y 之后, 第一个对 X 做某关系的对方; 枢轴日期 t0 之后取首个\napplies_to: [after_first]\n---\n\n# after_first 配方\n\n\"After Y, who was the first to <REL> X?\" → 锚=X, 方向通常 `<`, 枢轴=Y。\n\n```bash\n# 1) 取该方向+关系的序列 (已按日期升序)\nawk -F'\\t' '$2==\"<\" && $3==\"Make_a_visit\" {print}' database/$D/data.txt > /tmp/seq.txt\n# 2) 枢轴 Y 的日期 t0 (Y 用 catalog 规范名精确匹配 $4==\"...\")\nt0=$(awk -F'\\t' '$4==\"Defense_/_Security_Ministry_(Denmark)\" {print $1; exit}' /tmp/seq.txt)\n# 3) t0 之后第一行的对方\nawk -F'\\t' -v t=\"$t0\" '$1>t {print $4; exit}' /tmp/seq.txt\n```\n\n## 终止\n取到即 `FINAL:`。\n枢轴找不到 (t0 空) → 翻方向重取 seq, 或把 Y 当锚实体反查其日期; "
+   },
+   {
+    "cmd": "grep -iE \"visit\" database/_relations.txt",
+    "obs": "Make_a_visit\t24422\nHost_a_visit\t24411"
+   },
+   {
+    "cmd": "grep -i \"Iraq\" database/_catalog.tsv | head -5",
+    "obs": "Activist_(Iraq)\tentities/a/Activist_(Iraq)\t38\t2005-08-01\t2015-09-21\nArmy_Personnel_(Iraq)\tentities/a/Army_Personnel_(Iraq)\t1\t2007-07-20\t2007-07-20\nAsylum_Seeker_(Iraq)\tentities/a/Asylum_Seeker_(Iraq)\t10\t2007-11-08\t2015-12-30\nBank_(Iraq)\tentities/b/Bank_(Iraq)\t17\t2005-06-16\t2015-11-23\nBusiness_(Iraq)\tentities/b/Business_(Iraq)\t157\t2005-03-14\t2015-12-22"
+   },
+   {
+    "cmd": "grep -i \"^Iraq\" database/_catalog.tsv",
+    "obs": "Iraq\tentities/i/Iraq\t11561\t2005-01-01\t2015-12-31\nIraqi_Communist_Party\tentities/i/Iraqi_Communist_Party\t5\t2005-03-15\t2014-10-16\nIraqi_Interim_Government\tentities/i/Iraqi_Interim_Government\t3\t2005-01-22\t2005-05-24\nIraqi_Islamic_Party\tentities/i/Iraqi_Islamic_Party\t44\t2005-01-05\t2015-01-30\nIraqi_National_List\tentities/i/Iraqi_National_List\t10\t2006-09-19\t2009-08-26"
+   },
+   {
+    "cmd": "grep -i \"Danish\" database/_catalog.tsv | grep -i \"defence\\|defense\\|security\\|ministry\"",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "grep -i \"Denmark\" database/_catalog.tsv | head -10",
+    "obs": "Appeals_Court_(Denmark)\tentities/a/Appeals_Court_(Denmark)\t3\t2008-09-18\t2011-12-15\nArmed_Gang_(Denmark)\tentities/a/Armed_Gang_(Denmark)\t23\t2006-02-01\t2015-02-27\nAttack_Craft_(Denmark)\tentities/a/Attack_Craft_(Denmark)\t1\t2015-09-02\t2015-09-02\nBusinessperson_(Denmark)\tentities/b/Businessperson_(Denmark)\t5\t2008-11-06\t2015-11-06\nCabinet_/_Council_of_Ministers_/_Advisors_(Denmark)\tentities/c/Cabinet___Council_of_Ministers___Advisors_(Denmark)\t11\t2005-01-21\t2012-05-26\nCitizen_(Denmark)\tentities/c/Citizen_(Denmark)\t136\t2005-01-17\t2015-10-23\nConservative_Party_(Denmark)\tentities/c/Conservative_Party_("
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\"<\" && $3==\"Make_a_visit\" {print}' entities/i/Iraq/data.txt > /tmp/seq.txt && head -5 /tmp/seq.txt",
+    "obs": "[blocked] 只读环境: 禁止写操作/重定向/命令替换。请只用 grep/awk/cat/head/tail/sort/cut。"
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\"<\" && $3==\"Make_a_visit\" {print}' entities/i/Iraq/data.txt | head -5",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\"<\" && $3==\"Host_a_visit\" {print}' entities/i/Iraq/data.txt | head -5",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\">\" && $3==\"Make_a_visit\" {print}' entities/i/Iraq/data.txt | head -5",
+    "obs": "[blocked] 只读环境: 禁止写操作/重定向/命令替换。请只用 grep/awk/cat/head/tail/sort/cut。"
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\">\" && $3==\"Make_a_visit\" {print}' entities/i/Iraq/data.txt | head -5",
+    "obs": "[blocked] 只读环境: 禁止写操作/重定向/命令替换。请只用 grep/awk/cat/head/tail/sort/cut。"
+   }
+  ]
+ },
+ {
+  "quid": 3000001,
+  "qtype": "after_first",
+  "ok": false,
+  "cmds": 12,
+  "final": "知识库中无相关事实",
+  "gold": [
+   "Citizen (North Korea)"
+  ],
+  "trace": [
+   {
+    "cmd": "cat skills/_shared/NAVIGATION.md",
+    "obs": "# 共享导航原语 (所有 qtype skill 都依赖)\n\n你在导航一个时序知识图谱的文件系统知识库 `database/`。本文件是所有技能共用的底层操作手册。\n\n## 数据源布局\n\n```\ndatabase/\n  _catalog.tsv     实体规范名 -> 安全目录路径。列: name \\t dir_path \\t count \\t min_date \\t max_date\n  _relations.txt   全部 251 个关系编码 + 频次 (按频次降序)。列: code \\t freq\n  entities/<桶>/<安全名>/data.txt   该实体全部事件, 已按日期升序\n```\n\n`data.txt` 每行 (以本实体为视角): `日期 \\t 方向 \\t 关系 \\t 对方`\n- 方向 `>` = 本实体是 head (本实体 → 对方)\n- 方向 `<` = 本实体是 tail (对方 → 本实体)\n- 日期 `YYYY-MM-DD`, **字典序即时间序**。双向冗余: 每条事实在 head 与 tail 两个目录各存一份。\n\n## 第 1 步: 关系映射 (先做, 最易错)\n\n把问句谓词映射到精确关系编码。先 grep, 再从输出里挑:\n```bash\ngrep -iE \"visit|appeal|request|negotiat|sign\" d"
+   },
+   {
+    "cmd": "cat skills/after_first/SKILL.md",
+    "obs": "---\nname: tkgqa-after-first\ndescription: 在枢轴 Y 之后, 第一个对 X 做某关系的对方; 枢轴日期 t0 之后取首个\napplies_to: [after_first]\n---\n\n# after_first 配方\n\n\"After Y, who was the first to <REL> X?\" → 锚=X, 方向通常 `<`, 枢轴=Y。\n\n```bash\n# 1) 取该方向+关系的序列 (已按日期升序)\nawk -F'\\t' '$2==\"<\" && $3==\"Make_a_visit\" {print}' database/$D/data.txt > /tmp/seq.txt\n# 2) 枢轴 Y 的日期 t0 (Y 用 catalog 规范名精确匹配 $4==\"...\")\nt0=$(awk -F'\\t' '$4==\"Defense_/_Security_Ministry_(Denmark)\" {print $1; exit}' /tmp/seq.txt)\n# 3) t0 之后第一行的对方\nawk -F'\\t' -v t=\"$t0\" '$1>t {print $4; exit}' /tmp/seq.txt\n```\n\n## 终止\n取到即 `FINAL:`。\n枢轴找不到 (t0 空) → 翻方向重取 seq, 或把 Y 当锚实体反查其日期; "
+   },
+   {
+    "cmd": "grep -i \"Cabinet Council of Ministers of Kazakhstan\" database/_catalog.tsv",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "grep -i \"Kazakhstan\" database/_catalog.tsv | grep -i \"cabinet\"",
+    "obs": "Cabinet_/_Council_of_Ministers_/_Advisors_(Kazakhstan)\tentities/c/Cabinet___Council_of_Ministers___Advisors_(Kazakhstan)\t56\t2006-07-03\t2014-07-23"
+   },
+   {
+    "cmd": "grep -i \"China\" database/_catalog.tsv | head -5",
+    "obs": "Action_Party_(China)\tentities/a/Action_Party_(China)\t1\t2010-08-29\t2010-08-29\nAdmiral_(China)\tentities/a/Admiral_(China)\t29\t2006-01-06\t2015-03-05\nAgricultural_Bank_of_China\tentities/a/Agricultural_Bank_of_China\t8\t2005-12-20\t2015-10-11\nAll_India_Friends_of_China_Association\tentities/a/All_India_Friends_of_China_Association\t1\t2008-12-05\t2008-12-05\nArmed_Separatist_(China)\tentities/a/Armed_Separatist_(China)\t108\t2005-03-05\t2015-08-25"
+   },
+   {
+    "cmd": "grep -i \"Express_intent_to_negotiate\\|Express_intent_to_meet\\|negotiate\" database/_relations.txt | head -10",
+    "obs": "Express_intent_to_meet_or_negotiate\t30576\nReject_proposal_to_meet,_discuss,_or_negotiate\t609\nAppeal_to_others_to_meet_or_negotiate\t180"
+   },
+   {
+    "cmd": "grep -i \"China$\" database/_catalog.tsv",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "grep -i \"China\" database/_catalog.tsv | grep -i \"People\\|Republic\\|PRC\"",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "grep -i \"China\" database/_catalog.tsv | grep -i \"government\\|state\\|country\"",
+    "obs": "Government_Delegation_(China)\tentities/g/Government_Delegation_(China)\t12\t2005-12-26\t2014-10-23\nInterim_Government_(China)\tentities/i/Interim_Government_(China)\t1\t2008-03-09\t2008-03-09"
+   },
+   {
+    "cmd": "grep -i \"China\" database/_catalog.tsv | grep -i \"China$\"",
+    "obs": "[空结果]"
+   },
+   {
+    "cmd": "grep -i \"China\" database/_catalog.tsv | tail -20",
+    "obs": "Petrochina\tentities/p/Petrochina\t24\t2006-11-07\t2014-10-06\nPresidential_Candidate_(China)\tentities/p/Presidential_Candidate_(China)\t4\t2009-11-18\t2015-09-09\nPresidential_Press_Service_(China)\tentities/p/Presidential_Press_Service_(China)\t1\t2014-08-24\t2014-08-24\nPrisoner_of_War_(China)\tentities/p/Prisoner_of_War_(China)\t1\t2005-01-10\t2005-01-10\nPublic_Prosecutor_(China)\tentities/p/Public_Prosecutor_(China)\t4\t2006-10-24\t2015-09-08\nReligion_(China)\tentities/r/Religion_(China)\t52\t2005-01-10\t2015-07-16\nRepresentative_to_the_United_Nations_(China)\tentities/r/Representative_to_the_United_Nations_(China)"
+   },
+   {
+    "cmd": "grep -i \"China$\" database/_catalog.tsv | head -5",
+    "obs": "[空结果]"
+   }
+  ]
+ },
+ {
+  "quid": 3000002,
+  "qtype": "first_last",
+  "ok": true,
+  "cmds": 9,
+  "final": "2010",
+  "gold": [
+   "2010"
+  ],
+  "trace": [
+   {
+    "cmd": "cat skills/_shared/NAVIGATION.md",
+    "obs": "# 共享导航原语 (所有 qtype skill 都依赖)\n\n你在导航一个时序知识图谱的文件系统知识库 `database/`。本文件是所有技能共用的底层操作手册。\n\n## 数据源布局\n\n```\ndatabase/\n  _catalog.tsv     实体规范名 -> 安全目录路径。列: name \\t dir_path \\t count \\t min_date \\t max_date\n  _relations.txt   全部 251 个关系编码 + 频次 (按频次降序)。列: code \\t freq\n  entities/<桶>/<安全名>/data.txt   该实体全部事件, 已按日期升序\n```\n\n`data.txt` 每行 (以本实体为视角): `日期 \\t 方向 \\t 关系 \\t 对方`\n- 方向 `>` = 本实体是 head (本实体 → 对方)\n- 方向 `<` = 本实体是 tail (对方 → 本实体)\n- 日期 `YYYY-MM-DD`, **字典序即时间序**。双向冗余: 每条事实在 head 与 tail 两个目录各存一份。\n\n## 第 1 步: 关系映射 (先做, 最易错)\n\n把问句谓词映射到精确关系编码。先 grep, 再从输出里挑:\n```bash\ngrep -iE \"visit|appeal|request|negotiat|sign\" d"
+   },
+   {
+    "cmd": "cat skills/first_last/SKILL.md",
+    "obs": "---\nname: tkgqa-first-last\ndescription: X 第一次/最后一次做某关系是何时(time)或对谁(entity); 取按日期排好的序列的首/尾\napplies_to: [first_last]\n---\n\n# first_last 配方\n\n锚实体 $D, 关系 REL。data.txt 已按日期升序, 所以 `head -1`=first, `tail -1`=last。\n判 first/last: 问句含 \"first\" → head -1; 含 \"last\" → tail -1。\n\n## 答案是时间 (answer_type=time, \"In which year did X last … Y\")\n\nsubject=X(锚), object=Y(固定对方, 方向 `>`)。**Y 用 catalog 规范名精确匹配**:\n```bash\nawk -F'\\t' '$3==\"Make_an_appeal_or_request\" && $4==\"China\" {print $1}' database/$D/data.txt | tail -1\n# year → 再 cut -c1-4 ; month → cut -c1-7\n```\n\n## 答案是实体 (\"Who was the first country X expressed optimism "
+   },
+   {
+    "cmd": "grep -i \"Taiwan\" database/_catalog.tsv | grep -i \"defense\"",
+    "obs": "Defense_/_Security_Ministry_(Taiwan)\tentities/d/Defense___Security_Ministry_(Taiwan)\t55\t2005-02-22\t2015-11-25\nDefense_Attorney_(Taiwan)\tentities/d/Defense_Attorney_(Taiwan)\t2\t2007-05-04\t2007-05-04"
+   },
+   {
+    "cmd": "grep -iE \"request|appeal|demand\" database/_relations.txt",
+    "obs": "Make_an_appeal_or_request\t26661\nDemand\t7120\nAppeal_for_diplomatic_cooperation_(such_as_policy_support)\t1972\nAppeal_for_intelligence\t472\nDemand_diplomatic_cooperation_(such_as_policy_support)\t406\nAppeal_for_change_in_leadership\t344\nDemand_change_in_leadership\t241\nAppeal_for_de-escalation_of_military_engagement\t215\nAppeal_for_release_of_persons_or_property\t192\nAppeal_to_others_to_meet_or_negotiate\t180\nAppeal_to_engage_in_or_accept_mediation\t161\nAppeal_for_aid\t147\nAppeal_for_judicial_cooperation\t124\nDemand_de-escalation_of_military_engagement\t120\nAccede_to_demands_for_change_in_leadership\t110\nApp"
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\">\" && $3==\"Make_an_appeal_or_request\" && $4==\"China\" {print $1}' database/entities/d/Defense___Security_Ministry_(Taiwan)/data.txt | tail -1",
+    "obs": "[blocked] 只读环境: 禁止写操作/重定向/命令替换。请只用 grep/awk/cat/head/tail/sort/cut。"
+   },
+   {
+    "cmd": "awk -F'\\t' '$2==\">\" && $3==\"Make_an_appeal_or_request\" && $4==\"China\" {print $1}' database/entities/d/Defense___Security_Ministry_(Taiwan)/data.txt | tail -1",
+    "obs": "[blocked] 只读环境: 禁止写操作/重定向/命令替换。请只用 grep/awk/cat/head/tail/sort/cut。"
+   },
+   {
+    "cmd": "grep \"Make_an_appeal_or_request\" database/entities/d/Defense___Security_Ministry_(Taiwan)/data.txt | grep \"China\" | tail -1",
+    "obs": "[stderr] bash: -c: line 1: syntax error near unexpected token `('\nbash: -c: line 1: `grep \"Make_an_appeal_or_request\" database/entities/d/Defense___Security_Ministry_(Taiwan)/data.txt | grep \"China\" | tail -1'"
+   },
+   {
+    "cmd": "grep \"Make_an_appeal_or_request\" \"database/entities/d/Defense___Security_Ministry_(Taiwan)/data.txt\" | grep \"China\" | tail -1",
+    "obs": "2010-07-31\t>\tMake_an_appeal_or_request\tChina"
+   },
+   {
+    "cmd": "FINAL: 2010",
+    "obs": "[stderr] bash: line 1: FINAL:: command not found"
+   }
+  ]
+ }
+]
