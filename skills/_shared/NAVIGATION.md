@@ -23,7 +23,7 @@ database/
 grep -iE "visit|appeal|request|negotiat|sign" database/_relations.txt
 ```
 常见映射:
-- visit → `Make_a_visit` (主动访问) 或 `Host_a_visit` (接待访问)
+- visit → **统一只用 `Make_a_visit`** (见下方"visit 专项规则"; **不要用 `Host_a_visit`**)
 - sign agreement → `Sign_formal_agreement`
 - negotiate / intend to meet → `Express_intent_to_meet_or_negotiate`
 - request / appeal / demand → 多为 `Make_an_appeal_or_request` (易和 `Appeal_for_diplomatic_cooperation_(such_as_policy_support)`、`Demand` 混; 取不到结果就换族内另一个)
@@ -52,6 +52,20 @@ grep -i "Seyoum" database/_catalog.tsv | grep -i "Mesfin"   # 取第 2 列 = $D
 - 问 "X 对谁做了某事 / X 最后…谁" → 锚实体 = X, 方向 `>`, 答案是对方列 $4。
 - **被动语态**: "who was accused **by** Ethiopia" → Ethiopia 是施动者=head, 方向 `>`。
 - 拿不准就**两个方向都试**, 哪个有结果用哪个 (双向冗余保证不漏)。
+
+### ⚠️ visit 专项规则 (两臂最高频的绑定错, 必须照做)
+
+一次访问在库里有 4 份冗余: `Make_a_visit`/`Host_a_visit` × 两个 ego 文件。它们语义镜像、极易把方向搞反。
+**铁律: visit 一律只用 `Make_a_visit`, 用方向区分谁是访客 (访客 = 主动"去"的一方 = head)。**
+
+在锚实体 X 的文件里:
+- **"谁访问了 X" / "X 接待/受访于谁" / "X hosted / received a visit from" / "visited X"**
+  → X 是**目的地**, 用 `$2=="<" && $3=="Make_a_visit"`, **访客在 $4**。
+- **"X 访问了谁" / "whom did X visit" / "X 出访"**
+  → X 是**访客**, 用 `$2==">" && $3=="Make_a_visit"`, **目的地在 $4**。
+
+> 例: "UAE received the visit from China" = China 访问 UAE → 在 UAE 文件 `$2=="<" && $3=="Make_a_visit" && $4=="China"` → 2010-03。
+> **千万别用 `Host_a_visit`**: 在 X 文件里 `< Host_a_visit` 其实等于"X 去访问别人"(方向反了), 正是之前一直答错的根源。
 
 ## 固定对方 / 枢轴的精确匹配 (重要)
 
