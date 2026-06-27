@@ -122,7 +122,9 @@ def agent_solve(question, qtype, answer_type, time_level, max_cmds=11):
     return '[无答案]', trace, cmds
 
 # -------- 评分 (与 eval_fs 同口径: 实体=集合精确, 时间=交集非空) --------
-def norm(x): return re.sub(r'\s+', ' ', str(x).replace('_', ' ')).strip().lower()
+def norm(x):
+    s = re.sub(r'[*`#]', '', str(x).replace('_', ' '))   # 去 markdown(LLM 常给答案加 ** 等)
+    return re.sub(r'\s+', ' ', s).strip().strip(' .,:;!?"\'').lower()
 def parse_final(s):
     s = re.sub(r'^\s*\[?API_ERROR.*$', '', s)
     parts = [p for p in re.split(r'\s*;\s*|\s*、\s*', s.strip()) if p.strip()]
