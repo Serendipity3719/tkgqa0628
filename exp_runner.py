@@ -43,10 +43,56 @@ def split_thought(reply, block_match):
     return (reply[:block_match.start()] + reply[block_match.end():]).strip()
 
 
-def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11):
+# P3: 自反思关口 —— 在 Agent 第一次给 FINAL 时**有条件**注入一次聚焦自检。
+# 详见 skills/_shared/REFLECT.md。
+#
+# ⚠️ 关键教训 (n=100 实测): 早期的"通用清单, 每个 FINAL 都注入"版本是**净负**
+#    (ALL 82->73, equal 97->77 p=0.031 显著): 无条件"再想想"会让 agent 二次检索、
+#    把已对的答案改错 (backtracks 0.01->0.20)。同 parse 前端的过度干预失效。
+# 故改为 **targeted reflection**: 仅在有**具体风险信号**时才反思, 信心十足的单答案不碰。
+#   信号 1 (不完整): 复数问句却只给 1 个答案 -> 提示核实是否漏了同侧其他对方。
+#   信号 2 (空/放弃): 给出"无相关事实"前 -> 提示翻方向/换同族码再试一次。
+
+# 复数问句标志 (只看问句, 无 gold, 盲态无泄漏)
+_PLURAL_Q = re.compile(
+    r"which\s+\w*\s*(countr|nation|state|part|group|organi|leader|people|side)"
+    r"|\bwho are\b|哪些|list (all|the)|all .*\bwho\b", re.I)
+
+
+def _is_error_ans(ans):
+    """API 错误/空答案不触发反思 (无意义)。"""
+    return ("[API_ERROR" in ans) or ("[无答案]" in ans) or (not ans.strip())
+
+
+def _loaded_multianswer_skill(raw_steps):
+    """Agent 自己是否路由到了多答案 skill (before_after/equal_multi)。
+    用 agent 自身的路由选择当信号 —— 不是 gold qtype, 盲态无泄漏。"""
+    for s in raw_steps:
+        if re.search(r"skills[\\/](before_after|equal_multi)[\\/]", s.get("cmd", "")):
+            return True
+    return False
+
+
+def _reflect_probe(question, cand, raw_steps):
+    """targeted P3: 有具体风险信号才返回一条聚焦自检消息; 否则 None (不反思)。"""
+    if _is_error_ans(cand):
+        return None
+    if "知识库中无相关事实" in cand:
+        return ("⚠️ 给出'无相关事实'前再核一次: 翻镜像方向($2 取反), 或换 "
+                "_relation_families.tsv 同族另一关系码再过滤一遍; 仍空才确认无事实, 别强答。")
+    # 不完整信号: (agent 自己路由到多答案 skill 或问句明显复数) 却只给 1 个答案
+    n_ans = len([p for p in re.split(r"\s*;\s*|\s*、\s*", cand) if p.strip()])
+    if n_ans == 1 and (_loaded_multianswer_skill(raw_steps) or _PLURAL_Q.search(question or "")):
+        return ("⚠️ 这看起来要多个答案却只给了一个, 可能漏了同侧其他对方。请在正确方向($2)上"
+                "重跑过滤并 `sort -u` 看有几行; 确实只有一个就原样重发 `FINAL:`, 不要编造补充。")
+    return None
+
+
+def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11, reflect=False):
     """一题: 跑 agent 循环, 收集 [{cmd,obs,thought}] 原始步骤。
     reveal=喂入的 facet 集合; feed=要显示的 facet 值(默认 gold; parse 模式传预测值);
-    predicted=parse 前端预测的 facet(记入 trace, 非 None 即 parse 模式)。"""
+    predicted=parse 前端预测的 facet(记入 trace, 非 None 即 parse 模式);
+    reflect=P3 自反思关口: 第一次 FINAL 时注入一次自检, 给 +3 命令预算核实/修正。"""
     feed = feed or {"qtype": item["qtype"], "answer_type": item.get("answer_type"),
                     "time_level": item.get("time_level", "day")}
     user = build_user(item["question"], feed["qtype"], feed["answer_type"],
@@ -54,37 +100,59 @@ def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11):
     messages = [{"role": "system", "content": AN.SYSTEM},
                 {"role": "user", "content": user}]
     raw_steps, cmds, final = [], 0, "[无答案]"
+    reflected = False
+    hard_cap = max_cmds + (3 if reflect else 0)   # 反思后允许少量额外命令核实
 
-    for _turn in range(max_cmds + 4):
+    for _turn in range(hard_cap + 5):
         reply = AN._chat(messages)
         messages.append({"role": "assistant", "content": reply})
         mfin = re.search(r"FINAL:\s*(.+)", reply, re.S)
         mblk = AN._BLOCK.search(reply)
+        blk_is_final = bool(mblk and mblk.group(1).strip().upper().startswith("FINAL:"))
 
-        # FINAL 被误包进 ```bash 块
-        if mblk and mblk.group(1).strip().upper().startswith("FINAL:"):
-            final = mblk.group(1).strip()[6:].strip(); break
-        if mblk and (not mfin or mblk.start() < mfin.start()):
+        # 命令优先 (块是命令, 且在 FINAL 之前)
+        if mblk and not blk_is_final and (not mfin or mblk.start() < mfin.start()):
             cmd = mblk.group(1).strip()
             cmds += 1
             obs = AN.run_bash(cmd)
             raw_steps.append({"cmd": cmd, "obs": obs[:600],
                               "thought": split_thought(reply, mblk)[:500]})
-            if cmds > max_cmds:
+            if cmds > hard_cap:
                 messages.append({"role": "user", "content": "命令数已达上限, 请基于已有证据给出 FINAL。"})
             else:
                 messages.append({"role": "user", "content": f"命令输出:\n{obs}"})
             continue
-        if mfin:
-            final = mfin.group(1).strip(); break
-        messages.append({"role": "user", "content": "请输出一个 ```bash 命令块, 或给出 FINAL:。"})
+
+        # 取候选 FINAL (块内 FINAL 或文本 FINAL)
+        cand = None
+        if blk_is_final:
+            cand = mblk.group(1).strip()[6:].strip()
+        elif mfin:
+            cand = mfin.group(1).strip()
+        if cand is None:
+            messages.append({"role": "user", "content": "请输出一个 ```bash 命令块, 或给出 FINAL:。"})
+            continue
+
+        # P3 反思关口: 第一次给真实 FINAL 且**命中风险信号**时, 注入一次聚焦自检
+        if reflect and not reflected and cmds <= max_cmds:
+            probe = _reflect_probe(item["question"], cand, raw_steps)
+            if probe:
+                reflected = True
+                messages.append({"role": "user", "content": probe})
+                continue
+
+        final = cand
+        break
 
     ok = AN.is_correct(final, item["answers"], item.get("answer_type"))
-    return exp_trace.build_trace(
+    tr = exp_trace.build_trace(
         quid=item["quid"], question=item["question"], gold_qtype=item["qtype"],
         answer_type=item.get("answer_type"), time_level=item.get("time_level", "day"),
         raw_steps=raw_steps, final=final, gold=item["answers"], correct=ok,
         revealed_facets=reveal, predicted_facets=predicted, model="deepseek-chat")
+    tr.setdefault("meta", {})["reflect"] = bool(reflect)
+    tr["meta"]["reflected"] = reflected
+    return tr
 
 
 def solve_parse(item, max_cmds=11):
@@ -104,6 +172,8 @@ def main():
                     help="qtype,answer_type,time_level 的子集 | all | none")
     ap.add_argument("--parse", action="store_true",
                     help="S2a: 用 parse 前端自推 facet 代替 gold (隐含 reveal=all 但喂预测值)")
+    ap.add_argument("--reflect", action="store_true",
+                    help="P3: 开启自反思关口 (第一次 FINAL 时注入一次通用自检, +3 命令预算)")
     ap.add_argument("--data", default=os.path.join("data", "test.json"))
     ap.add_argument("--out", default="traces.json")
     ap.add_argument("--eval", action="store_true", help="跑完直接打印 exp_eval 报告")
@@ -121,10 +191,11 @@ def main():
 
     data = json.load(open(args.data, encoding="utf-8"))[:args.n]
     mode = "parse" if args.parse else ("oracle" if "qtype" in reveal else "blind")
-    print(f"导航实验 mode={mode} reveal={reveal or 'none'}: {len(data)} 题, {args.workers} 并发 ...")
+    refl = " +reflect" if args.reflect else ""
+    print(f"导航实验 mode={mode}{refl} reveal={reveal or 'none'}: {len(data)} 题, {args.workers} 并发 ...")
     t0, traces, done = time.time(), [], 0
     lock = threading.Lock()
-    worker = (lambda it: solve_parse(it)) if args.parse else (lambda it: solve_traced(it, reveal))
+    worker = (lambda it: solve_parse(it)) if args.parse else (lambda it: solve_traced(it, reveal, reflect=args.reflect))
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
         futs = [ex.submit(worker, it) for it in data]
         for fut in as_completed(futs):
