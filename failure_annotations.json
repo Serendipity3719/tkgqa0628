@@ -1,0 +1,19 @@
+{
+  "_README": "S1② 人工校准标注: agent_nav_100.json 的全部 15 个失败逐条读轨迹判定的真实根因。cause 取值见 exp_eval.FAILURE_CATS。这是校准 classify_failure 的 ground truth, 也是 --annotations 的输入。",
+  "_taxonomy_note": "原 5 类(routing/entity/relation/temporal/execution)无法表达真实失败: 实测 0/15 是 temporal, 反而出现 打分假阴性 / gold-题面冲突 / 答案不全 / 答案选择 / 方向 等原分类没有的模式。",
+  "3000016": {"cause": "answer_selection_error", "note": "awk END{print a} 已返回正确 Angela_Merkel, 但 FINAL 输出 Iran; 导航正确, 答案装配错"},
+  "3000023": {"cause": "relation_direction_error", "note": "Host_a_visit<China 得 2012-08/2015-01, 漏了 gold 2010-03 (在 Make_a_visit 一侧)"},
+  "3000028": {"cause": "gold_or_question_issue", "note": "问 which country 但 gold 9 个含 Mahmoud Abbas/Tony Blair/ASEAN 等非国家; agent 合理只留 4 国"},
+  "3000040": {"cause": "scoring_artifact", "note": "PRED 与 gold 两实体完全一致, 仅尾部多了 markdown ** 导致精确匹配假阴性; 实际答对"},
+  "3000043": {"cause": "relation_direction_error", "note": "'establish diplomatic cooperation' 关系码未绑对, 多次试错后放弃; Qatar 从未出现"},
+  "3000059": {"cause": "gold_or_question_issue", "note": "awk 已含全部 4 个(含人名 Abhisit), FINAL 按 'which country' 只留 3 国"},
+  "3000064": {"cause": "gold_or_question_issue", "note": "gold 8 个含 Barack Obama/Chuck Hagel/UN 等, agent 按 country 只回 4"},
+  "3000072": {"cause": "entity_resolution_error", "note": "cat 'entities/.../data.txt' 漏 database/ 前缀 → No such file; 枢轴 Hizbul Islam fighter 未解析"},
+  "3000074": {"cause": "relation_direction_error", "note": "gold 在 Engage_in_negotiation dir<; agent 用 Express_intent.../dir> 取到错集合"},
+  "3000080": {"cause": "entity_resolution_error", "note": "枢轴 'royal administration of Saudi Arabia' 未解析(t0 异常 2005-01-22), 方向也反(China praise 应 dir>)"},
+  "3000082": {"cause": "gold_or_question_issue", "note": "awk 已含全部 6 个, FINAL 按 country 只留 Eritrea/Qatar/Sudan"},
+  "3000085": {"cause": "relation_direction_error", "note": "'meet with Thailand' 应 dir< (别人指向泰国), agent 用 dir> 取到错集合"},
+  "3000086": {"cause": "relation_direction_error", "note": "只查 Host_a_visit, 漏 Make_a_visit 覆盖, 错过 gold Head of Government (Egypt)"},
+  "3000093": {"cause": "relation_direction_error", "note": "Host/Make 覆盖不全, 错过 gold Ma Ying Jeou"},
+  "3000095": {"cause": "entity_resolution_error", "note": "锚实体在 South Africa 与 Malaysia 间混淆, Government_(South_Africa) 过滤错, 放弃"}
+}

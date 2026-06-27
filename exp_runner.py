@@ -19,15 +19,20 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import agent_nav as AN          # 复用: run_bash / _chat / _BLOCK / SYSTEM / is_correct ...
 import exp_trace
 import exp_eval
+import exp_parse                # S2a: 解析前端
 
 
-def build_user(question, qtype, answer_type, time_level, routing_mode):
-    """blind 模式抹掉 qtype (路由必须从问句推断); oracle 保留现状。"""
+def build_user(question, qtype, answer_type, time_level, reveal):
+    """reveal = 要喂给 Agent 的 gold facet 集合 (S1 facet-blind ablation)。
+    全给 = oracle(旧行为); 空 = 全盲, Agent 须自行从问句推断 qtype/答案类型/粒度。"""
     lines = [f"问题: {question}"]
-    if routing_mode == "oracle":
+    if "qtype" in reveal:
         lines.append(f"qtype: {qtype}")
-    lines += [f"answer_type: {answer_type}", f"time_level: {time_level}",
-              "请按工作流导航作答 (先选并装载合适的 skill, 再取证)。"]
+    if "answer_type" in reveal:
+        lines.append(f"answer_type: {answer_type}")
+    if "time_level" in reveal:
+        lines.append(f"time_level: {time_level}")
+    lines.append("请按工作流导航作答 (先选并装载合适的 skill, 再取证)。")
     return "\n".join(lines)
 
 
@@ -38,10 +43,14 @@ def split_thought(reply, block_match):
     return (reply[:block_match.start()] + reply[block_match.end():]).strip()
 
 
-def solve_traced(item, routing_mode, max_cmds=11):
-    """一题: 跑 agent 循环, 收集 [{cmd,obs,thought}] 原始步骤。"""
-    user = build_user(item["question"], item["qtype"], item.get("answer_type"),
-                      item.get("time_level", "day"), routing_mode)
+def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11):
+    """一题: 跑 agent 循环, 收集 [{cmd,obs,thought}] 原始步骤。
+    reveal=喂入的 facet 集合; feed=要显示的 facet 值(默认 gold; parse 模式传预测值);
+    predicted=parse 前端预测的 facet(记入 trace, 非 None 即 parse 模式)。"""
+    feed = feed or {"qtype": item["qtype"], "answer_type": item.get("answer_type"),
+                    "time_level": item.get("time_level", "day")}
+    user = build_user(item["question"], feed["qtype"], feed["answer_type"],
+                      feed["time_level"], reveal)
     messages = [{"role": "system", "content": AN.SYSTEM},
                 {"role": "user", "content": user}]
     raw_steps, cmds, final = [], 0, "[无答案]"
@@ -75,25 +84,49 @@ def solve_traced(item, routing_mode, max_cmds=11):
         quid=item["quid"], question=item["question"], gold_qtype=item["qtype"],
         answer_type=item.get("answer_type"), time_level=item.get("time_level", "day"),
         raw_steps=raw_steps, final=final, gold=item["answers"], correct=ok,
-        routing_mode=routing_mode, model="deepseek-chat")
+        revealed_facets=reveal, predicted_facets=predicted, model="deepseek-chat")
+
+
+def solve_parse(item, max_cmds=11):
+    """parse 模式: 先自推 facet, 再把**预测值**当 facet 喂给 serve 循环 (不碰任何 gold)。"""
+    pred = exp_parse.parse_question(item["question"])
+    return solve_traced(item, reveal=list(exp_trace.ALL_FACETS), feed=pred,
+                        predicted=pred, max_cmds=max_cmds)
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=100)
     ap.add_argument("--workers", type=int, default=6)
-    ap.add_argument("--routing-mode", choices=["oracle", "blind"], default="oracle")
+    # 喂给 Agent 的 gold facet 子集; 逗号分隔。'all'=oracle(旧); 'none'=全盲。
+    # 也可单独保留, 如 --reveal answer_type,time_level 只盲 qtype。
+    ap.add_argument("--reveal", default="all",
+                    help="qtype,answer_type,time_level 的子集 | all | none")
+    ap.add_argument("--parse", action="store_true",
+                    help="S2a: 用 parse 前端自推 facet 代替 gold (隐含 reveal=all 但喂预测值)")
     ap.add_argument("--data", default=os.path.join("data", "test.json"))
     ap.add_argument("--out", default="traces.json")
     ap.add_argument("--eval", action="store_true", help="跑完直接打印 exp_eval 报告")
     args = ap.parse_args()
 
+    if args.reveal == "all":
+        reveal = list(exp_trace.ALL_FACETS)
+    elif args.reveal == "none":
+        reveal = []
+    else:
+        reveal = [f.strip() for f in args.reveal.split(",") if f.strip()]
+        bad = set(reveal) - set(exp_trace.ALL_FACETS)
+        if bad:
+            ap.error(f"未知 facet: {bad}; 允许 {exp_trace.ALL_FACETS}")
+
     data = json.load(open(args.data, encoding="utf-8"))[:args.n]
-    print(f"导航实验 (routing_mode={args.routing_mode}): {len(data)} 题, {args.workers} 并发 ...")
+    mode = "parse" if args.parse else ("oracle" if "qtype" in reveal else "blind")
+    print(f"导航实验 mode={mode} reveal={reveal or 'none'}: {len(data)} 题, {args.workers} 并发 ...")
     t0, traces, done = time.time(), [], 0
     lock = threading.Lock()
+    worker = (lambda it: solve_parse(it)) if args.parse else (lambda it: solve_traced(it, reveal))
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
-        futs = [ex.submit(solve_traced, it, args.routing_mode) for it in data]
+        futs = [ex.submit(worker, it) for it in data]
         for fut in as_completed(futs):
             t = fut.result()
             with lock:

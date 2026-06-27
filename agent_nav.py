@@ -62,8 +62,9 @@ def run_bash(cmd, timeout=25):
     if _BANNED_CMD.search(cmd) or _BAD_REDIR.search(cmd):
         return '[blocked] 只读环境: 禁止破坏性命令/写入 database|skills。awk 的 `>` 比较和 `> /tmp/...` 暂存允许。'
     try:
+        # KG 实体名含变音字符(Keïta/Gül 等)→ 必须 utf-8 解码, 否则 Windows 默认 GBK 会崩
         r = subprocess.run(['bash', '-lc', cmd], capture_output=True, text=True,
-                           timeout=timeout, cwd=ROOT)
+                           encoding='utf-8', errors='replace', timeout=timeout, cwd=ROOT)
         out = r.stdout
         if r.returncode != 0 and r.stderr:
             out += '\n[stderr] ' + r.stderr

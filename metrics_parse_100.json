@@ -1,0 +1,99 @@
+{
+  "n": 100,
+  "routing_mode": "parse",
+  "revealed_facets": [
+    "qtype",
+    "answer_type",
+    "time_level"
+  ],
+  "routing_accuracy": 0.82,
+  "routing_confusion": {
+    "after_first->after_first": 8,
+    "before_after->after_first": 7,
+    "before_after->before_after": 8,
+    "before_after->before_last": 5,
+    "before_last->before_last": 12,
+    "equal->equal": 29,
+    "equal->equal_multi": 2,
+    "equal->first_last": 3,
+    "first_last->after_first": 1,
+    "first_last->first_last": 25
+  },
+  "e2e_accuracy_raw": 0.75,
+  "e2e_accuracy_robust": 0.77,
+  "scoring_false_negatives": 2,
+  "per_qtype": {
+    "after_first": {
+      "n": 8,
+      "acc": 0.75,
+      "acc_robust": 0.875
+    },
+    "before_after": {
+      "n": 20,
+      "acc": 0.25,
+      "acc_robust": 0.25
+    },
+    "before_last": {
+      "n": 12,
+      "acc": 0.75,
+      "acc_robust": 0.8333333333333334
+    },
+    "equal": {
+      "n": 31,
+      "acc": 0.8709677419354839,
+      "acc_robust": 0.8709677419354839
+    },
+    "equal_multi": {
+      "n": 3,
+      "acc": 0.6666666666666666,
+      "acc_robust": 0.6666666666666666
+    },
+    "first_last": {
+      "n": 26,
+      "acc": 1.0,
+      "acc_robust": 1.0
+    }
+  },
+  "navigation_efficiency": {
+    "all": {
+      "avg_steps": 6.97,
+      "avg_evidence": 1.7,
+      "avg_backtracks": 0.04
+    },
+    "correct": {
+      "avg_steps": 6.597402597402597,
+      "avg_evidence": 1.4285714285714286,
+      "avg_backtracks": 0.03896103896103896
+    },
+    "incorrect": {
+      "avg_steps": 8.217391304347826,
+      "avg_evidence": 2.608695652173913,
+      "avg_backtracks": 0.043478260869565216
+    }
+  },
+  "failure_taxonomy": {
+    "routing_error": 11,
+    "answer_incompleteness": 5,
+    "entity_resolution_error": 1,
+    "execution_error": 1,
+    "needs_review": 5
+  },
+  "failure_attribution": {
+    "model_failures": 23,
+    "non_model_eval_or_gold": 0
+  },
+  "pipeline_decomposition": {
+    "routing_loss": 0.18000000000000005,
+    "navigation_loss_given_correct_routing": 0.13414634146341464,
+    "e2e_accuracy_robust": 0.77
+  },
+  "parse_accuracy": {
+    "n": 100,
+    "qtype": 0.83,
+    "skill_route": 0.84,
+    "answer_type": 1.0,
+    "time_level": 0.99,
+    "all_three": 0.82
+  },
+  "classifier_calibration": null
+}

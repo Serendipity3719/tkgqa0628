@@ -1,0 +1,22 @@
+{
+  "_README": "S1 收尾: traces_blind_100.json (reveal=none 全盲) 的全部 19 个 robust 失败, 逐条人工读轨迹判定真实根因。与 failure_annotations.json (oracle/旧run) 对照, 揭示盲态新增的失败模式 (尤其 routing_error)。",
+  "3000001": {"cause": "entity_resolution_error", "note": "after_first; 锚实体错绑成 China, 枢轴 Cabinet(Kazakhstan) 未对齐, /tmp 混乱后放弃"},
+  "3000007": {"cause": "temporal_position_error", "note": "before_after; 枢轴 Ethiopia 取到 t0=2014-03-04(过晚), <t0 几乎=全部, 返回整表而非 China/Sudan"},
+  "3000008": {"cause": "relation_direction_error", "note": "equal_multi; visit 的 Make/Host 方向歧义, 返回的同月集合与 gold 不符"},
+  "3000023": {"cause": "relation_direction_error", "note": "equal/time; Host_a_visit 漏了 Make_a_visit 一侧的 2010-03"},
+  "3000026": {"cause": "answer_selection_error", "note": "after_first; 末步 awk 已取到正确 NUFDAD(2010-05-11), 却最终输出'知识库中无相关事实'"},
+  "3000028": {"cause": "gold_or_question_issue", "note": "before_after; 问 which country 但 gold 含人/组织, agent 合理只留国家 (非模型错)"},
+  "3000034": {"cause": "entity_resolution_error", "note": "first_last; 路径写成 database/c/China 漏 entities/ 前缀 -> 全空 -> 放弃"},
+  "3000036": {"cause": "temporal_position_error", "note": "before_after; 题面近乎残缺, 枢轴 Religion_(China) 日期 2005-01-10 过早导致 <t0 为空"},
+  "3000046": {"cause": "routing_error", "note": "★盲态路由错: gold before_after 却装载 after_first, 只回了'之后第一个'(1个) 而非全部"},
+  "3000048": {"cause": "relation_direction_error", "note": "equal/month; visited China 的 Make/Host+方向选错, 返回错误人群"},
+  "3000059": {"cause": "gold_or_question_issue", "note": "before_after; awk 已含全部4个(含人名 Abhisit), FINAL 按 country 只留3国 (非模型错)"},
+  "3000064": {"cause": "gold_or_question_issue", "note": "before_after; gold 8个含人/UN, agent 按 country 只回3 (非模型错)"},
+  "3000074": {"cause": "routing_error", "note": "★盲态路由错: gold before_after 装成 after_first, 关系/方向本已对(Engage_in_negotiation<), 只回了1个"},
+  "3000077": {"cause": "routing_error", "note": "★盲态路由错: gold before_after 装成 after_first, 只回 Criminal(SK) 1个 而非全部3个"},
+  "3000080": {"cause": "temporal_position_error", "note": "before_last; 枢轴 Royal_Admin(Saudi) 取首事件 2005-01-22 过早, 之前最后praise=Vietnam, 漏 gold Malaysia"},
+  "3000082": {"cause": "gold_or_question_issue", "note": "before_after/year; awk 已含全部6个, FINAL 按 country 只留 Eritrea/Qatar/Sudan (非模型错)"},
+  "3000085": {"cause": "answer_incompleteness", "note": "equal/month; 方向 dir< 已对且首条 awk 取到全集, 后续过度收窄, 丢了 (Thailand) 内部行为体"},
+  "3000086": {"cause": "relation_direction_error", "note": "before_last; 只查 Host_a_visit, 漏 Make 覆盖, 取到 Abdullah_Gül, 漏 gold Head of Government(Egypt)"},
+  "3000093": {"cause": "relation_direction_error", "note": "before_last; Host/Make 覆盖不全, 取到 Laos, 漏 gold Ma Ying Jeou"}
+}

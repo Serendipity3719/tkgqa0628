@@ -23,3 +23,7 @@ database/
 
 # Secrets
 .env
+
+# Transient experiment artifacts
+run_*.log
+*_smoke.json

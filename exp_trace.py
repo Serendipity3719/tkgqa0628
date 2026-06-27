@@ -153,10 +153,22 @@ def build_steps(raw_steps):
     }
 
 
+ALL_FACETS = ["qtype", "answer_type", "time_level"]
+
+
 def build_trace(quid, question, gold_qtype, answer_type, time_level,
                 raw_steps, final, gold, correct,
-                routing_mode="oracle", model=None):
-    """组装一条规范 Trace。raw_steps=[{cmd,obs,thought?}]。"""
+                revealed_facets=None, predicted_facets=None, model=None):
+    """组装一条规范 Trace。raw_steps=[{cmd,obs,thought?}]。
+    revealed_facets: 推理期喂给 Agent 的 gold 元数据子集 (S1 facet-blind ablation)。
+      含 'qtype' → routing_mode=oracle; 否则 blind。默认全给 (= 旧 oracle 行为)。"""
+    if revealed_facets is None:
+        revealed_facets = list(ALL_FACETS)
+    # parse 模式喂的是预测 facet(非 gold), 不算 oracle
+    if predicted_facets is not None:
+        routing_mode = "parse"
+    else:
+        routing_mode = "oracle" if "qtype" in revealed_facets else "blind"
     steps, agg = build_steps(raw_steps)
     sel = agg["selected_skill"]
     gold_skill = GOLD_SKILL.get(gold_qtype)
@@ -170,6 +182,8 @@ def build_trace(quid, question, gold_qtype, answer_type, time_level,
             "answer_type": answer_type,
             "time_level": time_level,
             "routing_mode": routing_mode,    # oracle = qtype 已喂给 Agent; blind = 仅凭问句路由
+            "revealed_facets": revealed_facets,   # 哪些 gold 元数据被喂入 (ablation 维度)
+            "predicted_facets": predicted_facets, # parse 模式: 前端自推的 facet (非 gold)
             "model": model,
             "timestamp": datetime.datetime.now().isoformat(timespec="seconds"),
         },
@@ -211,7 +225,7 @@ def from_legacy(rec, question=None, answer_type=None, time_level=None):
         final=rec.get("final", ""),
         gold=rec.get("gold", []),
         correct=rec.get("ok", False),
-        routing_mode="oracle",
+        revealed_facets=list(ALL_FACETS),   # legacy runner 喂了全部 3 个 gold facet
         model=rec.get("model", "deepseek-chat"),
     )
 

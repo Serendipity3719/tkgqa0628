@@ -1,0 +1,90 @@
+{
+  "n": 100,
+  "routing_mode": "blind",
+  "revealed_facets": [
+    "answer_type",
+    "time_level"
+  ],
+  "routing_accuracy": 0.88,
+  "routing_confusion": {
+    "after_first->after_first": 6,
+    "after_first->first_last": 2,
+    "before_after->after_first": 5,
+    "before_after->before_after": 15,
+    "before_last->before_last": 12,
+    "equal->before_after": 1,
+    "equal->equal": 32,
+    "equal->first_last": 1,
+    "first_last->before_last": 3,
+    "first_last->first_last": 23
+  },
+  "e2e_accuracy_raw": 0.77,
+  "e2e_accuracy_robust": 0.79,
+  "scoring_false_negatives": 2,
+  "per_qtype": {
+    "after_first": {
+      "n": 8,
+      "acc": 0.625,
+      "acc_robust": 0.75
+    },
+    "before_after": {
+      "n": 20,
+      "acc": 0.5,
+      "acc_robust": 0.55
+    },
+    "before_last": {
+      "n": 12,
+      "acc": 0.5,
+      "acc_robust": 0.5
+    },
+    "equal": {
+      "n": 31,
+      "acc": 0.9032258064516129,
+      "acc_robust": 0.9032258064516129
+    },
+    "equal_multi": {
+      "n": 3,
+      "acc": 0.6666666666666666,
+      "acc_robust": 0.6666666666666666
+    },
+    "first_last": {
+      "n": 26,
+      "acc": 1.0,
+      "acc_robust": 1.0
+    }
+  },
+  "navigation_efficiency": {
+    "all": {
+      "avg_steps": 7.07,
+      "avg_evidence": 1.85,
+      "avg_backtracks": 0.16
+    },
+    "correct": {
+      "avg_steps": 6.7215189873417724,
+      "avg_evidence": 1.5822784810126582,
+      "avg_backtracks": 0.05063291139240506
+    },
+    "incorrect": {
+      "avg_steps": 8.380952380952381,
+      "avg_evidence": 2.857142857142857,
+      "avg_backtracks": 0.5714285714285714
+    }
+  },
+  "failure_taxonomy": {
+    "routing_error": 5,
+    "answer_incompleteness": 7,
+    "entity_resolution_error": 2,
+    "needs_review": 7
+  },
+  "failure_attribution": {
+    "model_failures": 21,
+    "non_model_eval_or_gold": 0
+  },
+  "pipeline_decomposition": {
+    "routing_loss": 0.12,
+    "navigation_loss_given_correct_routing": 0.18181818181818177,
+    "e2e_accuracy_robust": 0.79
+  },
+  "parse_accuracy": null,
+  "classifier_calibration": null
+}
