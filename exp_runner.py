@@ -46,12 +46,12 @@ def split_thought(reply, block_match):
 # P3: 自反思关口 —— 在 Agent 第一次给 FINAL 时**有条件**注入一次聚焦自检。
 # 详见 skills/_shared/REFLECT.md。
 #
-# ⚠️ 关键教训 (n=100 实测): 早期的"通用清单, 每个 FINAL 都注入"版本是**净负**
-#    (ALL 82->73, equal 97->77 p=0.031 显著): 无条件"再想想"会让 agent 二次检索、
-#    把已对的答案改错 (backtracks 0.01->0.20)。同 parse 前端的过度干预失效。
-# 故改为 **targeted reflection**: 仅在有**具体风险信号**时才反思, 信心十足的单答案不碰。
-#   信号 1 (不完整): 复数问句却只给 1 个答案 -> 提示核实是否漏了同侧其他对方。
-#   信号 2 (空/放弃): 给出"无相关事实"前 -> 提示翻方向/换同族码再试一次。
+# ⚠️ 关键教训:
+#   1) 通用版"每个 FINAL 都注入五项清单" = 净负 (ALL 82%→73%, p=0.031 显著)。
+#   2) 空结果探针"给'无相关事实'前再核一次" = 净负 (2026-06-28 McNemar: 改对9/改错14/净-5)。
+#      Agent 二次尝试失败后倾向于彻底放弃而非修正, 产生大量"正确答案→无相关事实"的回归。
+#   回溯预算已在 NAVIGATION.md 中处理空结果, 不需要反射层再介入。
+# 故 targeted reflection 现**仅保留不完整信号** (多答案题只给 1 个答案)。
 
 # 复数问句标志 (只看问句, 无 gold, 盲态无泄漏)
 _PLURAL_Q = re.compile(
@@ -60,7 +60,7 @@ _PLURAL_Q = re.compile(
 
 
 def _is_error_ans(ans):
-    """API 错误/空答案不触发反思 (无意义)。"""
+    """API 错误/空答案/无答案不触发反思 (无意义或回溯已处理)。"""
     return ("[API_ERROR" in ans) or ("[无答案]" in ans) or (not ans.strip())
 
 
@@ -74,12 +74,14 @@ def _loaded_multianswer_skill(raw_steps):
 
 
 def _reflect_probe(question, cand, raw_steps):
-    """targeted P3: 有具体风险信号才返回一条聚焦自检消息; 否则 None (不反思)。"""
+    """targeted P3: 仅在检测到答案不完整时注入一条自检; 否则 None。
+    空结果/无相关事实 由 NAVIGATION.md 回溯预算处理, 不在此介入
+    (实测空结果探针导致 net -5 回归, 见 REFLECT.md 更新)。"""
     if _is_error_ans(cand):
         return None
+    # 不再对"知识库中无相关事实"做反射 —— 回溯预算已覆盖, 反射层介入有害
     if "知识库中无相关事实" in cand:
-        return ("⚠️ 给出'无相关事实'前再核一次: 翻镜像方向($2 取反), 或换 "
-                "_relation_families.tsv 同族另一关系码再过滤一遍; 仍空才确认无事实, 别强答。")
+        return None
     # 不完整信号: (agent 自己路由到多答案 skill 或问句明显复数) 却只给 1 个答案
     n_ans = len([p for p in re.split(r"\s*;\s*|\s*、\s*", cand) if p.strip()])
     if n_ans == 1 and (_loaded_multianswer_skill(raw_steps) or _PLURAL_Q.search(question or "")):

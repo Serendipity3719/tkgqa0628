@@ -10,7 +10,7 @@ Deep Agent 文件系统导航的结构化知识库。无 LLM 参与，纯 Python
     带方向标记 '>'(本实体是 head) / '<'(本实体是 tail)。
   * 每个实体 = 一个目录，内含 data.txt（按日期升序），大实体附 INDEX.md。
   * _catalog.tsv 是唯一入口（规范名 -> 安全路径），Agent grep 取精确路径。
-  * 不切年、不建全局时间索引（当前 6 类查询全是 实体+关系+时序）。
+  * 大实体(>index-threshold 条)生成 INDEX.md(逐年地图)+by_year/<年>.txt(时序切片),支持渐进披露导航。
   * 日期 YYYY-MM-DD，字典序即时间序。
 
 用法:
@@ -462,6 +462,9 @@ _relation_families.tsv 列（关系绑定先查这张表，别再凭记忆猜关
     2) 据"逐年地图"定位年份, 只 awk 相关切片:
          awk -F'\\t' '...' "database/<dir>/by_year/2010.txt"
     3) 跨多年/不确定 → 回退到全量 data.txt 过滤(结果一致, 切片只是省力)。
+  ⛔ 铁律: first_last / before_last / after_first 永远只用全量 data.txt,
+     禁止用 by_year/ —— first/last 是跨年全局极值, 切单年=错。
+  ⛔ 切片空或不全 → 必须回退全量 data.txt 重查, 不要直接给"无相关事实"。
   小实体(无 INDEX.md): 直接 awk data.txt 即可(本就很小)。
   注: by_year/ 是【附加】结构, 不改变任何答案; 旧的"awk data.txt"配方继续有效。
 
@@ -471,6 +474,7 @@ _relation_families.tsv 列（关系绑定先查这张表，别再凭记忆猜关
   * 双向冗余：每条事实在 head 与 tail 两个目录各存一份，
     所以 tail 类问题（"谁访问了X"）只需读 X 的 data.txt，无需全库扫描。
   * 永远用 awk 过滤，绝不 cat 整个 data.txt 进上下文。
+  * before_after 多答案题: 必须 sort -u 输出**全部**匹配行, 禁止只取前几个。
 """
 
 

@@ -1,0 +1,4627 @@
+[
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000000,
+  "question": "After the Danish Ministry of Defence and Security, who was the first to visit Iraq?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:48",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Jack Straw"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000001,
+  "question": "After the Cabinet Council of Ministers of Kazakhstan, who was the first to express the intention to negotiate with China?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:48",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Citizen (North Korea)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000002,
+  "question": "In which year did Taiwan's Ministry of National Defence and Security last make a request to China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:48",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000003,
+  "question": "When did Kitti Wasinondh last express an intention to negotiate with Thailand?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2007-02-01"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000004,
+  "question": "With whom did Catherine Ashton last wish to meet before Cambodia?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:48",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Wen Jiabao"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000005,
+  "question": "Who was the first country that Ethiopia expressed optimism about?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:48",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Djibouti"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000006,
+  "question": "In which year did Iraq first negotiate with Gholamali Haddad Adel?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000007,
+  "question": "Before Ethiopia, which country did Seyoum Mesfin express his intention to negotiate with?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:03:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "China",
+    "Sudan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000008,
+  "question": "Who visited China in the same month as Oleg Ostapenko?",
+  "meta": {
+   "gold_qtype": "equal_multi",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:14",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Japan",
+    "Barnaby Joyce",
+    "Media Personnel (International)",
+    "Vietnam",
+    "Xi Jinping",
+    "Ibrahim Boubacar Keïta",
+    "Airline (Bulgaria)",
+    "Le Hong Anh",
+    "Vincent Gray",
+    "Abdulla Yameen",
+    "Barack Obama"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000009,
+  "question": "Who signed an agreement with China in April 2005?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:14",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran",
+    "Kuomintang",
+    "South Korea",
+    "Colombia",
+    "France",
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000010,
+  "question": "In which year did the Somali criminal threaten China for the first time?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:14",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2009"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000011,
+  "question": "Before 14 October 2015, who made Burundi suffer from conventional military forces?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Al-Shabaab",
+    "Military (Burundi)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000012,
+  "question": "In 2005-01, who used small arms and light weapons to attack Thailand?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:14",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Armed Gang (Thailand)",
+    "Citizen (Thailand)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000013,
+  "question": "Before 25 April 2005, who used conventional military force against Iraq?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:14",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran",
+    "Commando (Iraq)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000014,
+  "question": "After Devlet Bahçeli, who was the first to want to negotiate with Iraq?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Head of Government (Egypt)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000015,
+  "question": "After Tony Blair, which country was the first to express an interest in cooperating with Iraq?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000016,
+  "question": "Before the military of Taiwan, which country did China threaten last?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Angela Merkel"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000017,
+  "question": "Who praised Kuwait before Nuri al-Maliki?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Presidential Family (United States)",
+    "Shaukat Aziz",
+    "Sudan",
+    "Pervez Musharraf",
+    "Saud bin Faisal bin Abdul-Aziz",
+    "Jack Straw",
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000018,
+  "question": "Who visited Malaysia on 14 January 2007?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "China",
+    "Association of Southeast Asian Nations"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000019,
+  "question": "Which country condemned China in August 2013?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000020,
+  "question": "Who wanted to negotiate with Malaysia on 19 November 2015?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Barack Obama"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000021,
+  "question": "Could you tell me the exact month when Agence France-Presse appealed to China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2007-01"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000022,
+  "question": "Could you tell me the specific month in which the citizens of Belgium formally signed an agreement with China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005-06"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000023,
+  "question": "In which month did United Arab Emirates receive the visit from China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:04:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010-03"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000024,
+  "question": "When did Vasilis Skouris visit China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005-03-21"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000025,
+  "question": "In which year did the citizens of Norway express their intention to meet with Iraq?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2014"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000026,
+  "question": "After the Media Rights Group of Thailand, who was the first to denounce Thailand?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "National United Front for Democracy Against Dictatorship"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000027,
+  "question": "In which month did the African Union last ask Ethiopia?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2008-12"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000028,
+  "question": "Before 22 October 2008, which country did Malaysia make optimistic remarks about?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Mahmoud Abbas",
+    "Thailand",
+    "Association of Southeast Asian Nations",
+    "Iran",
+    "Japan",
+    "Government (Palestinian Territory, Occupied)",
+    "Nonaligned Movement",
+    "Tony Blair",
+    "Iraq"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000029,
+  "question": "Who paid a visit to Iraq in June 2011?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Nuri al-Maliki",
+    "Iran",
+    "Congress (United States)",
+    "Foreign Affairs (Syria)",
+    "Foreign Affairs (Italy)",
+    "Foreign Affairs (India)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000030,
+  "question": "In which year did Ismet Yilmaz visit Iraq for the first time?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2015"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000031,
+  "question": "Before Thailand, who last wanted to negotiate with the Governor of Thailand?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:07",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Citizen (Thailand)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000032,
+  "question": "When did Jatuporn Prompan make his first appeal to Thailand?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:31",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010-04-24"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000033,
+  "question": "Before Oman, with which country did Thailand formally sign an agreement?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:31",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "China",
+    "Malaysia"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000034,
+  "question": "When did China last visit Henry M Paulson?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2006-09-23"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000035,
+  "question": "Who did the Malaysian Foreign Ministry praise before Thailand?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Surakiart Sathirathai",
+    "Vietnam",
+    "Employee (Bangladesh)",
+    "Mahmoud Ahmadinejad",
+    "Laos",
+    "Barack Obama"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000036,
+  "question": "Which country did China study before the religion of China?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000037,
+  "question": "In what year did Qin Gang last express his intention to negotiate with Ethiopia?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2009"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000038,
+  "question": "In which year did the President of the Senate of Australia last visit Cambodia?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2007"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000039,
+  "question": "In which year was China optimistic about the leader of Ukraine?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000040,
+  "question": "Who wants to negotiate with China on 16 July 2009?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:57",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Energy Department/Ministry (United States)",
+    "Admiral (China)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000041,
+  "question": "Before the Asian Disaster Preparedness Centre, who did Thailand make optimistic comments about?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:57",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Citizen (Thailand)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000042,
+  "question": "When did Thailand express its intention to cooperate with Donald Rumsfeld?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:57",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005-06-06"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000043,
+  "question": "Before South Korea, with whom did Oman last wish to establish diplomatic cooperation?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:57",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Qatar"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000044,
+  "question": "Who made optimistic remarks about Iraq in 2009?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Barack Obama",
+    "Nuri al-Maliki",
+    "China",
+    "Japan",
+    "Supreme Council (Iraq)",
+    "Vietnam"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000045,
+  "question": "Who attacked Iraq with small arms and light weapons after 9 August 2006?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran",
+    "Armed Rebel (Syria)",
+    "Israeli Defense Forces"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000046,
+  "question": "Who did Iraq reject after the dissident of the People's Mujahedin of Iran?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Barack Obama",
+    "Iran",
+    "Nuri al-Maliki",
+    "Member of Parliament (Iraq)",
+    "Defense / Security Ministry (United States)",
+    "Student (Iraq)",
+    "Congress (United States)",
+    "Bank (Iraq)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000047,
+  "question": "On 7 August 2005, which country paid a visit to China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:05:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000048,
+  "question": "Who visited China in June 2010?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:23",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Hui Liangyu",
+    "Iran",
+    "UAE Armed Forces",
+    "Foreign Affairs (South Korea)",
+    "Dmitry Anatolyevich Medvedev",
+    "Linda Lingle",
+    "Wen Jiabao",
+    "Mahmoud Ahmadinejad",
+    "Joon Young Woo",
+    "International Government Organizations",
+    "Ministry (Iran)",
+    "Boris Vyacheslavovich Gryzlov",
+    "Valdis Dombrovskis",
+    "Dianne Feinstein"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000049,
+  "question": "Who criticised Chuck Hagel after China?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:23",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Sergey Kuzhugetovich Shoygu"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000050,
+  "question": "In which year did Federica Mogherini last express her intention to meet with China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:23",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2015"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000051,
+  "question": "Which country receive China's visit from China last before Bruno Stagno Ugarte did?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:23",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Sudan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000052,
+  "question": "In what year did Malaysia last investigate Thailand?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:24",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2008"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000053,
+  "question": "In which month did the citizens of Thailand express their intention to meet with China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:23",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2012-04"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000054,
+  "question": "Which country negotiated with China in July 2006?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:24",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "South Korea",
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000055,
+  "question": "Before Kuwait, which country received the Government Delegation of North Korea's visit from the Government Delegation of North Korea last?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:24",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "South Korea"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000056,
+  "question": "Before Zawahiri, who was the last person to condemn the citizens of Saudi Arabia?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Royal Administration (Saudi Arabia)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000057,
+  "question": "In which year did the Thai Ministry of Justice/Ministry of Foreign Affairs first express its intention to engage in diplomatic cooperation with China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2015"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000058,
+  "question": "Who investigated China first after Segolene Royal?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Hui Liangyu"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000059,
+  "question": "After 12 May 2011, which country did Cambodia denounce?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Vietnam",
+    "Abhisit Vejjajiva",
+    "China",
+    "Thailand"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000060,
+  "question": "Before the Sudanese police, who was the last to use unconventional force against Ethiopia?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:50",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Armed Rebel (Somalia)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000061,
+  "question": "Who used conventional military force against China in June 2014?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:49",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Vietnam",
+    "East Turkistan Islamic Movement",
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000062,
+  "question": "Who was the first to visit Norodom Sihanouk after China?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:50",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Wen Jiabao"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000063,
+  "question": "In which year did Iraq commend the member of the Legislative Council of Iran?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:06:50",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2013"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000064,
+  "question": "To which country did Malaysia send an appeal after 2012-11-20?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "UN Security Council",
+    "Citizen (Unidentified State Actor)",
+    "Citizen (Thailand)",
+    "Barack Obama",
+    "Chuck Hagel",
+    "Maldives",
+    "Vietnam",
+    "China"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000065,
+  "question": "In Aug, 2006, who wanted to negotiate with Kuwait?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran",
+    "Government Delegation (Fiji)",
+    "Ali Jannati"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000066,
+  "question": "In what year did Ignacio Bunye first make pessimistic remarks about Iraq?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2006"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000067,
+  "question": "Could you tell me the exact month when Teodoro Obiang Nguema Mbasogo visited Thailand?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2013-03"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000068,
+  "question": "When did Hoang Tuan Anh praise China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2009-09-01"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000069,
+  "question": "In which year did the United States' Council of Advisors to the Cabinet threaten Thailand?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2014"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000070,
+  "question": "In 2012, which country was the first to express interest in cooperation with Cambodia?",
+  "meta": {
+   "gold_qtype": "equal_multi",
+   "answer_type": "entity",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:15",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Thailand"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000071,
+  "question": "In which year did the leader of Mongolia first negotiate with China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:16",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000072,
+  "question": "Who did Ethiopia use conventional military force against on the same day as the Hizbul Islam fighter?",
+  "meta": {
+   "gold_qtype": "equal_multi",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Al-Shabaab"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000073,
+  "question": "In what year did China last appeal to Iraq?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:40",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000074,
+  "question": "Who negotiated with the Thai military after Thailand?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "National United Front for Democracy Against Dictatorship",
+    "Abhisit Vejjajiva",
+    "Worachai Hema",
+    "Protester (Thailand)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000075,
+  "question": "In which month did the Prime Minister of Peru visit China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010-03"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000076,
+  "question": "In what year did the Ethiopian police last use conventional military force against Ethiopia?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000077,
+  "question": "After Sankei, who was investigated by the Lawyer/Attorney of South Korea?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Criminal (South Korea)",
+    "Business (South Korea)",
+    "Grand National Party"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000078,
+  "question": "In which month did Ali Tayyebnia make optimistic remarks about China?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2014-04"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000079,
+  "question": "Before the Governor of Japan, who was the last to condemn China?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:07:41",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Ai Weiwei"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000080,
+  "question": "Before the royal administration of Saudi Arabia, which country did China praise last?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Malaysia"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000081,
+  "question": "Could you tell me the exact month when the leader of Ghana first expressed his intention to negotiate with China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010-09"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000082,
+  "question": "Which country was accused by Ethiopia after 2012?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:06",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Government (Qatar)",
+    "Activist (Ethiopia)",
+    "Qatar",
+    "Al-Shabaab",
+    "Eritrea",
+    "Sudan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000083,
+  "question": "Who was negotiating with China in 2012?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "year",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:07",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran",
+    "Dissident (China)",
+    "Association of Southeast Asian Nations",
+    "Ali Baqeri",
+    "Vietnam",
+    "Sudan",
+    "South Korea",
+    "European Central Bank",
+    "France",
+    "Foreign Affairs (France)",
+    "Ma Ying Jeou",
+    "Cabinet / Council of Ministers / Advisors (United States)",
+    "Japan"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000084,
+  "question": "When did Maumoon Abdul Gayoom last visit China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:07",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2007-07-08"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000085,
+  "question": "Who wanted to meet with Thailand in May 2009?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:07",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Student (Thailand)",
+    "Vietnam",
+    "Children (Thailand)",
+    "South Korea",
+    "Citizen (Thailand)",
+    "Cabinet / Council of Ministers / Advisors (Thailand)",
+    "Men (United States)",
+    "Cambodia"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000086,
+  "question": "Who was the last person to visit Antonis Samaras before China?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:07",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Head of Government (Egypt)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000087,
+  "question": "In what month did Donald Rumsfeld last threaten Iraq?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:07",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2005-06"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000088,
+  "question": "When was the first visit of Burundi to China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2006-06-14"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000089,
+  "question": "When was the last time Huang Ju visited China?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2007-05-24"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000090,
+  "question": "When did South Sudan formally sign an agreement with Djibouti?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2012-02-03"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000091,
+  "question": "Could you tell me the exact month when the head of the Egyptian government first visited Iraq?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:33",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2011-08"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000092,
+  "question": "Who criticised the citizens of Saudi Arabia before Zawahiri?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Iran",
+    "Islamic Preacher (Saudi Arabia)",
+    "Royal Administration (Saudi Arabia)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000093,
+  "question": "Who was the last person to visit Malaysia before the leader of Turkmenistan?",
+  "meta": {
+   "gold_qtype": "before_last",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:32",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Ma Ying Jeou"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000094,
+  "question": "Who hosted the visit of Yang Hyong Sop before Cambodia did?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:33",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "South Africa",
+    "China",
+    "Angola",
+    "Norodom Sihanouk"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000095,
+  "question": "Who was the first to sign formal agreements with South Africa after Malaysia?",
+  "meta": {
+   "gold_qtype": "after_first",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:33",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "after_first",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Lesotho"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000096,
+  "question": "When did the Saudi Arabian Defence Forces first use small arms and light weapons against Ethiopia?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2011-03-11"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000097,
+  "question": "After 27 June 2008, who made Djibouti suffer from conventional military forces?",
+  "meta": {
+   "gold_qtype": "before_after",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "before_after",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Al-Shabaab",
+    "Eritrea",
+    "African Union"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000098,
+  "question": "Who made a telephone call to the Inquirer on 23 April 2009?",
+  "meta": {
+   "gold_qtype": "equal",
+   "answer_type": "entity",
+   "time_level": "day",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "equal",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "Edgard Arevalo",
+    "Police (Philippines)"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ },
+ {
+  "schema_version": "tkg-trace/1.0",
+  "quid": 3000099,
+  "question": "In which month did China first make negative remarks about the Association of Southeast Asian Nations?",
+  "meta": {
+   "gold_qtype": "first_last",
+   "answer_type": "time",
+   "time_level": "month",
+   "routing_mode": "blind",
+   "revealed_facets": [],
+   "predicted_facets": null,
+   "model": "deepseek-chat",
+   "timestamp": "2026-06-28T21:08:58",
+   "reflect": false,
+   "reflected": false
+  },
+  "routing": {
+   "selected_skill": null,
+   "selected_skill_path": null,
+   "gold_skill": "first_last",
+   "routing_observed": false,
+   "routing_correct": false,
+   "routing_turn": null
+  },
+  "navigation": {
+   "steps": [],
+   "num_steps": 0,
+   "num_tool_calls": 0,
+   "num_evidence_calls": 0,
+   "num_backtracks": 0,
+   "reconstructed_state": {}
+  },
+  "answer": {
+   "final": "[API_ERROR] Connection error.",
+   "gold": [
+    "2010-09"
+   ],
+   "correct": false
+  },
+  "failure": {
+   "is_failure": true,
+   "category": null,
+   "evidence": null
+  }
+ }
+]

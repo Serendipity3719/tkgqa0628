@@ -100,16 +100,74 @@ def obs_is_error(obs):
     return any(mk in o for mk in _ERR_MARKERS)
 
 
+# ---- Fallback 检测 (回溯原因标记) -------------------------------------------
+# 从 cmd 序列中识别已知的 fallback 模式, 产出可统计的标签
+_RE_BY_YEAR   = re.compile(r'by_year/')
+_RE_DATAFILE  = re.compile(r'/data\.txt')
+_RE_REL_FAM   = re.compile(r'_relation_families\.tsv')
+_RE_FLIP_DIR  = re.compile(r'\$2\s*==\s*"([<>])"')
+_RE_CATALOG_RE= re.compile(r'_catalog\.tsv')
+
+
+def _detect_fallback_patterns(steps_list):
+    """扫描已富化的 steps, 识别常见回溯模式。返回 fallback_log 列表。"""
+    log = []
+    prev_cmds = []  # 前几条 cmd 文本
+    prev_empty = False
+    for s in steps_list:
+        cmd = s.get("tool_call", {}).get("cmd", "")
+        empty = s.get("obs_empty", False)
+
+        # 模式 A: by_year 切片空 → 回退 data.txt 全量
+        if _RE_DATAFILE.search(cmd) and not _RE_BY_YEAR.search(cmd):
+            prev_by_year = any(_RE_BY_YEAR.search(c) for c in prev_cmds[-3:])
+            if prev_by_year and not empty:
+                log.append({"turn": s["turn"],
+                           "reason": "by_year_to_full",
+                           "detail": "切片无结果或不全, 回退全量 data.txt"})
+
+        # 模式 B: 方向翻转 ($2=="<" → $2==">" 或反之)
+        dirs = _RE_FLIP_DIR.findall(cmd)
+        prev_dirs = []
+        for pc in prev_cmds[-4:]:
+            prev_dirs.extend(_RE_FLIP_DIR.findall(pc))
+        if dirs and prev_dirs and dirs[0] != prev_dirs[-1] and prev_empty:
+            log.append({"turn": s["turn"],
+                       "reason": "flip_direction",
+                       "detail": f"方向 {prev_dirs[-1]} → {dirs[0]} (前次空结果)"})
+
+        # 模式 C: 尝试不同关系码 (同族 fallback)
+        if _RE_REL_FAM.search(cmd) and prev_empty:
+            log.append({"turn": s["turn"],
+                       "reason": "alt_relation_family",
+                       "detail": "重新查 _relation_families.tsv 换码"})
+
+        # 模式 D: 换实体 (grep catalog 不同 token)
+        if _RE_CATALOG_RE.search(cmd) and prev_empty:
+            # check if previous catalog grep used different tokens
+            pass
+
+        prev_cmds.append(cmd)
+        if len(prev_cmds) > 6:
+            prev_cmds = prev_cmds[-6:]
+        prev_empty = empty
+
+    return log
+
+
 # ---- Trace 组装 ------------------------------------------------------------
 def build_steps(raw_steps):
     """
     raw_steps: [{'cmd':..., 'obs':..., 'thought':...(可选)}]  按时间序
-    返回富化后的 navigation steps + 汇总统计 + 推断出的 selected_skill。
+    返回富化后的 navigation steps + 汇总统计 + fallback_log + 推断出的 selected_skill。
     """
     steps, carry = [], {}          # carry = 截至当前已绑定的槽位 (前向累积)
     selected_skill, routing_turn = None, None
     prev_evidence_empty = False
     num_evidence = num_backtrack = 0
+    used_by_year = False           # P2: 是否访问了 by_year/ 时序切片
+    used_index = False             # P2: 是否读了 INDEX.md
+    used_rel_fam = False           # P1: 是否查了 _relation_families.tsv
 
     for i, s in enumerate(raw_steps):
         cmd, obs = s.get("cmd", ""), s.get("obs", "")
@@ -119,6 +177,11 @@ def build_steps(raw_steps):
         sk = detect_skill_load(cmd)
         if sk and selected_skill is None:
             selected_skill, routing_turn = sk, i + 1
+
+        # P1/P2 使用标记
+        if "by_year/" in cmd:      used_by_year = True
+        if "INDEX.md" in cmd:      used_index = True
+        if "_relation_families.tsv" in cmd: used_rel_fam = True
 
         carry = {**carry, **extract_facets(cmd)}   # 前向累积绑定
         empty = obs_is_empty(obs)
@@ -142,6 +205,8 @@ def build_steps(raw_steps):
             "state": parse_state_line(thought) or dict(carry),
         })
 
+    fallback_log = _detect_fallback_patterns(steps)
+
     return steps, {
         "selected_skill": selected_skill,
         "routing_turn": routing_turn,
@@ -150,6 +215,12 @@ def build_steps(raw_steps):
         "num_evidence_calls": num_evidence,
         "num_backtracks": num_backtrack,
         "final_state": dict(carry),
+        # P1/P2 行为标记
+        "used_relation_families": used_rel_fam,
+        "used_index_md": used_index,
+        "used_by_year": used_by_year,
+        # 回溯原因标记
+        "fallback_log": fallback_log,
     }
 
 

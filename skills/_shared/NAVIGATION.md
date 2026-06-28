@@ -1,6 +1,7 @@
 # 共享导航原语 (所有 qtype skill 都依赖)
 
 你在导航一个时序知识图谱的文件系统知识库 `database/`。本文件是所有技能共用的底层操作手册。
+**每一步必须产出可观测的输出; 空结果、回溯、fallback 都必须记录 reason, 不要静默跳过。**
 
 ## 数据源布局
 
@@ -20,59 +21,98 @@ database/
 - 方向 `<` = 本实体是 tail (对方 → 本实体)
 - 日期 `YYYY-MM-DD`, **字典序即时间序**。双向冗余: 每条事实在 head 与 tail 两个目录各存一份。
 
-## 第 0 步: 分层导航 (大实体先看地图再钻取)
+---
 
-定位到实体目录后, **先看它是不是大实体** (目录里有没有 `INDEX.md`)。**有就先 `cat INDEX.md`**
-—— 这是鸟瞰地图 (哪些年有事件、各年最高频关系、Top 关系/邻居), 用它**规划再行动**, 大幅减少回溯。
+## 第 -1 步: 文件选择 (最先做, 选错文件 = 答案错)
 
-**何时钻 `by_year/<年>.txt`, 何时用全量 `data.txt` (关键, 别钻错)**:
-| 问题形态 | 用哪个文件 | 原因 |
-|---|---|---|
-| **锚定单年/单月** ("在 2010 年…"、`equal` 某年某月与 X) | `by_year/<年>.txt` | 答案只在那一年, 钻进去最省 |
-| **全序列首尾** (`first_last`: 第一次/最后一次) | **全量 `data.txt`** (`head -1`/`tail -1`) | first/last 是**跨所有年**的, 切到单年会取成"该年的首尾"→错 |
-| **枢轴单侧** (`before_after`/`after_first`/`before_last`, `$1<t0`/`$1>t0`) | **全量 `data.txt`** | 单侧通常跨多年, 切单年会漏 |
+**定位到实体目录后, 先 `ls` 检查目录里有什么:**
+```bash
+ls "database/$D/"
+```
+这会列出 `data.txt`、可能的 `INDEX.md`、可能的 `by_year/`。
+
+### ⛔ 铁律: first_last / before_last / after_first **绝对禁止**使用 by_year/
+
+这些 qtype 的答案**跨所有年份**, 切到任何单年都会取错范围:
+- `first_last`: "第一次/最后一次 X" → 必须扫描**全量** `data.txt` 用 `head -1` / `tail -1`
+- `before_last`: "在 Y 之前最后一个 X" → 枢轴日期 t0 之前的**全部年份**都要看, 不能只查一年
+- `after_first`: "在 Y 之后第一个 X" → 同理, t0 之后可能跨多年, 不能只查一年
+
+> ⛔ 你如果对 first_last / before_last / after_first 用了 `by_year/<年>.txt`,
+> **答案一定是错的** (会把跨年首尾取成单年首尾)。
+
+### 文件选择决策树 (必须按序判断, 不可跳过)
+
+| 步骤 | 条件 | 行动 | 否则 |
+|---|---|---|---|
+| 1 | qtype ∈ {first_last, before_last, after_first} | → **只用 `data.txt`**(全量)。**禁止**看 INDEX.md / by_year/。跳到第 1 步。 | → 步骤 2 |
+| 2 | qtype ∈ {before_after, equal, equal_multi} | → **可以先** `cat INDEX.md`(若存在)了解年份分布 | → 直接 awk `data.txt` |
+| 3 | 步骤 2 后, 问题**锚定明确年份/月份** (如 "in 2010", "July 2006") | → 可用 `by_year/<年>.txt` 缩小范围 | → 用全量 `data.txt` |
+| 4 | 步骤 3 用了切片但结果为空或不全 | → **回退到全量** `data.txt` 重查。在 trace 里记 `fallback_reason: by_year_empty` | — |
 
 ```bash
-cat "database/$D/INDEX.md"                         # 1) 先看地图: 定位年份 + 确认关系/方向存在
-awk -F'\t' '...' "database/$D/by_year/2010.txt"     # 2a) 只当问题锚定该年时才钻切片
-awk -F'\t' '...' "database/$D/data.txt"             # 2b) first/last/枢轴单侧 -> 仍走全量
+# 步骤 1 (first_last / before_last / after_first):
+awk -F'\t' '...' "database/$D/data.txt"    # ← 永远 data.txt, 绝不用 by_year/
+
+# 步骤 2-3 (before_after / equal / equal_multi, 且锚定年份):
+cat "database/$D/INDEX.md"                  # 先看地图
+awk -F'\t' '...' "database/$D/by_year/2010.txt"  # 锚定年才钻切片
+
+# 步骤 4 (回退):
+awk -F'\t' '...' "database/$D/data.txt"     # 切片空 → 回退全量
 ```
+
 - **没 `INDEX.md`** (小实体): 直接 awk `data.txt`, 它本就很小。
-- 切片与全量**结果完全一致** (by_year 是 data.txt 的按年子集), 钻错了无非多读, 回退到 data.txt 即可。
-- INDEX.md 还辅助**绑定/回溯**: 关系不在"高频关系"里 → 多半关系码选错, 回 `_relation_families.tsv` 换同族码;
-  目标年份事件数为 0 → 时间窗口或方向判断有误。
+- INDEX.md 辅助**绑定确认**: 目标关系不在"高频关系"里 → 回 `_relation_families.tsv` 换同族码;
+  目标年份事件数为 0 → 方向或关系码可能错。
 
-## 第 1 步: 关系映射 (先做, 最易错) —— **查表, 别凭记忆猜**
+---
 
-关系映射现在是**离线投影产物** `database/_relation_families.tsv` (28 个关系族)。
-**不要再凭记忆写关系码**, 按 NL 谓词 grep 这张表, 拿到 ①规范码 ②标准方向。
+## 第 1 步: 关系映射 — **查表, 严禁凭记忆猜码**
+
+关系映射的唯一入口是 `database/_relation_families.tsv` (28 个关系族, 离线生成)。
+**不要凭记忆、不要凭经验、不要自己拼关系码。每一步都 grep 这张表。**
 
 表的列: `family \t canonical_direction \t member_codes`
-- `member_codes` **空格分隔** (关系码内含逗号, 故不用逗号); 频次降序, **第一个 = 规范码**;
-  `!` 前缀 = 镜像冗余码, **勿用** (如 `!Host_a_visit`)。
+- `member_codes` **空格分隔**; 频次降序; **第一个 = 规范码**;
+  `!` 前缀 = 镜像/冗余码, **勿用作初次绑定** (如 `!Host_a_visit`), 仅在规范码查不到结果时作 fallback 尝试。
 - `canonical_direction` = 该族施动者(=head)是谁, 如 `head=visitor` / `head=accuser` / `head=actor`。
 
-> ⚠️ **选码规则 (重要)**: 在族内挑**与谓词词面最匹配**的成员码, **不是无脑用规范码**。
-> 谓词指名具体成员时用具体码: "optimistic comment" → `Make_optimistic_comment` (**不是** `Praise_or_endorse`);
-> "military force" → `Use_conventional_military_force`。谓词只是泛指(只说 "visit"/"sign"/"praise")才用第一个(规范码)。
+> ⚠️ **选码规则**: 族内挑**与谓词词面最匹配**的成员码。谓词指名具体成员时用具体码:
+> "optimistic comment" → `Make_optimistic_comment`; "military force" → `Use_conventional_military_force`。
+> 谓词只是泛指 ("visit"/"sign"/"praise") 才用第一个(规范码)。
+
+### 查表流程 (必须按序)
 
 ```bash
-# 1) 按谓词找族 (一两个判别词即可)
+# 1) 按 NL 谓词关键词 grep (一两个词即可)
 grep -i "visit" database/_relation_families.tsv
 #   -> visit  head=visitor  Make_a_visit !Host_a_visit
-# 2) 取规范码 = 第 3 列空格切分的第一个
-awk -F'\t' '/visit/{split($3,a," "); print a[1]}' database/_relation_families.tsv
-#   -> Make_a_visit
-```
-> ⚠️ grep 命中**多行**时 (谓词碰巧是别族某成员码的子串, 如 `appeal` 也出现在 `meet_negotiate` 的
-> `Appeal_to_others_to_meet_or_negotiate` 里): **选第 1 列 family 名与谓词最匹配的那行**
-> (`appeal` → `appeal_request`, 不是 `meet_negotiate`)。
 
-取不到结果时, 在**同族**里换下一个成员码 (回溯第 1 档), 不要跳到别的族。
-常用谓词 → 族关键词: visit→`visit` · negotiate/meet→`negotiat` · appeal/request→`appeal` ·
-demand→`demand` · sign/agreement→`sign` · criticize/condemn→`criticiz` · accuse→`accuse` ·
-cooperate→`cooperat` · praise/optimistic/endorse→`praise` · sanction/embargo→`sanction`。
-visit 仍照下方"visit 专项规则"用方向区分访客/目的地。
+# 2) 取规范码: 第 3 列空格切分的第一个 (不含 ! 前缀的)
+awk -F'\t' '/visit/{split($3,a," "); print a[1]}' database/_relation_families.tsv
+
+# 3) 取标准方向: 第 2 列
+awk -F'\t' '/visit/{print $2}' database/_relation_families.tsv
+```
+
+> ⚠️ grep 命中**多行**时: **选第 1 列 family 名与谓词最匹配的那行**。
+> 例: "appeal" 命中 `appeal_request` 和 `meet_negotiate`(成员含 Appeal_to_others_to_meet_or_negotiate)
+> → 选 `appeal_request`(family 名直接匹配), 不是 `meet_negotiate`。
+
+### 查不到时的 fallback (按序尝试, 记 reason)
+
+| 优先级 | 动作 | trace 标记 |
+|---|---|---|
+| 1 | 换更短的 grep 关键词 (如 "cooperat" 替代 "cooperation") | `fallback: broader_keyword` |
+| 2 | 在**同族**换下一个非 `!` 成员码 | `fallback: same_family_alt_code` |
+| 3 | 尝试该族的 `!` 降级码 (镜像码, 方向语义相反) | `fallback: demoted_mirror_code` |
+| 4 | grep 其他族的成员码名 (跨族搜索) | `fallback: cross_family_search` |
+
+**严禁跳过的步骤**: 必须先查 `_relation_families.tsv` → 再模糊 grep → 最后才允许人工推断。
+如果最终仍用人工推断的关系码, trace 必须标记 `binding_source: manual_guess`。
+
+---
 
 ## 第 2 步: 实体映射 (锚实体 / 枢轴 / 固定对方)
 
@@ -89,50 +129,71 @@ grep -i "Seyoum" database/_catalog.tsv | grep -i "Mesfin"   # 取第 2 列 = $D
 - 英式拼写 → 美式: `defence`→`defense`, `centre`→`center`
 - "citizens of Belgium" → `Citizen_(Belgium)`
 
+---
+
 ## 第 3 步: 方向判定 (答案在哪一列)
 
-- 问 "谁/which country 对 X 做了某事" → 锚实体 = X (已知), 方向 `<`, **答案是对方列 $4**。
-- 问 "X 对谁做了某事 / X 最后…谁" → 锚实体 = X, 方向 `>`, 答案是对方列 $4。
-- **被动语态**: "who was accused **by** Ethiopia" → Ethiopia 是施动者=head, 方向 `>`。
-- 拿不准就**两个方向都试**, 哪个有结果用哪个 (双向冗余保证不漏)。
+先查 `_relation_families.tsv` 拿到的 `canonical_direction`:
+- `head=visitor` → 访客(主动去的人)是 head, 方向 `>`。问 "谁访问了X" = X 是目的地 → 在 X 文件用 `<`。
+- `head=accuser` → 谴责者是 head, 方向 `>`。问 "谁被X谴责" = X 是施动者 → 在 X 文件用 `>`。
+- `head=actor` → 施动者=actor=head。按问句语义判定谁主动。
 
-### ⚠️ visit 专项规则 (两臂最高频的绑定错, 必须照做)
+通用规则:
+- 问 "谁/which country **对 X 做了**某事" → 锚=X, 方向 `<`, 答案在 $4。
+- 问 "**X 对谁做了**某事 / X 最后…谁" → 锚=X, 方向 `>`, 答案在 $4。
+- **被动语态**: "who was accused **by** Ethiopia" → Ethiopia 是施动者=head, 在 Ethiopia 文件方向 `>`。
+- 拿不准就两个方向都试, 哪个有结果用哪个。
 
-一次访问在库里有 4 份冗余: `Make_a_visit`/`Host_a_visit` × 两个 ego 文件。它们语义镜像、极易把方向搞反。
-**铁律: visit 一律只用 `Make_a_visit`, 用方向区分谁是访客 (访客 = 主动"去"的一方 = head)。**
+### visit 方向规则 (参照 `_relation_families.tsv`)
+
+`_relation_families.tsv` visit 行: `visit \t head=visitor \t Make_a_visit !Host_a_visit`
+含义: 访客(主动去的人)=head。**只用 `Make_a_visit`, 绝不用 `Host_a_visit`。**
 
 在锚实体 X 的文件里:
-- **"谁访问了 X" / "X 接待/受访于谁" / "X hosted / received a visit from" / "visited X"**
-  → X 是**目的地**, 用 `$2=="<" && $3=="Make_a_visit"`, **访客在 $4**。
-- **"X 访问了谁" / "whom did X visit" / "X 出访"**
-  → X 是**访客**, 用 `$2==">" && $3=="Make_a_visit"`, **目的地在 $4**。
+- **"谁访问了 X" / "X received/hosted a visit from Y"** → X=目的地, `$2=="<" && $3=="Make_a_visit"`, 访客在 $4。
+- **"X 访问了谁" / "X paid a visit to Y"** → X=访客, `$2==">" && $3=="Make_a_visit"`, 目的地在 $4。
 
-> 例: "UAE received the visit from China" = China 访问 UAE → 在 UAE 文件 `$2=="<" && $3=="Make_a_visit" && $4=="China"` → 2010-03。
-> **千万别用 `Host_a_visit`**: 在 X 文件里 `< Host_a_visit` 其实等于"X 去访问别人"(方向反了), 正是之前一直答错的根源。
+> `Host_a_visit` 带 `!` 前缀 = 降级镜像码, 仅在 `Make_a_visit` 查不到结果时作 fallback 尝试。
 
-## 固定对方 / 枢轴的精确匹配 (重要)
+---
 
-匹配"对方"列时, 先把短语解析成 catalog 规范名再**精确**比, 别用子串——
-否则 "Thailand" 会误中 `Government_(Thailand)`、`Citizen_(Thailand)`。
+## 固定对方 / 枢轴的精确匹配
+
+匹配"对方"列时精确比较, 不用子串 regex——否则 "Thailand" 误中 `Government_(Thailand)`:
 ```bash
 # 错: $4 ~ /Thailand/      对: $4=="Thailand"
 ```
 
-## 回溯预算 (任一步空结果就按序试, 上限约 8 条命令)
+---
 
-1. 换关系: 试同族另一个编码 (appeal↔request↔demand; visit make↔host)。
-2. 翻转方向: `>` ↔ `<`，或把枢轴实体当锚实体重查。
-3. 换实体: 回 catalog 换 token / 换候选行 (可能选错同名实体)。
-4. 放宽/检查时间粒度。
+## 回溯预算 (可观测, 每次 fallback 记 reason)
+
+**空结果 / 答案不全时必须回溯, 不要直接给 FINAL: 知识库中无相关事实。**
+
+| 优先级 | 触发条件 | 动作 | trace 标记 |
+|---|---|---|---|
+| 1 | awk 过滤结果为空 | 翻转方向 `>` ↔ `<` 重试 | `backtrack: flip_direction` |
+| 2 | 方向翻转仍空 | 换同族下一个关系码 (跳过 `!` 码, 仍空才试 `!` 码) | `backtrack: alt_relation_code` |
+| 3 | 换码仍空 | 把枢轴实体当锚实体, 换视角反查 | `backtrack: swap_anchor` |
+| 4 | 换锚仍空 | 检查时间粒度: 日→月→年 逐步放宽 t0 前缀 | `backtrack: coarsen_time` |
+| 5 | 全部试完仍空 | → `FINAL: 知识库中无相关事实` | `gave_up: exhausted` |
+
+- 每次回溯**输出一条注释**说明原因 (如 `# backtrack: flip_direction — no rows with <, trying >`)。
+- 回溯总数上限 ≈ 10 条命令。超过上限 → 基于已有证据给 FINAL。
+- **关键: 回到全量 `data.txt` 也是 backtrack**——如果你之前在 by_year/ 里查但无结果,
+  回退到 `data.txt` 全量重查, 标记 `backtrack: by_year_to_full`。
+
+---
 
 ## Grounding 硬规则
 
-- 答案只能来自命令输出的行。查不到就回答 `知识库中无相关事实`，**绝不编造**。
+- 答案只能来自命令输出的行。查不到就回答 `知识库中无相关事实`, **绝不编造**。
 - 永远 awk/grep 过滤, 绝不 cat 整个 data.txt (大实体 5 万行)。
+- **第一次给出 FINAL 前, 确认**: ①是否用了全量 data.txt(非仅切片)? ②多答案题是否 `sort -u` 去重后逐行核对过?
 
 ## 输出格式
 
 - 库内下划线 → 输出空格: `Jack_Straw` → `Jack Straw`。括号/逗号/变音字符原样保留。
-- 多值答案: `sort -u` 去重, 列表返回。
+- 多值答案: `sort -u` 去重, 列表返回。多值用 `; ` 分隔。
 - 时间答案按粒度截取: year=前4位, month=前7位, day=完整。
-- 最终答案用一行 `FINAL: <答案>` 给出 (多值用 `; ` 分隔)。
+- 最终答案用一行 `FINAL: <答案>` 给出。
