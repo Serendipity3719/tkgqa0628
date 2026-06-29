@@ -50,13 +50,15 @@ def split_thought(reply, block_match):
 #   1) 通用版"每个 FINAL 都注入五项清单" = 净负 (ALL 82%→73%, p=0.031 显著)。
 #   2) 空结果探针"给'无相关事实'前再核一次" = 净负 (2026-06-28 McNemar: 改对9/改错14/净-5)。
 #      Agent 二次尝试失败后倾向于彻底放弃而非修正, 产生大量"正确答案→无相关事实"的回归。
+#   3) 旧 _PLURAL_Q 用 countr 会把 "which country" 单答案题误判成复数题, 造成反射误触发。
 #   回溯预算已在 NAVIGATION.md 中处理空结果, 不需要反射层再介入。
-# 故 targeted reflection 现**仅保留不完整信号** (多答案题只给 1 个答案)。
+# 故 targeted reflection 现**仅保留更保守的不完整信号**。
 
-# 复数问句标志 (只看问句, 无 gold, 盲态无泄漏)
+# 复数问句标志 (只看问句, 无 gold, 盲态无泄漏)。只匹配明确复数形式;
+# "which country/state/party/organization..." 这类单数问句不触发, 避免 REPORT_NEXT 记录的误触发。
 _PLURAL_Q = re.compile(
-    r"which\s+\w*\s*(countr|nation|state|part|group|organi|leader|people|side)"
-    r"|\bwho are\b|哪些|list (all|the)|all .*\bwho\b", re.I)
+    r"which\s+(?:countries|nations|states|parties|groups|organizations|leaders|people|sides)\b"
+    r"|\bwho are\b|哪些|list (?:all|the)|all .*\bwho\b", re.I)
 
 
 def _is_error_ans(ans):
@@ -82,7 +84,7 @@ def _reflect_probe(question, cand, raw_steps):
     # 不再对"知识库中无相关事实"做反射 —— 回溯预算已覆盖, 反射层介入有害
     if "知识库中无相关事实" in cand:
         return None
-    # 不完整信号: (agent 自己路由到多答案 skill 或问句明显复数) 却只给 1 个答案
+    # 不完整信号: (agent 自己路由到多答案 skill 或问句明确复数) 却只给 1 个答案
     n_ans = len([p for p in re.split(r"\s*;\s*|\s*、\s*", cand) if p.strip()])
     if n_ans == 1 and (_loaded_multianswer_skill(raw_steps) or _PLURAL_Q.search(question or "")):
         return ("⚠️ 这看起来要多个答案却只给了一个, 可能漏了同侧其他对方。请在正确方向($2)上"
