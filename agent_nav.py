@@ -22,8 +22,19 @@ if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-client = OpenAI(api_key=os.environ.get("DEEPSEEK_API_KEY", "set-DEEPSEEK_API_KEY-env-var"),
-                base_url="https://api.deepseek.com")
+
+# DeepSeek API 配置
+# - DEEPSEEK_API_KEY: 必需。不要写进代码或提交到 git。
+# - DEEPSEEK_BASE_URL: 默认官方 OpenAI-compatible endpoint。
+# - DEEPSEEK_MODEL: 默认 deepseek-chat 以保持历史 trace 可比性；新实验可显式设为
+#   deepseek-v4-flash / deepseek-v4-pro。详见 scripts/deepseek_smoke.py 与 API_RUNBOOK_2026-06-29.md。
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
+DEEPSEEK_BASE_URL = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+DEEPSEEK_TIMEOUT = float(os.environ.get("DEEPSEEK_TIMEOUT", "70"))
+
+client = OpenAI(api_key=DEEPSEEK_API_KEY or "missing-DEEPSEEK_API_KEY",
+                base_url=DEEPSEEK_BASE_URL)
 
 ROUTER = open(os.path.join(ROOT, 'skills', 'SKILLS.md'), encoding='utf-8').read()
 
@@ -80,14 +91,18 @@ def run_bash(cmd, timeout=25):
         return f'[错误] {e}'
 
 def _chat(messages, retries=4):
+    if not DEEPSEEK_API_KEY:
+        return 'FINAL: [API_ERROR] missing DEEPSEEK_API_KEY; run scripts/deepseek_smoke.py before experiments'
+
     last = ''
     for a in range(retries):
         try:
-            r = client.chat.completions.create(model='deepseek-chat', messages=messages,
-                                               temperature=0, max_tokens=700, timeout=70)
+            r = client.chat.completions.create(model=DEEPSEEK_MODEL, messages=messages,
+                                               temperature=0, max_tokens=700, timeout=DEEPSEEK_TIMEOUT)
             return r.choices[0].message.content
         except Exception as e:
-            last = str(e)[:100]; time.sleep(2 * (a + 1))
+            last = f'{type(e).__name__}: {str(e)}'[:300]
+            time.sleep(2 * (a + 1))
     return f'FINAL: [API_ERROR] {last}'
 
 def agent_solve(question, qtype, answer_type, time_level, max_cmds=11):
@@ -161,6 +176,7 @@ def main():
 
     data = json.load(open(os.path.join('data', 'test.json'), encoding='utf-8'))[:args.n]
     print(f'真 Agent 导航实验: {len(data)} 题, {args.workers} 并发 ...')
+    print(f'DeepSeek API: base_url={DEEPSEEK_BASE_URL} model={DEEPSEEK_MODEL} key_present={bool(DEEPSEEK_API_KEY)}')
     t0 = time.time(); results = []; done = 0
     lock = threading.Lock()
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
