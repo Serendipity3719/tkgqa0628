@@ -110,7 +110,7 @@ def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11, reflect=F
 
     NG_ENABLE = os.getenv("NG_ENABLE", "0") == "1"
 
-    if NG_ENABLE and args.reveal == "none":
+    if NG_ENABLE and len(reveal) == 0:
         g = build_graph(item["question"])
         ng_ctx = build_ng_prompt(item["question"], g)
 
