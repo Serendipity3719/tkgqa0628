@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Hierarchical Skill-Based Navigation with Reinforcement Learning for Temporal Knowledge Graph Question Answering}
+\author{TKGQA Navigation Agent System}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We propose a hierarchical navigation framework for Temporal Knowledge Graph Question Answering (TKGQA), where reasoning is formulated as a learned navigation problem over a structured skill space. Our system integrates skill abstraction, neural routing, and reinforcement learning to enable efficient multi-hop reasoning over temporal knowledge graphs. Unlike prior work relying on flat retrieval or pure LLM reasoning, our method constructs a navigable skill tree and optimizes navigation policies via trajectory-level rewards.
+\end{abstract}
+
+\section{Introduction}
+Temporal Knowledge Graph Question Answering (TKGQA) requires reasoning over entities, relations, and temporal constraints. Existing approaches suffer from flat retrieval inefficiency and lack structured navigation. We address this by introducing a hierarchical skill-based navigation framework.
+
+\section{Method}
+
+\subsection{Skill Abstraction}
+We define a skill as a structured unit consisting of entity sets, relation types, temporal scope, and associated document identifiers.
+
+\subsection{Hierarchical Navigation}
+The system performs multi-step navigation:
+Query $\rightarrow$ Skill Router $\rightarrow$ Neural Policy $\rightarrow$ Navigator $\rightarrow$ Document Retrieval.
+
+\subsection{Neural Policy}
+We model skill selection as:
+\begin{equation}
+\pi(s|q) = \frac{\exp(\cos(e_q, e_s))}{\sum_{s'} \exp(\cos(e_q, e_{s'}))}
+\end{equation}
+
+\subsection{Reinforcement Learning Optimization}
+We optimize the policy using trajectory-level rewards:
+\begin{equation}
+\nabla J(\theta) = \mathbb{E}[\log \pi(a|s)(R - b)]
+\end{equation}
+where $b$ is a baseline.
+
+\section{Unified Agent}
+We unify routing, navigation, neural policy, and optimization into a single agent loop that performs both inference and learning.
+
+\section{Experiments}
+
+\subsection{Baselines}
+Flat retrieval, heuristic routing, and LLM-only reasoning.
+
+\subsection{Metrics}
+Accuracy, Hit@K, navigation depth, and retrieval efficiency.
+
+\subsection{Ablation}
+We remove neural policy, RL optimization, and hierarchical structure to evaluate contributions.
+
+\section{Conclusion}
+We present a unified hierarchical navigation framework for TKGQA that integrates structured decomposition, neural ranking, and reinforcement learning into a single agent system.
+
+\end{document}
