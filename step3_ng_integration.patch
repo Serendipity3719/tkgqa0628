@@ -1,0 +1,29 @@
+diff --git a/exp_runner.py b/exp_runner.py
+index 0000000..1111111 100644
+--- a/exp_runner.py
++++ b/exp_runner.py
+@@
+ import agent_nav as AN
+ import exp_trace
+ import exp_eval
+ import exp_parse
++import os
++
++from navigation_graph import build_graph
++from ng_prompt_builder import build_ng_prompt
+
+@@ def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11, reflect=False):
+     user = build_user(item["question"], feed["qtype"], feed["answer_type"],
+                       feed["time_level"], reveal)
++
++    # ============================
++    # NG-LAYER (Route B Injection)
++    # ============================
++    NG_ENABLE = os.getenv("NG_ENABLE", "0") == "1"
++    if NG_ENABLE and (not reveal):
++        ng_graph = build_graph(item["question"])
++        ng_prompt = build_ng_prompt(item["question"], ng_graph)
++        user = ng_prompt + "\n\n" + user
++
+     messages = [{"role": "system", "content": AN.SYSTEM},
+                 {"role": "user", "content": user}]

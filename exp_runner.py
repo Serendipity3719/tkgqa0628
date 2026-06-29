@@ -101,6 +101,22 @@ def solve_traced(item, reveal, feed=None, predicted=None, max_cmds=11, reflect=F
                     "time_level": item.get("time_level", "day")}
     user = build_user(item["question"], feed["qtype"], feed["answer_type"],
                       feed["time_level"], reveal)
+    # ============================
+    # NG-LAYER INJECTION (Route B)
+    # ============================
+    import os
+    from navigation_graph import build_graph
+    from ng_prompt_builder import build_ng_prompt
+
+    NG_ENABLE = os.getenv("NG_ENABLE", "0") == "1"
+
+    if NG_ENABLE and args.reveal == "none":
+        g = build_graph(item["question"])
+        ng_ctx = build_ng_prompt(item["question"], g)
+
+        # 关键：只增强 user，不动 system / messages 结构
+        user = ng_ctx + "\n\n" + user
+        
     messages = [{"role": "system", "content": AN.SYSTEM},
                 {"role": "user", "content": user}]
     raw_steps, cmds, final = [], 0, "[无答案]"
