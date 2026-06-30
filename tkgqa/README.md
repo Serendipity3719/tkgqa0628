@@ -1,6 +1,6 @@
-# Phase 2: Hierarchical Skill Directory
+# Phase 3 Step 1: Semantic Routing Schema
 
-This directory introduces a **hierarchical navigation structure** for TKGQA Skill system.
+This directory materializes a **semantic routing layer** for the TKGQA Skill system.
 
 ## Core Design Principle
 We replace flat retrieval:
@@ -13,6 +13,9 @@ root skill → cluster skill → entity skill → temporal skill → fact/doc
 ```
 
 This ensures **logarithmic reduction of search space (O(log N))** at each navigation step.
+
+Phase 3 replaces coarse physical entity buckets with ontology-like semantic
+clusters defined in `tkgqa_skills/routing/cluster_taxonomy.py`.
 
 ---
 
@@ -31,13 +34,15 @@ tkgqa/
   root/
     index.md
 
-  entity_clusters/
+  semantic_clusters/
     index.md
-    org/
-    person/
-    location/
-    other/
+    clusters.tsv
+    cluster_001_geopolitical_entities/
+    cluster_002_government_institutions/
+    cluster_003_political_leadership/
+    ...
       catalog.tsv
+      relation_families.tsv
       <entity>/
         index.md
         temporal/
@@ -58,20 +63,29 @@ tkgqa/
 
   indexes/
     entity_index.tsv
+    semantic_cluster_index.tsv
     relation_cluster_index.tsv
     temporal_index.tsv
 ```
 
-### Entity Clusters
-- org: organization / institution / military / government entities
-- person: role-bearing people and person-like actor nodes
-- location: countries, regions, cities, and geographic actor nodes
-- other: fallback cluster for entities not covered by deterministic rules
+### Semantic Clusters
+Clusters are stable schema objects with:
+
+- `cluster_id`
+- `name`
+- `description`
+- `entity_type_hints`
+- `relation_family_hints`
+- `keywords`
+- `parent_domain`
+- `routing_policy`
+
+The current static taxonomy contains 15 representative TKGQA clusters and stays
+below the Phase 3 limit of 100 clusters.
 
 ### Relation Clusters
-- event: general events
-- transaction: financial / exchange actions
-- conflict: conflict / war / dispute events
+- legacy compatibility branch for relation-family navigation
+- semantic cluster folders also include `relation_families.tsv`
 
 ### Temporal Clusters
 - one directory per observed year in the KG
@@ -90,9 +104,10 @@ Each level in the hierarchy must:
 ## Mapping from Old System
 | Old System | New System |
 |-----------|------------|
-| `database/_catalog.tsv` | `tkgqa/entity_clusters/*/catalog.tsv` + `tkgqa/indexes/entity_index.tsv` |
-| by-letter bucket | semantic cluster |
-| direct `grep -> data.txt` | `root -> cluster -> entity -> temporal -> fact_doc` |
+| `database/_catalog.tsv` | `tkgqa/semantic_clusters/*/catalog.tsv` + `tkgqa/indexes/entity_index.tsv` |
+| by-letter bucket | ontology-like semantic cluster |
+| `entity_clusters/org/person/location/other` | `semantic_clusters/cluster_001_* ... cluster_015_*` |
+| direct `grep -> data.txt` | `root -> semantic_cluster -> entity -> temporal -> fact_doc` |
 | `database/entities/*/*/by_year` only for large entities | temporal leaf skills for every entity-year, with `filter_hint` fallback |
 
 `database/` remains the grounded fact store. `tkgqa/` is the navigation layer:

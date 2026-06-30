@@ -27,6 +27,14 @@ import sys
 import time
 from collections import defaultdict, Counter
 
+from tkgqa_skills.routing.cluster_taxonomy import (
+    SEMANTIC_CLUSTERS,
+    assign_entity_to_semantic_cluster,
+    relation_family_semantic_clusters,
+    semantic_cluster_dirname,
+    semantic_cluster_tsv_rows,
+)
+
 # Windows / 跨平台文件名非法字符
 _ILLEGAL = '<>:"/\\|?*'
 _ILLEGAL_MAP = {ord(c): '_' for c in _ILLEGAL}
@@ -62,42 +70,6 @@ def bucket_of(safe):
     if c.isalnum():
         return c.lower()
     return '_other'
-
-
-def entity_cluster_of(name):
-    """Phase 2: 把实体路由到可解释的语义簇，替代 by-letter 作为导航入口。
-
-    这是确定性弱分类，不追求 NER 完美；目标是让第一层目录能真实减少候选空间。
-    后续 Phase 3 可用 embedding/ontology 替换这里的规则。
-    """
-    low = name.lower()
-    org_markers = [
-        'ministry', 'government', 'department', 'office', 'council', 'party',
-        'parliament', 'senate', 'army', 'military', 'police', 'court',
-        'agency', 'organization', 'organisation', 'company', 'bank',
-        'united nations', 'security council', 'cabinet', 'embassy',
-    ]
-    location_markers = [
-        'province', 'city', 'region', 'state', 'district', 'island',
-        'border', 'territory', 'republic of', 'kingdom of',
-    ]
-    person_role_markers = [
-        'president', 'minister', 'leader', 'governor', 'ambassador',
-        'secretary', 'spokesman', 'spokesperson', 'mayor', 'prime minister',
-        'head of government', 'official',
-    ]
-
-    if any(m in low for m in org_markers):
-        return 'org'
-    if any(m in low for m in location_markers):
-        return 'location'
-    if any(m in low for m in person_role_markers):
-        return 'person'
-    # Many country/location nodes in ICEWS-style KG are one to three title-cased tokens.
-    tokens = [t for t in name.replace('_', ' ').split() if t]
-    if 1 <= len(tokens) <= 3 and all(t[:1].isupper() for t in tokens):
-        return 'location'
-    return 'other'
 
 
 RELATION_CLUSTER_MAP = {
@@ -306,9 +278,9 @@ def write_tsv(path, header, rows):
 
 
 def reset_hierarchy_dir(hier_dir):
-    """清理 Phase 2 生成物，但保留 tkgqa/README.md 等手写文件。"""
+    """清理生成物，但保留 tkgqa/README.md 等手写文件。"""
     os.makedirs(hier_dir, exist_ok=True)
-    for child in ['root', 'entity_clusters', 'relation_clusters', 'temporal', 'indexes']:
+    for child in ['root', 'entity_clusters', 'semantic_clusters', 'relation_clusters', 'temporal', 'indexes']:
         p = os.path.join(hier_dir, child)
         if os.path.isdir(p):
             shutil.rmtree(p)
@@ -318,39 +290,73 @@ def reset_hierarchy_dir(hier_dir):
 
 def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path,
                                         catalog_rows, fam_rows, index_threshold):
-    """Phase 2: 物化 root -> cluster -> entity -> temporal -> doc 的导航目录。
+    """Phase 3 Step 1: 物化 root -> semantic cluster -> entity -> temporal -> doc。
 
     旧 database/entities 仍是事实存储；tkgqa/ 是技能导航层，所有叶子都指向可验证
-    data.txt 或 by_year/<year>.txt。这样不复制事实、不破坏旧实验，同时让目录层级
-    成为真实 routing surface。
+    data.txt 或 by_year/<year>.txt。semantic_clusters 是 ontology-like routing surface；
+    relation_clusters/temporal/indexes 保留为兼容和交叉索引层。
     """
     reset_hierarchy_dir(hier_dir)
 
-    entity_clusters = defaultdict(list)
+    semantic_cluster_entities = defaultdict(list)
     temporal_index = defaultdict(list)
     relation_clusters = defaultdict(list)
     entity_year_counts = {}
+    semantic_index_rows = []
+    relation_family_rows_by_semantic = defaultdict(list)
 
     for canonical, rel_path, cnt, dmin, dmax in catalog_rows:
-        cluster = entity_cluster_of(canonical)
-        entity_clusters[cluster].append((canonical, rel_path, cnt, dmin, dmax))
+        cluster = assign_entity_to_semantic_cluster(canonical)
+        semantic_cluster_entities[cluster.cluster_id].append((canonical, rel_path, cnt, dmin, dmax))
         year_counts = Counter(rec[0][:4] for rec in records[canonical])
         entity_year_counts[canonical] = year_counts
+        semantic_path = os.path.join('semantic_clusters', semantic_cluster_dirname(cluster),
+                                     rel_path.split('/')[-1]).replace('\\', '/')
+        semantic_index_rows.append((
+            cluster.cluster_id,
+            cluster.name,
+            'entity',
+            canonical,
+            semantic_path,
+            cnt,
+            f'{dmin}..{dmax}',
+        ))
         for year, ycnt in year_counts.items():
             temporal_index[year].append((canonical, rel_path, ycnt, dmin, dmax))
+            semantic_index_rows.append((
+                cluster.cluster_id,
+                cluster.name,
+                'temporal',
+                year,
+                f'{semantic_path}/temporal/{year}',
+                ycnt,
+                canonical,
+            ))
 
     for fam, direction, members in fam_rows:
         relation_clusters[relation_cluster_of(fam)].append((fam, direction, ' '.join(members)))
+        for cluster in relation_family_semantic_clusters(fam):
+            row = (fam, direction, ' '.join(members))
+            relation_family_rows_by_semantic[cluster.cluster_id].append(row)
+            semantic_index_rows.append((
+                cluster.cluster_id,
+                cluster.name,
+                'relation_family',
+                fam,
+                f'relation_family:{fam}',
+                len(members),
+                direction,
+            ))
 
     root_lines = [
         '# TKGQA Root Skill',
         '',
-        'Phase 2 hierarchical navigation entry point.',
+        'Phase 3 semantic routing entry point.',
         '',
         '## Navigation Policy',
         '',
-        '1. Select an entity, relation, or temporal cluster from this root index.',
-        '2. Open that cluster index to reduce candidate scope.',
+        '1. Select a semantic cluster from `../semantic_clusters/index.md` using ontology cues.',
+        '2. Open that cluster index to reduce candidate entity and relation-family scope.',
         '3. Drill into an entity skill, then a temporal skill when the query has a year/window.',
         '4. Read only the pointed fact document (`by_year/<year>.txt` when available, otherwise `data.txt` with a year filter).',
         '',
@@ -358,14 +364,14 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         '',
         '| branch | purpose | index |',
         '|---|---|---|',
-        '| entity_clusters | semantic entity routing | ../entity_clusters/index.md |',
-        '| relation_clusters | relation-family routing | ../relation_clusters/index.md |',
+        '| semantic_clusters | ontology-like entity/relation routing | ../semantic_clusters/index.md |',
+        '| relation_clusters | legacy relation-family routing | ../relation_clusters/index.md |',
         '| temporal | year-first routing | ../temporal/index.md |',
         '| indexes | machine-readable cross indexes | ../indexes/ |',
         '',
         '## Search-Space Reduction',
         '',
-        f'- entities: {len(catalog_rows):,} -> cluster -> entity -> year',
+        f'- entities: {len(catalog_rows):,} -> semantic cluster -> entity -> year',
         f'- relation families: {len(fam_rows):,} -> relation cluster -> family -> relation code',
         f'- years: {len(temporal_index):,} yearly slices -> entity candidates',
         '',
@@ -374,27 +380,50 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
 
     entity_index_rows = []
     cluster_summary_rows = []
-    for cluster in sorted(entity_clusters):
-        rows = sorted(entity_clusters[cluster], key=lambda r: (-r[2], r[0]))
-        cluster_dir = os.path.join(hier_dir, 'entity_clusters', cluster)
-        cluster_summary_rows.append((cluster, len(rows), rows[0][2] if rows else 0))
+    for cluster in SEMANTIC_CLUSTERS:
+        rows = sorted(semantic_cluster_entities.get(cluster.cluster_id, []), key=lambda r: (-r[2], r[0]))
+        cluster_slug = semantic_cluster_dirname(cluster)
+        cluster_dir = os.path.join(hier_dir, 'semantic_clusters', cluster_slug)
+        rel_rows = sorted(relation_family_rows_by_semantic.get(cluster.cluster_id, []))
+        cluster_summary_rows.append((cluster.cluster_id, cluster.name, cluster.parent_domain,
+                                     len(rows), len(rel_rows), cluster_slug))
         write_tsv(
             os.path.join(cluster_dir, 'catalog.tsv'),
             '# canonical_name\tdatabase_path\tcount\tmin_date\tmax_date',
             rows,
         )
+        write_tsv(
+            os.path.join(cluster_dir, 'relation_families.tsv'),
+            '# family\tcanonical_direction\tmember_codes',
+            rel_rows,
+        )
         lines = [
-            f'# Entity Cluster: {cluster}',
+            f'# Semantic Cluster: {cluster.cluster_id} {cluster.name}',
+            '',
+            f'- parent_domain: {cluster.parent_domain}',
+            f'- description: {cluster.description}',
+            '',
+            '## Routing Policy',
+            '',
+            cluster.routing_policy,
             '',
             '## Navigation Contract',
             '',
             '- Use `catalog.tsv` to choose candidate entity skills in this semantic cluster.',
+            '- Use `relation_families.tsv` to bind relation-family hints before falling back globally.',
             '- Open the entity `index.md` before reading fact documents.',
-            '- If no candidate fits, backtrack to `../index.md` and inspect another cluster.',
+            '- If no candidate fits, backtrack to `../index.md` and inspect another semantic cluster.',
+            '',
+            '## Schema Hints',
+            '',
+            f'- entity_type_hints: {", ".join(cluster.entity_type_hints) if cluster.entity_type_hints else "(none)"}',
+            f'- relation_family_hints: {", ".join(cluster.relation_family_hints) if cluster.relation_family_hints else "(none)"}',
+            f'- keywords: {", ".join(cluster.keywords) if cluster.keywords else "(none)"}',
             '',
             f'## Coverage',
             '',
             f'- entities: {len(rows):,}',
+            f'- relation_families: {len(rel_rows):,}',
             f'- total events by entity view: {sum(r[2] for r in rows):,}',
             '',
             '## Top Entity Skills',
@@ -410,12 +439,14 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
             entity_dir = os.path.join(cluster_dir, safe)
             db_path = os.path.join(out_dir, *rel_path.split('/')).replace('\\', '/')
             years = sorted(entity_year_counts[canonical])
-            entity_index_rows.append((canonical, cluster, os.path.join('entity_clusters', cluster, safe).replace('\\', '/'),
+            entity_index_rows.append((canonical, cluster.cluster_id, cluster.name,
+                                      os.path.join('semantic_clusters', cluster_slug, safe).replace('\\', '/'),
                                       rel_path, cnt, dmin, dmax))
             lines = [
                 f'# Entity Skill: {canonical}',
                 '',
-                f'- cluster: {cluster}',
+                f'- semantic_cluster_id: {cluster.cluster_id}',
+                f'- semantic_cluster_name: {cluster.name}',
                 f'- database_path: `{db_path}`',
                 f'- event_count: {cnt:,}',
                 f'- time_range: {dmin}..{dmax}',
@@ -432,6 +463,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
                 '- For first/last questions, use full `data.txt` because global extrema cross years.',
                 '- For bounded/equal-year questions, drill into the relevant temporal subskill.',
                 '- If a temporal leaf points to `data.txt`, filter by `substr($1,1,4)==YEAR`.',
+                f'- Semantic reduction: {cluster.routing_policy}',
                 '',
             ])
             write_md(os.path.join(entity_dir, 'index.md'), '\n'.join(lines))
@@ -464,14 +496,22 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
                 ])
                 write_md(os.path.join(ydir, 'index.md'), text)
 
-    write_md(os.path.join(hier_dir, 'entity_clusters', 'index.md'), '\n'.join([
-        '# Entity Cluster Index',
+    write_tsv(
+        os.path.join(hier_dir, 'semantic_clusters', 'clusters.tsv'),
+        '# cluster_id\tname\tparent_domain\tdescription\tentity_type_hints\trelation_family_hints\tkeywords\trouting_policy',
+        semantic_cluster_tsv_rows(),
+    )
+    write_md(os.path.join(hier_dir, 'semantic_clusters', 'index.md'), '\n'.join([
+        '# Semantic Cluster Index',
         '',
-        'Semantic entity clusters replace cosmetic by-letter buckets.',
+        'Ontology-like semantic routing clusters replace cosmetic by-letter buckets.',
         '',
-        '| cluster | entities | max_entity_events | index |',
-        '|---|---:|---:|---|',
-        *[f'| {c} | {n:,} | {m:,} | {c}/index.md |' for c, n, m in sorted(cluster_summary_rows)],
+        '| cluster_id | name | domain | entities | relation_families | index |',
+        '|---|---|---|---:|---:|---|',
+        *[
+            f'| {cid} | {name} | {domain} | {n_ent:,} | {n_rel:,} | {slug}/index.md |'
+            for cid, name, domain, n_ent, n_rel, slug in cluster_summary_rows
+        ],
         '',
     ]))
 
@@ -528,9 +568,9 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
             '',
         ]
         for canonical, rel_path, ycnt, _dmin, _dmax in rows[:50]:
-            ent_cluster = entity_cluster_of(canonical)
+            ent_cluster = assign_entity_to_semantic_cluster(canonical)
             safe = rel_path.split('/')[-1]
-            ent_path = f'../../entity_clusters/{ent_cluster}/{safe}/temporal/{year}/index.md'
+            ent_path = f'../../semantic_clusters/{semantic_cluster_dirname(ent_cluster)}/{safe}/temporal/{year}/index.md'
             lines.append(f'- [{canonical}]({ent_path}) - {ycnt:,} events')
         write_md(os.path.join(hier_dir, 'temporal', year, 'index.md'), '\n'.join(lines) + '\n')
     write_md(os.path.join(hier_dir, 'temporal', 'index.md'), '\n'.join([
@@ -544,8 +584,13 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
 
     write_tsv(
         os.path.join(hier_dir, 'indexes', 'entity_index.tsv'),
-        '# canonical_name\tentity_cluster\tskill_path\tdatabase_path\tcount\tmin_date\tmax_date',
+        '# canonical_name\tsemantic_cluster_id\tsemantic_cluster_name\tskill_path\tdatabase_path\tcount\tmin_date\tmax_date',
         sorted(entity_index_rows),
+    )
+    write_tsv(
+        os.path.join(hier_dir, 'indexes', 'semantic_cluster_index.tsv'),
+        '# cluster_id\tcluster_name\tmapping_type\ttarget_id\ttarget_path_or_key\tcount_or_weight\tnote',
+        sorted(semantic_index_rows),
     )
     write_tsv(
         os.path.join(hier_dir, 'indexes', 'relation_cluster_index.tsv'),
@@ -559,7 +604,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
     )
 
     return {
-        'entity_clusters': len(entity_clusters),
+        'semantic_clusters': len(SEMANTIC_CLUSTERS),
         'relation_clusters': len(relation_clusters),
         'temporal_clusters': len(temporal_index),
         'entities': len(catalog_rows),
@@ -743,7 +788,7 @@ def main():
 
     hier_stats = None
     if not args.no_hierarchy:
-        print(f'[Phase 2] 物化层级 Skill Directory 到 {args.hier_out}/ ...')
+        print(f'[Phase 3] 物化 Semantic Routing Directory 到 {args.hier_out}/ ...')
         hier_stats = materialize_hierarchical_skill_tree(
             args.hier_out,
             out_dir,
@@ -767,8 +812,8 @@ def main():
     print(f'  大实体导航包: {len(big_entities)} 个 (INDEX.md + by_year/, 阈值 >{args.index_threshold})')
     print(f'  时序切片   : {n_slices} 个 by_year/<年>.txt')
     if hier_stats:
-        print(f'  Phase 2树  : {args.hier_out}/root/index.md '
-              f'({hier_stats["entity_clusters"]} entity clusters, '
+        print(f'  Phase 3树  : {args.hier_out}/root/index.md '
+              f'({hier_stats["semantic_clusters"]} semantic clusters, '
               f'{hier_stats["relation_clusters"]} relation clusters, '
               f'{hier_stats["temporal_clusters"]} temporal clusters)')
     print(f'  耗时       : {dt:.1f}s')
@@ -788,15 +833,21 @@ README_LAYOUT = """TKGQA 文件系统知识库 —— 布局说明 (给 Agent)
         INDEX.md          仅 >{threshold} 条的大实体：导航地图（逐年地图/高频关系/高频邻居 + 钻取指引）
         by_year/<年>.txt  仅大实体：按年切片（INDEX.md 的钻取目标，省力，非必需）
 
-  tkgqa/                 Phase 2 层级 Skill Directory（导航层，不复制事实）
-    root/index.md         根 skill：选择 entity/relation/temporal 分支
-    entity_clusters/      org/person/location/other 语义实体簇（替代字母桶导航）
-      <cluster>/catalog.tsv
-      <cluster>/<entity>/index.md
-      <cluster>/<entity>/temporal/<年>/index.md  叶子 skill，指向 fact_doc
-    relation_clusters/    event/transaction/conflict 关系簇 -> relation family
-    temporal/<年>/         年份簇 -> 候选实体 -> entity temporal leaf
+  tkgqa/                 Phase 3 Semantic Routing Directory（导航层，不复制事实）
+    root/index.md         根 skill：选择 semantic/relation/temporal 分支
+    semantic_clusters/    <100 ontology-like routing clusters（替代字母桶/粗粒度类型桶）
+      index.md
+      clusters.tsv
+      cluster_001_geopolitical_entities/
+        index.md          从 taxonomy schema 注入 routing_policy / hints / coverage
+        catalog.tsv       本簇候选实体
+        relation_families.tsv
+        <entity>/index.md
+        <entity>/temporal/<年>/index.md  叶子 skill，指向 fact_doc
+    relation_clusters/    event/transaction/conflict 关系簇 -> relation family（兼容索引）
+    temporal/<年>/         年份簇 -> 候选实体 -> semantic entity temporal leaf
     indexes/              machine-readable cross indexes
+      semantic_cluster_index.tsv
 
 _catalog.tsv 列:
     canonical_name \\t dir_path \\t count \\t min_date \\t max_date
@@ -835,14 +886,14 @@ _relation_families.tsv 列（关系绑定先查这张表，别再凭记忆猜关
   小实体(无 INDEX.md): 直接 awk data.txt 即可(本就很小)。
   注: by_year/ 是【附加】结构, 不改变任何答案; 旧的"awk data.txt"配方继续有效。
 
-Phase 2 层级 Skill Directory:
+Phase 3 Semantic Routing Directory:
   旧 database/ 是事实层; tkgqa/ 是导航层。推荐新流程:
     1) cat tkgqa/root/index.md
-    2) 选择 entity_clusters / relation_clusters / temporal 的一个入口
+    2) 选择 semantic_clusters / relation_clusters / temporal 的一个入口
     3) 逐层打开 index.md / catalog.tsv 缩小候选空间
     4) 到 entity temporal leaf 后读取 fact_doc；若 leaf 指向 data.txt，按 filter_hint 过滤年份
   每层都必须减少候选空间:
-    root -> cluster -> entity -> temporal -> fact_doc
+    root -> semantic_cluster -> entity -> temporal -> fact_doc
   by-letter bucket 仍保留在 database/entities/ 作为存储细节，但不再作为导航决策依据。
 
 重要约定:
