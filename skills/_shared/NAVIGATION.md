@@ -1,11 +1,24 @@
 # 共享导航原语 (所有 qtype skill 都依赖)
 
-你在导航一个时序知识图谱的文件系统知识库 `database/`。本文件是所有技能共用的底层操作手册。
+你在导航一个时序知识图谱的文件系统知识库。Phase 3 后, 默认入口是
+`tkgqa/semantic_clusters/` 语义路由层; `database/` 是最终 grounding 事实层。
 **每一步必须产出可观测的输出; 空结果、回溯、fallback 都必须记录 reason, 不要静默跳过。**
 
 ## 数据源布局
 
 ```
+tkgqa/
+  root/index.md
+  semantic_clusters/index.md
+  semantic_clusters/clusters.tsv
+  semantic_clusters/<cluster_id>_<name>/
+    index.md                 该语义簇的 routing_policy / hints / coverage
+    catalog.tsv              本簇候选实体。列: canonical_name \t database_path \t count \t min_date \t max_date
+    relation_families.tsv    本簇候选关系族。列: family \t canonical_direction \t member_codes
+    <entity>/index.md
+    <entity>/temporal/<年>/index.md
+  indexes/semantic_cluster_index.tsv
+
 database/
   _catalog.tsv            实体规范名 -> 安全目录路径。列: name \t dir_path \t count \t min_date \t max_date
   _relations.txt          全部 251 个关系编码 + 频次 (按频次降序)。列: code \t freq
@@ -14,6 +27,72 @@ database/
     data.txt              该实体全部事件, 已按日期升序 (全量, 永远可用)
     INDEX.md              仅大实体(>2000 条): 导航地图 (逐年地图/高频关系/高频邻居 + 钻取指引)
     by_year/<年>.txt      仅大实体: 按年切片 (INDEX.md 的钻取目标)
+```
+
+---
+
+## 第 0 步: Phase 3 语义簇导航 (必须先做)
+
+默认流程是:
+
+```
+Query -> Semantic Cluster (Top-K) -> Candidate Entity/Relation/Time -> Drill Down -> database fact
+```
+
+### 标准动作流
+
+1. 读根入口:
+```bash
+cat tkgqa/root/index.md
+```
+
+2. 读语义簇总索引:
+```bash
+cat tkgqa/semantic_clusters/index.md
+```
+
+3. 根据问题语义选择 Top-2 簇, 优先打开 Top-1:
+```bash
+cat "tkgqa/semantic_clusters/cluster_004_military_security_actors/index.md"
+```
+
+4. 在该簇内点杀实体和关系族:
+```bash
+grep -i "Military" "tkgqa/semantic_clusters/cluster_004_military_security_actors/catalog.tsv"
+grep -i "military_force" "tkgqa/semantic_clusters/cluster_004_military_security_actors/relation_families.tsv"
+```
+
+5. 若问题含明确年份, 进入 entity temporal leaf:
+```bash
+cat "tkgqa/semantic_clusters/cluster_004_military_security_actors/<entity>/temporal/2024/index.md"
+```
+
+6. leaf 中的 `fact_doc` 指向最终 `database/.../by_year/<年>.txt` 或 `database/.../data.txt`。
+
+### ⛔ 禁止的默认动作
+
+不要一上来就全局:
+```bash
+grep -i "..." database/_catalog.tsv
+```
+
+只有在以下条件满足时才允许 fallback 到 `_catalog.tsv`:
+- Top-2 semantic clusters 的 `catalog.tsv` 都没有候选;
+- Top-2 semantic clusters 的 relation_families 都无法绑定关系;
+- temporal leaf 不存在且无法从 entity index 回退;
+- trace 中明确记录 `fallback_reason: semantic_top2_exhausted`。
+
+### 必须记录 routing_path
+
+每个问题至少在心智 trace 中维护:
+
+```json
+{
+  "semantic_cluster": "cluster_004_military_security_actors",
+  "entity_candidate": "...",
+  "relation_cluster": "...",
+  "temporal_leaf": "..."
+}
 ```
 
 `data.txt` 每行 (以本实体为视角): `日期 \t 方向 \t 关系 \t 对方`
@@ -116,7 +195,12 @@ awk -F'\t' '/visit/{print $2}' database/_relation_families.tsv
 
 ## 第 2 步: 实体映射 (锚实体 / 枢轴 / 固定对方)
 
-绝不自己拼路径。用 2 个区分性 token grep catalog 取 dir_path:
+优先在已选 semantic cluster 的 `catalog.tsv` 中找实体候选:
+```bash
+grep -i "Seyoum" "tkgqa/semantic_clusters/<cluster>/catalog.tsv" | grep -i "Mesfin"
+```
+
+只有 semantic Top-2 都失败, 才允许回退全局 catalog。绝不自己拼 database 路径。fallback 用 2 个区分性 token grep catalog 取 dir_path:
 ```bash
 grep -i "Seyoum" database/_catalog.tsv | grep -i "Mesfin"   # 取第 2 列 = $D
 ```

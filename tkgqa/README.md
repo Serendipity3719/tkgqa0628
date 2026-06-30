@@ -98,6 +98,7 @@ Smoke-test query routing:
 
 ```bash
 python scripts/semantic_router_smoke.py "What did the US Military do in 2024?"
+python scripts/navigation_smoke.py "What did the US Military do in 2024?"
 ```
 
 ### Relation Clusters

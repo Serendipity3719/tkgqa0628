@@ -23,7 +23,9 @@ class NavigationPolicy:
             "temporal": 0.8,
             "recency_bias": 0.3,
             "specificity": 0.5,
+            "semantic_cluster": 1.0,
         }
+        self.cluster_backtracking_count = 0
 
     def score_skill(self, skill_name: str, routing_result) -> float:
         """Compute soft score for a candidate skill."""
@@ -97,4 +99,50 @@ class NavigationPolicy:
             "ranked": ranked,
             "distribution": probs,
             "top_skill": ranked[0]["skill"] if ranked else None
+        }
+
+    def _routing_scores(self, routing_result) -> Dict[str, float]:
+        if isinstance(routing_result, dict):
+            return routing_result.get("routing_scores", {}) or routing_result.get("scores", {})
+        return getattr(routing_result, "routing_scores", None) or getattr(routing_result, "scores", {}) or {}
+
+    def rank_semantic_clusters(self, routing_result) -> List[Dict[str, Any]]:
+        """Rank semantic clusters by P(cluster | query)-style routing scores."""
+        scores = self._routing_scores(routing_result)
+        ranked = [
+            {"semantic_cluster": cluster_id, "score": float(score)}
+            for cluster_id, score in scores.items()
+            if str(cluster_id).startswith("cluster_")
+        ]
+        ranked.sort(key=lambda r: (-r["score"], r["semantic_cluster"]))
+        return ranked
+
+    def select_semantic_clusters(self, routing_result, k: int = 2) -> List[str]:
+        """Keep Top-K semantic clusters for drill-down and backtracking."""
+        ranked = self.rank_semantic_clusters(routing_result)
+        if ranked:
+            return [r["semantic_cluster"] for r in ranked[:max(k, 2)]]
+
+        clusters = []
+        if isinstance(routing_result, dict):
+            clusters = routing_result.get("semantic_clusters", [])
+        else:
+            clusters = getattr(routing_result, "semantic_clusters", [])
+        return list(clusters[:max(k, 2)])
+
+    def argmax_semantic_cluster(self, routing_result) -> Optional[str]:
+        selected = self.select_semantic_clusters(routing_result, k=1)
+        return selected[0] if selected else None
+
+    def record_cluster_backtrack(self) -> int:
+        self.cluster_backtracking_count += 1
+        return self.cluster_backtracking_count
+
+    def semantic_route(self, routing_result, k: int = 2) -> Dict[str, Any]:
+        top_clusters = self.select_semantic_clusters(routing_result, k=k)
+        return {
+            "top_semantic_clusters": top_clusters,
+            "top_cluster": top_clusters[0] if top_clusters else None,
+            "ranked_semantic_clusters": self.rank_semantic_clusters(routing_result),
+            "cluster_backtracking_count": self.cluster_backtracking_count,
         }
