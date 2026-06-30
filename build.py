@@ -64,6 +64,66 @@ def bucket_of(safe):
     return '_other'
 
 
+def entity_cluster_of(name):
+    """Phase 2: 把实体路由到可解释的语义簇，替代 by-letter 作为导航入口。
+
+    这是确定性弱分类，不追求 NER 完美；目标是让第一层目录能真实减少候选空间。
+    后续 Phase 3 可用 embedding/ontology 替换这里的规则。
+    """
+    low = name.lower()
+    org_markers = [
+        'ministry', 'government', 'department', 'office', 'council', 'party',
+        'parliament', 'senate', 'army', 'military', 'police', 'court',
+        'agency', 'organization', 'organisation', 'company', 'bank',
+        'united nations', 'security council', 'cabinet', 'embassy',
+    ]
+    location_markers = [
+        'province', 'city', 'region', 'state', 'district', 'island',
+        'border', 'territory', 'republic of', 'kingdom of',
+    ]
+    person_role_markers = [
+        'president', 'minister', 'leader', 'governor', 'ambassador',
+        'secretary', 'spokesman', 'spokesperson', 'mayor', 'prime minister',
+        'head of government', 'official',
+    ]
+
+    if any(m in low for m in org_markers):
+        return 'org'
+    if any(m in low for m in location_markers):
+        return 'location'
+    if any(m in low for m in person_role_markers):
+        return 'person'
+    # Many country/location nodes in ICEWS-style KG are one to three title-cased tokens.
+    tokens = [t for t in name.replace('_', ' ').split() if t]
+    if 1 <= len(tokens) <= 3 and all(t[:1].isupper() for t in tokens):
+        return 'location'
+    return 'other'
+
+
+RELATION_CLUSTER_MAP = {
+    'transaction': {'aid', 'material_economic'},
+    'conflict': {
+        'conflict', 'threaten', 'reject_refuse', 'sanction_embargo',
+        'military_force', 'arrest_detain', 'protest_dissent',
+    },
+    'event': {
+        'visit', 'receive_host', 'mediate', 'meet_negotiate', 'consult',
+        'appeal_request', 'demand', 'cooperate', 'sign_agreement',
+        'praise_support', 'criticize_accuse', 'statement_comment',
+        'diplo_relations', 'yield_concede', 'investigate', 'lawsuit_legal',
+        'leadership_policy', 'express_intent', 'other',
+    },
+}
+
+
+def relation_cluster_of(family):
+    """Phase 2 relation cluster used by tkgqa/relation_clusters."""
+    for cluster, families in RELATION_CLUSTER_MAP.items():
+        if family in families:
+            return cluster
+    return 'event'
+
+
 # =====================================================================
 # 关系族投影 (P1): 把 N 个关系码确定性地聚成 <=30 个"关系族"
 # ---------------------------------------------------------------------
@@ -231,6 +291,281 @@ def _embedding_reassign(fam_members):
     print(f'      [rel-embedding] 把 {moved} 个 other 关系归并到最近族 (cos>=0.45)。')
 
 
+def write_md(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(text)
+
+
+def write_tsv(path, header, rows):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(header.rstrip('\n') + '\n')
+        for row in rows:
+            f.write('\t'.join(str(x) for x in row) + '\n')
+
+
+def reset_hierarchy_dir(hier_dir):
+    """清理 Phase 2 生成物，但保留 tkgqa/README.md 等手写文件。"""
+    os.makedirs(hier_dir, exist_ok=True)
+    for child in ['root', 'entity_clusters', 'relation_clusters', 'temporal', 'indexes']:
+        p = os.path.join(hier_dir, child)
+        if os.path.isdir(p):
+            shutil.rmtree(p)
+        elif os.path.isfile(p):
+            os.remove(p)
+
+
+def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path,
+                                        catalog_rows, fam_rows, index_threshold):
+    """Phase 2: 物化 root -> cluster -> entity -> temporal -> doc 的导航目录。
+
+    旧 database/entities 仍是事实存储；tkgqa/ 是技能导航层，所有叶子都指向可验证
+    data.txt 或 by_year/<year>.txt。这样不复制事实、不破坏旧实验，同时让目录层级
+    成为真实 routing surface。
+    """
+    reset_hierarchy_dir(hier_dir)
+
+    entity_clusters = defaultdict(list)
+    temporal_index = defaultdict(list)
+    relation_clusters = defaultdict(list)
+    entity_year_counts = {}
+
+    for canonical, rel_path, cnt, dmin, dmax in catalog_rows:
+        cluster = entity_cluster_of(canonical)
+        entity_clusters[cluster].append((canonical, rel_path, cnt, dmin, dmax))
+        year_counts = Counter(rec[0][:4] for rec in records[canonical])
+        entity_year_counts[canonical] = year_counts
+        for year, ycnt in year_counts.items():
+            temporal_index[year].append((canonical, rel_path, ycnt, dmin, dmax))
+
+    for fam, direction, members in fam_rows:
+        relation_clusters[relation_cluster_of(fam)].append((fam, direction, ' '.join(members)))
+
+    root_lines = [
+        '# TKGQA Root Skill',
+        '',
+        'Phase 2 hierarchical navigation entry point.',
+        '',
+        '## Navigation Policy',
+        '',
+        '1. Select an entity, relation, or temporal cluster from this root index.',
+        '2. Open that cluster index to reduce candidate scope.',
+        '3. Drill into an entity skill, then a temporal skill when the query has a year/window.',
+        '4. Read only the pointed fact document (`by_year/<year>.txt` when available, otherwise `data.txt` with a year filter).',
+        '',
+        '## Skill Branches',
+        '',
+        '| branch | purpose | index |',
+        '|---|---|---|',
+        '| entity_clusters | semantic entity routing | ../entity_clusters/index.md |',
+        '| relation_clusters | relation-family routing | ../relation_clusters/index.md |',
+        '| temporal | year-first routing | ../temporal/index.md |',
+        '| indexes | machine-readable cross indexes | ../indexes/ |',
+        '',
+        '## Search-Space Reduction',
+        '',
+        f'- entities: {len(catalog_rows):,} -> cluster -> entity -> year',
+        f'- relation families: {len(fam_rows):,} -> relation cluster -> family -> relation code',
+        f'- years: {len(temporal_index):,} yearly slices -> entity candidates',
+        '',
+    ]
+    write_md(os.path.join(hier_dir, 'root', 'index.md'), '\n'.join(root_lines))
+
+    entity_index_rows = []
+    cluster_summary_rows = []
+    for cluster in sorted(entity_clusters):
+        rows = sorted(entity_clusters[cluster], key=lambda r: (-r[2], r[0]))
+        cluster_dir = os.path.join(hier_dir, 'entity_clusters', cluster)
+        cluster_summary_rows.append((cluster, len(rows), rows[0][2] if rows else 0))
+        write_tsv(
+            os.path.join(cluster_dir, 'catalog.tsv'),
+            '# canonical_name\tdatabase_path\tcount\tmin_date\tmax_date',
+            rows,
+        )
+        lines = [
+            f'# Entity Cluster: {cluster}',
+            '',
+            '## Navigation Contract',
+            '',
+            '- Use `catalog.tsv` to choose candidate entity skills in this semantic cluster.',
+            '- Open the entity `index.md` before reading fact documents.',
+            '- If no candidate fits, backtrack to `../index.md` and inspect another cluster.',
+            '',
+            f'## Coverage',
+            '',
+            f'- entities: {len(rows):,}',
+            f'- total events by entity view: {sum(r[2] for r in rows):,}',
+            '',
+            '## Top Entity Skills',
+            '',
+        ]
+        for canonical, rel_path, cnt, dmin, dmax in rows[:50]:
+            safe = rel_path.split('/')[-1]
+            lines.append(f'- [{canonical}]({safe}/index.md) - {cnt:,} events, {dmin}..{dmax}')
+        write_md(os.path.join(cluster_dir, 'index.md'), '\n'.join(lines) + '\n')
+
+        for canonical, rel_path, cnt, dmin, dmax in rows:
+            safe = rel_path.split('/')[-1]
+            entity_dir = os.path.join(cluster_dir, safe)
+            db_path = os.path.join(out_dir, *rel_path.split('/')).replace('\\', '/')
+            years = sorted(entity_year_counts[canonical])
+            entity_index_rows.append((canonical, cluster, os.path.join('entity_clusters', cluster, safe).replace('\\', '/'),
+                                      rel_path, cnt, dmin, dmax))
+            lines = [
+                f'# Entity Skill: {canonical}',
+                '',
+                f'- cluster: {cluster}',
+                f'- database_path: `{db_path}`',
+                f'- event_count: {cnt:,}',
+                f'- time_range: {dmin}..{dmax}',
+                '',
+                '## Subskills',
+                '',
+            ]
+            for year in years:
+                lines.append(f'- [temporal:{year}](temporal/{year}/index.md) - {entity_year_counts[canonical][year]:,} events')
+            lines.extend([
+                '',
+                '## Navigation Policy',
+                '',
+                '- For first/last questions, use full `data.txt` because global extrema cross years.',
+                '- For bounded/equal-year questions, drill into the relevant temporal subskill.',
+                '- If a temporal leaf points to `data.txt`, filter by `substr($1,1,4)==YEAR`.',
+                '',
+            ])
+            write_md(os.path.join(entity_dir, 'index.md'), '\n'.join(lines))
+
+            for year in years:
+                ydir = os.path.join(entity_dir, 'temporal', year)
+                by_year_rel = os.path.join(rel_path, 'by_year', f'{year}.txt').replace('\\', '/')
+                by_year_abs = os.path.join(out_dir, *by_year_rel.split('/'))
+                if os.path.isfile(by_year_abs):
+                    fact_doc = os.path.join(out_dir, by_year_rel).replace('\\', '/')
+                    filter_hint = 'none'
+                else:
+                    fact_doc = os.path.join(out_dir, rel_path, 'data.txt').replace('\\', '/')
+                    filter_hint = f'substr($1,1,4)=="{year}"'
+                text = '\n'.join([
+                    f'# Temporal Skill: {canonical} / {year}',
+                    '',
+                    f'- parent_entity: {canonical}',
+                    f'- year: {year}',
+                    f'- event_count: {entity_year_counts[canonical][year]:,}',
+                    f'- fact_doc: `{fact_doc}`',
+                    f'- filter_hint: `{filter_hint}`',
+                    '',
+                    '## Navigation Policy',
+                    '',
+                    '- Read this leaf only after entity and year have both been selected.',
+                    '- If the fact document is full `data.txt`, apply the filter hint before relation filtering.',
+                    '- If no facts match, backtrack to sibling years or the parent entity index.',
+                    '',
+                ])
+                write_md(os.path.join(ydir, 'index.md'), text)
+
+    write_md(os.path.join(hier_dir, 'entity_clusters', 'index.md'), '\n'.join([
+        '# Entity Cluster Index',
+        '',
+        'Semantic entity clusters replace cosmetic by-letter buckets.',
+        '',
+        '| cluster | entities | max_entity_events | index |',
+        '|---|---:|---:|---|',
+        *[f'| {c} | {n:,} | {m:,} | {c}/index.md |' for c, n, m in sorted(cluster_summary_rows)],
+        '',
+    ]))
+
+    rel_summary_rows = []
+    for cluster in sorted(relation_clusters):
+        rows = sorted(relation_clusters[cluster])
+        rel_summary_rows.append((cluster, len(rows)))
+        write_tsv(
+            os.path.join(hier_dir, 'relation_clusters', cluster, 'families.tsv'),
+            '# family\tcanonical_direction\tmember_codes',
+            rows,
+        )
+        lines = [
+            f'# Relation Cluster: {cluster}',
+            '',
+            '## Families',
+            '',
+        ]
+        for fam, direction, members in rows:
+            first_code = members.split()[0] if members else ''
+            lines.append(f'- {fam}: `{first_code}` ({direction})')
+        write_md(os.path.join(hier_dir, 'relation_clusters', cluster, 'index.md'),
+                 '\n'.join(lines) + '\n')
+    write_md(os.path.join(hier_dir, 'relation_clusters', 'index.md'), '\n'.join([
+        '# Relation Cluster Index',
+        '',
+        '| cluster | relation_families | index |',
+        '|---|---:|---|',
+        *[f'| {c} | {n:,} | {c}/index.md |' for c, n in sorted(rel_summary_rows)],
+        '',
+    ]))
+
+    year_summary_rows = []
+    for year in sorted(temporal_index):
+        rows = sorted(temporal_index[year], key=lambda r: (-r[2], r[0]))
+        year_summary_rows.append((year, len(rows), sum(r[2] for r in rows)))
+        write_tsv(
+            os.path.join(hier_dir, 'temporal', year, 'entities.tsv'),
+            '# canonical_name\tdatabase_path\tyear_event_count\tentity_min_date\tentity_max_date',
+            rows,
+        )
+        lines = [
+            f'# Temporal Cluster: {year}',
+            '',
+            '## Navigation Contract',
+            '',
+            '- Use this branch when the query gives a year before a reliable entity anchor.',
+            '- Pick candidate entities from `entities.tsv`, then jump to their entity skill.',
+            '',
+            f'- candidate_entities: {len(rows):,}',
+            f'- year_events_by_entity_view: {sum(r[2] for r in rows):,}',
+            '',
+            '## Top Entity Candidates',
+            '',
+        ]
+        for canonical, rel_path, ycnt, _dmin, _dmax in rows[:50]:
+            ent_cluster = entity_cluster_of(canonical)
+            safe = rel_path.split('/')[-1]
+            ent_path = f'../../entity_clusters/{ent_cluster}/{safe}/temporal/{year}/index.md'
+            lines.append(f'- [{canonical}]({ent_path}) - {ycnt:,} events')
+        write_md(os.path.join(hier_dir, 'temporal', year, 'index.md'), '\n'.join(lines) + '\n')
+    write_md(os.path.join(hier_dir, 'temporal', 'index.md'), '\n'.join([
+        '# Temporal Cluster Index',
+        '',
+        '| year | candidate_entities | events | index |',
+        '|---|---:|---:|---|',
+        *[f'| {y} | {n:,} | {e:,} | {y}/index.md |' for y, n, e in year_summary_rows],
+        '',
+    ]))
+
+    write_tsv(
+        os.path.join(hier_dir, 'indexes', 'entity_index.tsv'),
+        '# canonical_name\tentity_cluster\tskill_path\tdatabase_path\tcount\tmin_date\tmax_date',
+        sorted(entity_index_rows),
+    )
+    write_tsv(
+        os.path.join(hier_dir, 'indexes', 'relation_cluster_index.tsv'),
+        '# relation_cluster\tfamily_count',
+        sorted(rel_summary_rows),
+    )
+    write_tsv(
+        os.path.join(hier_dir, 'indexes', 'temporal_index.tsv'),
+        '# year\tcandidate_entities\tevents',
+        year_summary_rows,
+    )
+
+    return {
+        'entity_clusters': len(entity_clusters),
+        'relation_clusters': len(relation_clusters),
+        'temporal_clusters': len(temporal_index),
+        'entities': len(catalog_rows),
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description='Build TKGQA filesystem knowledge base.')
     ap.add_argument('--input', default=os.path.join('data', 'full.txt'),
@@ -243,6 +578,10 @@ def main():
     ap.add_argument('--rel-embedding', action='store_true',
                     help='关系族投影时, 用 sentence-transformers 把 other 关系归并到最近族 '
                          '(可选, 无依赖则自动回退到纯词法)')
+    ap.add_argument('--hier-out', default='tkgqa',
+                    help='Phase 2 层级 skill tree 输出目录（默认 tkgqa；保留 README，仅重建生成子目录）')
+    ap.add_argument('--no-hierarchy', action='store_true',
+                    help='只构建旧 database/ 布局，不生成 Phase 2 tkgqa/ 层级目录')
     args = ap.parse_args()
 
     t_start = time.time()
@@ -402,6 +741,19 @@ def main():
             for o, c in nbr_cnt.most_common(args.top_n):
                 mf.write(f'- {o}\t{c}\n')
 
+    hier_stats = None
+    if not args.no_hierarchy:
+        print(f'[Phase 2] 物化层级 Skill Directory 到 {args.hier_out}/ ...')
+        hier_stats = materialize_hierarchical_skill_tree(
+            args.hier_out,
+            out_dir,
+            records,
+            name_to_path,
+            catalog_rows,
+            fam_rows,
+            args.index_threshold,
+        )
+
     # _README_layout.txt（给 Agent 看的格式说明）
     with open(os.path.join(out_dir, '_README_layout.txt'), 'w', encoding='utf-8', newline='\n') as rm:
         rm.write(README_LAYOUT.format(threshold=args.index_threshold))
@@ -414,6 +766,11 @@ def main():
     print(f'  关系族     : {n_fam} (-> _relation_families.tsv)')
     print(f'  大实体导航包: {len(big_entities)} 个 (INDEX.md + by_year/, 阈值 >{args.index_threshold})')
     print(f'  时序切片   : {n_slices} 个 by_year/<年>.txt')
+    if hier_stats:
+        print(f'  Phase 2树  : {args.hier_out}/root/index.md '
+              f'({hier_stats["entity_clusters"]} entity clusters, '
+              f'{hier_stats["relation_clusters"]} relation clusters, '
+              f'{hier_stats["temporal_clusters"]} temporal clusters)')
     print(f'  耗时       : {dt:.1f}s')
 
 
@@ -430,6 +787,16 @@ README_LAYOUT = """TKGQA 文件系统知识库 —— 布局说明 (给 Agent)
         data.txt          该实体全部相关四元组，已按日期升序（全量，永远可用）
         INDEX.md          仅 >{threshold} 条的大实体：导航地图（逐年地图/高频关系/高频邻居 + 钻取指引）
         by_year/<年>.txt  仅大实体：按年切片（INDEX.md 的钻取目标，省力，非必需）
+
+  tkgqa/                 Phase 2 层级 Skill Directory（导航层，不复制事实）
+    root/index.md         根 skill：选择 entity/relation/temporal 分支
+    entity_clusters/      org/person/location/other 语义实体簇（替代字母桶导航）
+      <cluster>/catalog.tsv
+      <cluster>/<entity>/index.md
+      <cluster>/<entity>/temporal/<年>/index.md  叶子 skill，指向 fact_doc
+    relation_clusters/    event/transaction/conflict 关系簇 -> relation family
+    temporal/<年>/         年份簇 -> 候选实体 -> entity temporal leaf
+    indexes/              machine-readable cross indexes
 
 _catalog.tsv 列:
     canonical_name \\t dir_path \\t count \\t min_date \\t max_date
@@ -467,6 +834,16 @@ _relation_families.tsv 列（关系绑定先查这张表，别再凭记忆猜关
   ⛔ 切片空或不全 → 必须回退全量 data.txt 重查, 不要直接给"无相关事实"。
   小实体(无 INDEX.md): 直接 awk data.txt 即可(本就很小)。
   注: by_year/ 是【附加】结构, 不改变任何答案; 旧的"awk data.txt"配方继续有效。
+
+Phase 2 层级 Skill Directory:
+  旧 database/ 是事实层; tkgqa/ 是导航层。推荐新流程:
+    1) cat tkgqa/root/index.md
+    2) 选择 entity_clusters / relation_clusters / temporal 的一个入口
+    3) 逐层打开 index.md / catalog.tsv 缩小候选空间
+    4) 到 entity temporal leaf 后读取 fact_doc；若 leaf 指向 data.txt，按 filter_hint 过滤年份
+  每层都必须减少候选空间:
+    root -> cluster -> entity -> temporal -> fact_doc
+  by-letter bucket 仍保留在 database/entities/ 作为存储细节，但不再作为导航决策依据。
 
 重要约定:
   * 实体名与关系编码在库内一律用下划线。测试集标准答案用【空格】，
