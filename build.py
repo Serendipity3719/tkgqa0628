@@ -96,6 +96,16 @@ def relation_cluster_of(family):
     return 'event'
 
 
+def semantic_cluster_of_entity(entity_name, mode='lexical'):
+    """Generic semantic assignment wrapper over taxonomy-defined signals."""
+    return assign_entity_to_semantic_cluster(entity_name, mode=mode)
+
+
+def semantic_cluster_of_relation_family(family_name, mode='lexical', top_k=3):
+    """Generic relation-family assignment wrapper over taxonomy-defined signals."""
+    return relation_family_semantic_clusters(family_name, mode=mode, top_k=top_k)
+
+
 # =====================================================================
 # 关系族投影 (P1): 把 N 个关系码确定性地聚成 <=30 个"关系族"
 # ---------------------------------------------------------------------
@@ -289,7 +299,8 @@ def reset_hierarchy_dir(hier_dir):
 
 
 def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path,
-                                        catalog_rows, fam_rows, index_threshold):
+                                        catalog_rows, fam_rows, index_threshold,
+                                        semantic_routing='lexical'):
     """Phase 3 Step 1: 物化 root -> semantic cluster -> entity -> temporal -> doc。
 
     旧 database/entities 仍是事实存储；tkgqa/ 是技能导航层，所有叶子都指向可验证
@@ -306,7 +317,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
     relation_family_rows_by_semantic = defaultdict(list)
 
     for canonical, rel_path, cnt, dmin, dmax in catalog_rows:
-        cluster = assign_entity_to_semantic_cluster(canonical)
+        cluster = semantic_cluster_of_entity(canonical, mode=semantic_routing)
         semantic_cluster_entities[cluster.cluster_id].append((canonical, rel_path, cnt, dmin, dmax))
         year_counts = Counter(rec[0][:4] for rec in records[canonical])
         entity_year_counts[canonical] = year_counts
@@ -335,7 +346,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
 
     for fam, direction, members in fam_rows:
         relation_clusters[relation_cluster_of(fam)].append((fam, direction, ' '.join(members)))
-        for cluster in relation_family_semantic_clusters(fam):
+        for cluster in semantic_cluster_of_relation_family(fam, mode=semantic_routing):
             row = (fam, direction, ' '.join(members))
             relation_family_rows_by_semantic[cluster.cluster_id].append(row)
             semantic_index_rows.append((
@@ -568,7 +579,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
             '',
         ]
         for canonical, rel_path, ycnt, _dmin, _dmax in rows[:50]:
-            ent_cluster = assign_entity_to_semantic_cluster(canonical)
+            ent_cluster = semantic_cluster_of_entity(canonical, mode=semantic_routing)
             safe = rel_path.split('/')[-1]
             ent_path = f'../../semantic_clusters/{semantic_cluster_dirname(ent_cluster)}/{safe}/temporal/{year}/index.md'
             lines.append(f'- [{canonical}]({ent_path}) - {ycnt:,} events')
@@ -627,6 +638,8 @@ def main():
                     help='Phase 2 层级 skill tree 输出目录（默认 tkgqa；保留 README，仅重建生成子目录）')
     ap.add_argument('--no-hierarchy', action='store_true',
                     help='只构建旧 database/ 布局，不生成 Phase 2 tkgqa/ 层级目录')
+    ap.add_argument('--semantic-routing', choices=['lexical', 'embedding', 'hybrid'], default='lexical',
+                    help='Phase 3 semantic cluster assignment mode; embedding 缺依赖时自动回退 lexical')
     args = ap.parse_args()
 
     t_start = time.time()
@@ -797,6 +810,7 @@ def main():
             catalog_rows,
             fam_rows,
             args.index_threshold,
+            args.semantic_routing,
         )
 
     # _README_layout.txt（给 Agent 看的格式说明）
@@ -815,7 +829,8 @@ def main():
         print(f'  Phase 3树  : {args.hier_out}/root/index.md '
               f'({hier_stats["semantic_clusters"]} semantic clusters, '
               f'{hier_stats["relation_clusters"]} relation clusters, '
-              f'{hier_stats["temporal_clusters"]} temporal clusters)')
+              f'{hier_stats["temporal_clusters"]} temporal clusters, '
+              f'routing={args.semantic_routing})')
     print(f'  耗时       : {dt:.1f}s')
 
 

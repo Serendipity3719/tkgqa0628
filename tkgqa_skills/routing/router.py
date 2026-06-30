@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Dict
-import re
+
+from tkgqa_skills.routing.semantic_router import SemanticRouter
 
 @dataclass
 class RoutingResult:
@@ -8,49 +9,39 @@ class RoutingResult:
     relation_skills: List[str]
     temporal_skills: List[str]
     scores: Dict[str, float]
+    semantic_clusters: List[str]
+    entity_candidates: List[str]
+    relation_clusters: List[str]
+    temporal_candidates: List[str]
+    routing_scores: Dict[str, float]
 
 class SkillRouter:
-    """Phase 1 Skill Router for TKGQA"""
+    """Phase 3-compatible Skill Router for TKGQA."""
 
-    def __init__(self, skill_registry: Dict):
+    def __init__(self, skill_registry: Dict = None, mode: str = "lexical", top_k: int = 3):
         self.skill_registry = skill_registry
+        self.semantic_router = SemanticRouter(mode=mode, top_k=top_k)
 
     def extract_entities(self, query: str) -> List[str]:
-        candidates = re.findall(r"\\b([A-Z][a-zA-Z]+(?:\\s[A-Z][a-zA-Z]+)*)\\b", query)
-        return list(set(candidates))
+        return self.semantic_router.extract_entity_candidates(query)
 
     def extract_relations(self, query: str) -> List[str]:
-        keywords = ["acquire","acquisition","merge","investment","conflict","war","trade","agreement","sanction","appoint","resign"]
-        q = query.lower()
-        return [k for k in keywords if k in q]
+        return self.semantic_router.extract_relation_candidates(query)
 
     def extract_temporal(self, query: str) -> List[str]:
-        years = re.findall(r"(19\\d{2}|20\\d{2})", query)
-        out = []
-        for y in years:
-            yr = int(y)
-            if yr <= 2015:
-                out.append("2010_2015")
-            elif yr <= 2020:
-                out.append("2016_2020")
-            else:
-                out.append("2021_2024")
-        return list(set(out))
+        return self.semantic_router.route(query).temporal_candidates
 
     def route(self, query: str) -> RoutingResult:
-        entities = self.extract_entities(query)
-        relations = self.extract_relations(query)
-        temporal = self.extract_temporal(query)
-
-        scores = {
-            "entity_conf": 0.8 if entities else 0.3,
-            "relation_conf": 0.7 if relations else 0.2,
-            "temporal_conf": 0.6 if temporal else 0.2
-        }
+        semantic = self.semantic_router.route(query)
 
         return RoutingResult(
-            entity_skills=entities,
-            relation_skills=relations,
-            temporal_skills=temporal,
-            scores=scores
+            entity_skills=semantic.entity_candidates,
+            relation_skills=semantic.relation_clusters,
+            temporal_skills=semantic.temporal_candidates,
+            scores=semantic.routing_scores,
+            semantic_clusters=semantic.semantic_clusters,
+            entity_candidates=semantic.entity_candidates,
+            relation_clusters=semantic.relation_clusters,
+            temporal_candidates=semantic.temporal_candidates,
+            routing_scores=semantic.routing_scores,
         )
