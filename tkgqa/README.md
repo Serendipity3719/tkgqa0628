@@ -38,6 +38,14 @@ python build.py --semantic-routing embedding
 `embedding` and `hybrid` automatically fall back to lexical scoring when local
 embedding dependencies are unavailable.
 
+Temporal decomposition schema modes:
+
+```bash
+python build.py --temporal-decomposition fixed-year
+python build.py --temporal-decomposition fixed-window
+python build.py --temporal-decomposition adaptive-event
+```
+
 `build.py` preserves this README and rebuilds only generated subdirectories:
 
 ```text
@@ -72,9 +80,13 @@ tkgqa/
       index.md
       entities.tsv
 
+  temporal_schema/
+    index.md
+
   indexes/
     entity_index.tsv
     semantic_cluster_index.tsv
+    temporal_slice_schema.tsv
     relation_cluster_index.tsv
     temporal_index.tsv
 ```
@@ -107,6 +119,15 @@ python scripts/navigation_smoke.py "What did the US Military do in 2024?"
 
 ### Temporal Clusters
 - one directory per observed year in the KG
+
+### Temporal Decomposition Schema
+- `fixed-year`: reproduces the current `entity -> temporal/<year>` leaves
+- `fixed-window`: expresses multi-year ranges such as `2010-2012`
+- `adaptive-event`: creates density-aware windows from observed event counts
+
+The schema is defined in `tkgqa_skills/temporal/slice_schema.py` and materialized
+to `tkgqa/temporal_schema/index.md` plus
+`tkgqa/indexes/temporal_slice_schema.tsv`.
 
 ---
 

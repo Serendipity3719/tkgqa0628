@@ -34,6 +34,12 @@ from tkgqa_skills.routing.cluster_taxonomy import (
     semantic_cluster_dirname,
     semantic_cluster_tsv_rows,
 )
+from tkgqa_skills.temporal.slice_schema import (
+    SUPPORTED_TEMPORAL_STRATEGIES,
+    build_temporal_slices,
+    render_temporal_schema_index,
+    temporal_slice_tsv_rows,
+)
 
 # Windows / 跨平台文件名非法字符
 _ILLEGAL = '<>:"/\\|?*'
@@ -290,7 +296,8 @@ def write_tsv(path, header, rows):
 def reset_hierarchy_dir(hier_dir):
     """清理生成物，但保留 tkgqa/README.md 等手写文件。"""
     os.makedirs(hier_dir, exist_ok=True)
-    for child in ['root', 'entity_clusters', 'semantic_clusters', 'relation_clusters', 'temporal', 'indexes']:
+    for child in ['root', 'entity_clusters', 'semantic_clusters', 'relation_clusters',
+                  'temporal', 'temporal_schema', 'indexes']:
         p = os.path.join(hier_dir, child)
         if os.path.isdir(p):
             shutil.rmtree(p)
@@ -298,9 +305,45 @@ def reset_hierarchy_dir(hier_dir):
             os.remove(p)
 
 
+def materialize_temporal_schema(hier_dir, records, temporal_decomposition):
+    year_counts = Counter()
+    rel_counts = Counter()
+    neighbor_counts = Counter()
+    for rows in records.values():
+        for date, _dir, relation, other in rows:
+            year_counts[date[:4]] += 1
+            rel_counts[relation] += 1
+            neighbor_counts[other] += 1
+
+    dominant_relations = [rel for rel, _count in rel_counts.most_common(10)]
+    dominant_neighbors = [name for name, _count in neighbor_counts.most_common(10)]
+    slices = build_temporal_slices(
+        temporal_decomposition,
+        dict(year_counts),
+        fact_doc='database/<entity_path>/data.txt',
+        dominant_relations=dominant_relations,
+        dominant_neighbors=dominant_neighbors,
+    )
+
+    write_md(
+        os.path.join(hier_dir, 'temporal_schema', 'index.md'),
+        render_temporal_schema_index(dict(year_counts), temporal_decomposition, slices),
+    )
+    write_tsv(
+        os.path.join(hier_dir, 'indexes', 'temporal_slice_schema.tsv'),
+        '# slice_id\tlabel\tstart_date\tend_date\tgranularity\tstrategy\tevent_count\tdominant_relations\tdominant_neighbors\tfact_doc\tfilter_hint\tnavigation_policy',
+        temporal_slice_tsv_rows(slices),
+    )
+    return {
+        'temporal_strategy': temporal_decomposition,
+        'temporal_schema_slices': len(slices),
+    }
+
+
 def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path,
                                         catalog_rows, fam_rows, index_threshold,
-                                        semantic_routing='lexical'):
+                                        semantic_routing='lexical',
+                                        temporal_decomposition='fixed-year'):
     """Phase 3 Step 1: 物化 root -> semantic cluster -> entity -> temporal -> doc。
 
     旧 database/entities 仍是事实存储；tkgqa/ 是技能导航层，所有叶子都指向可验证
@@ -308,6 +351,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
     relation_clusters/temporal/indexes 保留为兼容和交叉索引层。
     """
     reset_hierarchy_dir(hier_dir)
+    temporal_schema_stats = materialize_temporal_schema(hier_dir, records, temporal_decomposition)
 
     semantic_cluster_entities = defaultdict(list)
     temporal_index = defaultdict(list)
@@ -378,6 +422,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         '| semantic_clusters | ontology-like entity/relation routing | ../semantic_clusters/index.md |',
         '| relation_clusters | legacy relation-family routing | ../relation_clusters/index.md |',
         '| temporal | year-first routing | ../temporal/index.md |',
+        '| temporal_schema | Phase 4 slice schema and strategy contract | ../temporal_schema/index.md |',
         '| indexes | machine-readable cross indexes | ../indexes/ |',
         '',
         '## Search-Space Reduction',
@@ -618,6 +663,8 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         'semantic_clusters': len(SEMANTIC_CLUSTERS),
         'relation_clusters': len(relation_clusters),
         'temporal_clusters': len(temporal_index),
+        'temporal_strategy': temporal_schema_stats['temporal_strategy'],
+        'temporal_schema_slices': temporal_schema_stats['temporal_schema_slices'],
         'entities': len(catalog_rows),
     }
 
@@ -635,11 +682,13 @@ def main():
                     help='关系族投影时, 用 sentence-transformers 把 other 关系归并到最近族 '
                          '(可选, 无依赖则自动回退到纯词法)')
     ap.add_argument('--hier-out', default='tkgqa',
-                    help='Phase 2 层级 skill tree 输出目录（默认 tkgqa；保留 README，仅重建生成子目录）')
+                    help='层级/语义 skill tree 输出目录（默认 tkgqa；保留 README，仅重建生成子目录）')
     ap.add_argument('--no-hierarchy', action='store_true',
-                    help='只构建旧 database/ 布局，不生成 Phase 2 tkgqa/ 层级目录')
+                    help='只构建旧 database/ 布局，不生成 tkgqa/ 层级语义目录')
     ap.add_argument('--semantic-routing', choices=['lexical', 'embedding', 'hybrid'], default='lexical',
                     help='Phase 3 semantic cluster assignment mode; embedding 缺依赖时自动回退 lexical')
+    ap.add_argument('--temporal-decomposition', choices=SUPPORTED_TEMPORAL_STRATEGIES, default='fixed-year',
+                    help='Phase 4 temporal slice schema strategy; fixed-year 保持当前 year leaf 兼容')
     args = ap.parse_args()
 
     t_start = time.time()
@@ -811,6 +860,7 @@ def main():
             fam_rows,
             args.index_threshold,
             args.semantic_routing,
+            args.temporal_decomposition,
         )
 
     # _README_layout.txt（给 Agent 看的格式说明）
@@ -830,7 +880,8 @@ def main():
               f'({hier_stats["semantic_clusters"]} semantic clusters, '
               f'{hier_stats["relation_clusters"]} relation clusters, '
               f'{hier_stats["temporal_clusters"]} temporal clusters, '
-              f'routing={args.semantic_routing})')
+              f'routing={args.semantic_routing}, '
+              f'temporal={hier_stats["temporal_strategy"]}/{hier_stats["temporal_schema_slices"]} slices)')
     print(f'  耗时       : {dt:.1f}s')
 
 
@@ -861,8 +912,11 @@ README_LAYOUT = """TKGQA 文件系统知识库 —— 布局说明 (给 Agent)
         <entity>/temporal/<年>/index.md  叶子 skill，指向 fact_doc
     relation_clusters/    event/transaction/conflict 关系簇 -> relation family（兼容索引）
     temporal/<年>/         年份簇 -> 候选实体 -> semantic entity temporal leaf
+    temporal_schema/       Phase 4 TemporalSlice schema 和策略说明
+      index.md
     indexes/              machine-readable cross indexes
       semantic_cluster_index.tsv
+      temporal_slice_schema.tsv
 
 _catalog.tsv 列:
     canonical_name \\t dir_path \\t count \\t min_date \\t max_date
@@ -910,6 +964,15 @@ Phase 3 Semantic Routing Directory:
   每层都必须减少候选空间:
     root -> semantic_cluster -> entity -> temporal -> fact_doc
   by-letter bucket 仍保留在 database/entities/ 作为存储细节，但不再作为导航决策依据。
+
+Phase 4 Temporal Decomposition Schema:
+  `tkgqa/temporal_schema/index.md` 定义 TemporalSlice 字段与切片策略。
+  `tkgqa/indexes/temporal_slice_schema.tsv` 是机器可读 schema 视图。
+  可选策略:
+    --temporal-decomposition fixed-year      复现当前 entity -> temporal/<year> 行为
+    --temporal-decomposition fixed-window    生成 2010-2012 / 2013-2016 等多年份窗口 schema
+    --temporal-decomposition adaptive-event  按全局事件密度生成自适应窗口 schema
+  Step 1 仅建立 schema 和策略接口；entity 级 temporal_slices 物化在后续阶段接入。
 
 重要约定:
   * 实体名与关系编码在库内一律用下划线。测试集标准答案用【空格】，
