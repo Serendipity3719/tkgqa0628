@@ -218,6 +218,7 @@ class NavigationPolicyNavigator:
         else:
             self.policy_engine = None
         self.inspect_k = max(2, int(inspect_k))
+        self.cross_skill_links = self._load_cross_skill_links()
 
     def navigate(self, query: str, **features: Any) -> NavigationResult:
         policy_input = self._build_policy_input(query, features)
@@ -262,6 +263,11 @@ class NavigationPolicyNavigator:
             except NavigationBranchError as exc:
                 last_trigger = exc.trigger
                 next_cluster = selected_clusters[index + 1] if index + 1 < len(selected_clusters) else None
+                if next_cluster is None:
+                    related = self._related_semantic_clusters(cluster_id)
+                    next_cluster = next((cluster for cluster in related if cluster not in inspected), None)
+                    if next_cluster:
+                        selected_clusters.append(next_cluster)
                 self._record_backtrack(trace, exc, cluster_id, next_cluster, decision_plain)
                 if next_cluster is None:
                     break
@@ -442,12 +448,32 @@ class NavigationPolicyNavigator:
             direct = root / cluster_id
             if direct.is_dir():
                 candidates.append(direct)
+            if root.is_dir():
+                candidates.extend(path for path in root.glob(f"{cluster_id}*") if path.is_dir())
         if not candidates:
-            for path in self.knowledge_root.rglob(cluster_id):
+            for path in self.knowledge_root.rglob(f"{cluster_id}*"):
                 if path.is_dir():
                     candidates.append(path)
         unique: Dict[str, Path] = {str(path.resolve()): path for path in candidates}
         return list(unique.values())
+
+    def _load_cross_skill_links(self) -> Dict[str, Any]:
+        candidates = [
+            self.knowledge_root / "tkgqa" / "indexes" / "cross_skill_links.json",
+            self.knowledge_root / "indexes" / "cross_skill_links.json",
+        ]
+        for path in candidates:
+            if path.is_file():
+                try:
+                    return json.loads(path.read_text(encoding="utf-8"))
+                except Exception:
+                    return {}
+        return {}
+
+    def _related_semantic_clusters(self, cluster_id: str) -> List[str]:
+        links = self.cross_skill_links.get("semantic_cluster_links", {})
+        related = links.get(cluster_id, {}).get("related_semantic_clusters", [])
+        return [str(cluster) for cluster in related if cluster]
 
     def _rank_entity_candidates(self, files: Sequence[Path], tokens: Sequence[str]) -> List[Tuple[float, Path]]:
         scored: List[Tuple[float, Path]] = []
@@ -504,6 +530,20 @@ class NavigationPolicyNavigator:
             "message": str(exc),
         }
         _set_or_append_trace(trace, "backtrack_events", event)
+        if next_cluster:
+            jump = {
+                "from": current_cluster,
+                "to": next_cluster,
+                "reason": self._cross_jump_reason(current_cluster, next_cluster, exc.trigger),
+            }
+            _set_or_append_trace(trace, "cross_skill_jumps", jump)
+            _set_trace_value(trace, "cross_skill_jump", jump)
+
+    def _cross_jump_reason(self, current_cluster: str, next_cluster: str, trigger: str) -> str:
+        links = self.cross_skill_links.get("semantic_cluster_links", {})
+        if next_cluster in links.get(current_cluster, {}).get("related_semantic_clusters", []):
+            return f"{trigger}; related semantic cluster from cross_skill_links.json"
+        return f"{trigger}; inspect Top-K policy fallback branch"
 
     def _action_for_trigger(self, plan: Any, trigger: str) -> Optional[str]:
         if not isinstance(plan, Iterable) or isinstance(plan, (str, bytes)):

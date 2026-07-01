@@ -26,6 +26,8 @@ tkgqa/
   indexes/semantic_cluster_index.tsv
   indexes/temporal_index.tsv
   indexes/entity_temporal_slices.tsv
+  indexes/entity_index.json
+  indexes/cross_skill_links.json
 
 database/
   _catalog.tsv            实体规范名 -> 安全目录路径。列: name \t dir_path \t count \t min_date \t max_date
@@ -39,19 +41,20 @@ database/
 
 ---
 
-## 第 0 步: Phase 3 语义簇导航 (必须先做)
+## 第 0 步: Phase 5 NPL 导航策略 (必须先做)
 
-默认流程是:
+你现在不是 search agent, 而是 navigation policy agent。默认流程是:
 
 ```
-Query -> Semantic Cluster (Top-K) -> Candidate Entity/Relation/Time -> Drill Down -> database fact
+Query -> NPL Policy Trace -> Semantic Cluster Top-2 -> Cross-Skill Jump -> Drill Down -> database fact
 ```
 
 ### 标准动作流
 
-1. 读根入口:
+1. 读根入口与共享 cross index:
 ```bash
 cat tkgqa/root/index.md
+cat tkgqa/indexes/cross_skill_links.json
 ```
 
 2. 读语义簇总索引:
@@ -59,7 +62,7 @@ cat tkgqa/root/index.md
 cat tkgqa/semantic_clusters/index.md
 ```
 
-3. 根据问题语义选择 Top-2 簇, 优先打开 Top-1:
+3. 必须 inspect Top-2 semantic clusters。优先打开 Top-1:
 ```bash
 cat "tkgqa/semantic_clusters/cluster_004_military_security_actors/index.md"
 ```
@@ -98,6 +101,39 @@ cat tkgqa/temporal_slices/2013_2016/index.md
 
 再从 `entities.tsv` 跳到对应 semantic entity skill。
 
+### Branch Fail 时的 cross-skill jump
+
+分支失败时, 先查 `cross_skill_links.json`, 不要立刻 grep 全局 catalog:
+
+```bash
+python - <<'PY'
+import json
+links=json.load(open("tkgqa/indexes/cross_skill_links.json", encoding="utf-8"))
+print(links["semantic_cluster_links"].get("cluster_004", {}))
+PY
+```
+
+优先跳转顺序:
+
+| 失败类型 | 先跳哪里 | 最后 fallback |
+|---|---|---|
+| Top-1 cluster 无实体 | Top-2 cluster / related_semantic_clusters | database/_catalog.tsv |
+| relation family 绑定失败 | relation_family_to_semantic_clusters 中的其他 cluster | database/_relation_families.tsv |
+| temporal slice 空 | temporal_slice_to_candidate_entities 的相邻/同窗实体 | full data.txt |
+| entity ambiguity | entity_index.json 的 canonical entry | database/_catalog.tsv |
+
+trace 必须记录:
+
+```json
+{
+  "cross_skill_jump": {
+    "from": "cluster_004",
+    "to": "cluster_006",
+    "reason": "military actor query also matches conflict event cluster"
+  }
+}
+```
+
 ### ⛔ 禁止的默认动作
 
 不要一上来就全局:
@@ -108,6 +144,7 @@ grep -i "..." database/_catalog.tsv
 只有在以下条件满足时才允许 fallback 到 `_catalog.tsv`:
 - Top-2 semantic clusters 的 `catalog.tsv` 都没有候选;
 - Top-2 semantic clusters 的 relation_families 都无法绑定关系;
+- cross_skill_links.json 中的 related branch 也已尝试;
 - temporal leaf 不存在且无法从 entity index 回退;
 - trace 中明确记录 `fallback_reason: semantic_top2_exhausted`。
 

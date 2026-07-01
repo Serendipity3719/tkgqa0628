@@ -21,6 +21,7 @@ Deep Agent 文件系统导航的结构化知识库。无 LLM 参与，纯 Python
 """
 
 import argparse
+import json
 import os
 import shutil
 import sys
@@ -297,6 +298,12 @@ def write_tsv(path, header, rows):
             f.write('\t'.join(str(x) for x in row) + '\n')
 
 
+def write_json(path, payload):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2, sort_keys=True)
+
+
 def reset_hierarchy_dir(hier_dir):
     """清理生成物，但保留 tkgqa/README.md 等手写文件。"""
     os.makedirs(hier_dir, exist_ok=True)
@@ -397,6 +404,10 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         for cluster in semantic_cluster_of_relation_family(fam, mode=semantic_routing):
             row = (fam, direction, ' '.join(members))
             relation_family_rows_by_semantic[cluster.cluster_id].append(row)
+            relation_family_links[fam]['semantic_clusters'].add(cluster.cluster_id)
+            relation_family_links[fam]['relation_cluster'] = relation_cluster_of(fam)
+            relation_family_links[fam]['member_codes'] = ' '.join(members)
+            relation_family_links[fam]['canonical_direction'] = direction
             semantic_index_rows.append((
                 cluster.cluster_id,
                 cluster.name,
@@ -443,6 +454,13 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
     entity_index_rows = []
     entity_temporal_slice_rows = []
     global_temporal_slice_entities = defaultdict(list)
+    entity_index_json = {}
+    relation_family_links = defaultdict(lambda: {
+        'semantic_clusters': set(),
+        'relation_cluster': None,
+        'member_codes': '',
+        'canonical_direction': '',
+    })
     cluster_summary_rows = []
     for cluster in SEMANTIC_CLUSTERS:
         rows = sorted(semantic_cluster_entities.get(cluster.cluster_id, []), key=lambda r: (-r[2], r[0]))
@@ -506,6 +524,18 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
             entity_index_rows.append((canonical, cluster.cluster_id, cluster.name,
                                       os.path.join('semantic_clusters', cluster_slug, safe).replace('\\', '/'),
                                       rel_path, cnt, dmin, dmax))
+            entity_index_json[canonical] = {
+                'canonical_name': canonical,
+                'semantic_cluster_id': cluster.cluster_id,
+                'semantic_cluster_name': cluster.name,
+                'skill_path': os.path.join('semantic_clusters', cluster_slug, safe).replace('\\', '/'),
+                'database_path': rel_path,
+                'count': cnt,
+                'min_date': dmin,
+                'max_date': dmax,
+                'temporal_slices': [],
+                'legacy_year_leaves': years,
+            }
             lines = [
                 f'# Entity Skill: {canonical}',
                 '',
@@ -570,6 +600,18 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
                     slice_obj.filter_hint,
                     slice_obj.navigation_policy,
                 ))
+                entity_index_json[canonical]['temporal_slices'].append({
+                    'slice_id': slice_obj.slice_id,
+                    'label': slice_obj.label,
+                    'start_date': slice_obj.start_date,
+                    'end_date': slice_obj.end_date,
+                    'event_count': slice_obj.event_count,
+                    'path': os.path.join(
+                        'semantic_clusters', cluster_slug, safe, 'temporal_slices',
+                        slice_obj.slice_id, 'index.md'
+                    ).replace('\\', '/'),
+                    'filter_hint': slice_obj.filter_hint,
+                })
                 slice_path = os.path.join(
                     'semantic_clusters', cluster_slug, safe, 'temporal_slices', slice_obj.slice_id
                 ).replace('\\', '/')
@@ -699,6 +741,72 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         render_global_temporal_slices_index(global_temporal_slice_rows, temporal_decomposition),
     )
 
+    cluster_to_entities = defaultdict(list)
+    cluster_to_temporal_slices = defaultdict(set)
+    for entity_name, meta in entity_index_json.items():
+        cluster_to_entities[meta['semantic_cluster_id']].append(entity_name)
+        for slice_meta in meta['temporal_slices']:
+            cluster_to_temporal_slices[meta['semantic_cluster_id']].add(slice_meta['slice_id'])
+
+    temporal_slice_links = {}
+    for slice_id, entries in global_temporal_slice_entities.items():
+        temporal_slice_links[slice_id] = {
+            'candidate_entities': [e['canonical_name'] for e in entries],
+            'semantic_clusters': sorted({e['semantic_cluster_id'] for e in entries}),
+            'dominant_relation_families': sorted({
+                fam
+                for e in entries
+                for fam in e['dominant_relations'].split()
+                if fam
+            }),
+            'index_path': f'temporal_slices/{slice_id}/index.md',
+            'entities_tsv': f'temporal_slices/{slice_id}/entities.tsv',
+        }
+
+    cluster_links = {}
+    for cluster in SEMANTIC_CLUSTERS:
+        relation_neighbors = sorted({
+            linked_cluster
+            for fam in cluster.relation_family_hints
+            for linked_cluster in relation_family_links.get(fam, {}).get('semantic_clusters', set())
+            if linked_cluster != cluster.cluster_id
+        })
+        temporal_neighbors = sorted(cluster_to_temporal_slices.get(cluster.cluster_id, set()))
+        cluster_links[cluster.cluster_id] = {
+            'name': cluster.name,
+            'related_semantic_clusters': relation_neighbors,
+            'candidate_entities': sorted(cluster_to_entities.get(cluster.cluster_id, [])),
+            'temporal_slices': temporal_neighbors,
+            'index_path': f'semantic_clusters/{semantic_cluster_dirname(cluster)}/index.md',
+        }
+
+    cross_skill_links = {
+        'schema': 'cross_skill_links_v1',
+        'entity_to_semantic_cluster': {
+            entity: {
+                'semantic_cluster_id': meta['semantic_cluster_id'],
+                'semantic_cluster_name': meta['semantic_cluster_name'],
+                'skill_path': meta['skill_path'],
+            }
+            for entity, meta in entity_index_json.items()
+        },
+        'entity_to_temporal_slices': {
+            entity: meta['temporal_slices']
+            for entity, meta in entity_index_json.items()
+        },
+        'relation_family_to_semantic_clusters': {
+            fam: {
+                'semantic_clusters': sorted(meta['semantic_clusters']),
+                'relation_cluster': meta['relation_cluster'],
+                'canonical_direction': meta['canonical_direction'],
+                'member_codes': meta['member_codes'],
+            }
+            for fam, meta in relation_family_links.items()
+        },
+        'temporal_slice_to_candidate_entities': temporal_slice_links,
+        'semantic_cluster_links': cluster_links,
+    }
+
     rel_summary_rows = []
     for cluster in sorted(relation_clusters):
         rows = sorted(relation_clusters[cluster])
@@ -770,6 +878,14 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         os.path.join(hier_dir, 'indexes', 'entity_index.tsv'),
         '# canonical_name\tsemantic_cluster_id\tsemantic_cluster_name\tskill_path\tdatabase_path\tcount\tmin_date\tmax_date',
         sorted(entity_index_rows),
+    )
+    write_json(
+        os.path.join(hier_dir, 'indexes', 'entity_index.json'),
+        entity_index_json,
+    )
+    write_json(
+        os.path.join(hier_dir, 'indexes', 'cross_skill_links.json'),
+        cross_skill_links,
     )
     write_tsv(
         os.path.join(hier_dir, 'indexes', 'semantic_cluster_index.tsv'),
@@ -1072,6 +1188,8 @@ README_LAYOUT = """TKGQA 文件系统知识库 —— 布局说明 (给 Agent)
       semantic_cluster_index.tsv
       temporal_slice_schema.tsv
       entity_temporal_slices.tsv
+      entity_index.json
+      cross_skill_links.json
 
 _catalog.tsv 列:
     canonical_name \\t dir_path \\t count \\t min_date \\t max_date
@@ -1138,6 +1256,17 @@ Phase 4 Temporal Decomposition Schema:
     tkgqa/temporal_slices/<slice_id>/entities.tsv
   `tkgqa/indexes/temporal_index.tsv` 现在按 slice 记录 candidate entities、semantic clusters、
   dominant relation families 和全局 slice index path。
+
+Phase 5 Cross-Skill Jump Indexes:
+  `tkgqa/indexes/entity_index.json`:
+    canonical entity -> semantic cluster / skill path / database path / temporal slices
+  `tkgqa/indexes/cross_skill_links.json`:
+    entity -> related semantic cluster
+    entity -> temporal_slices
+    relation_family -> semantic clusters
+    temporal_slice -> candidate entities
+    semantic_cluster -> related semantic clusters
+  Branch fail 时必须先查 cross_skill_links.json 跳 related skill, 最后才 fallback 全局 catalog。
 
 重要约定:
   * 实体名与关系编码在库内一律用下划线。测试集标准答案用【空格】，

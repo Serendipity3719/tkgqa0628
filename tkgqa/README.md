@@ -94,9 +94,11 @@ tkgqa/
 
   indexes/
     entity_index.tsv
+    entity_index.json
     semantic_cluster_index.tsv
     temporal_slice_schema.tsv
     entity_temporal_slices.tsv
+    cross_skill_links.json
     relation_cluster_index.tsv
     temporal_index.tsv
 ```
@@ -146,6 +148,11 @@ skill as `temporal_slices/<slice_id>/index.md`. Legacy year leaves under
 Global temporal navigation is materialized as `tkgqa/temporal_slices/`.
 `tkgqa/indexes/temporal_index.tsv` is slice-aware and records candidate
 entities, semantic clusters, dominant relation families, and slice index paths.
+
+Phase 5 cross-skill navigation is materialized in
+`tkgqa/indexes/cross_skill_links.json`. It supports entity-to-cluster,
+entity-to-temporal-slice, relation-family-to-cluster, temporal-slice-to-entity,
+and semantic-cluster-to-related-cluster jumps before global fallback.
 
 ---
 

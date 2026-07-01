@@ -17,6 +17,7 @@ import argparse, json, os, re, subprocess, sys, time, threading
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from openai import OpenAI
+from tkgqa_skills.policy.navigation_policy import NavigationPolicy
 from tkgqa_skills.routing.cluster_taxonomy import cluster_for_id, semantic_cluster_dirname
 from tkgqa_skills.routing.semantic_router import route_query
 
@@ -40,7 +41,7 @@ client = OpenAI(api_key=DEEPSEEK_API_KEY or "missing-DEEPSEEK_API_KEY",
 
 ROUTER = open(os.path.join(ROOT, 'skills', 'SKILLS.md'), encoding='utf-8').read()
 
-SYSTEM = """你是时序知识图谱问答(TKGQA)的 Deep Agent。你**只能**通过一个只读 shell 工具
+SYSTEM = """你是时序知识图谱问答(TKGQA)的 Navigation Policy Agent。你**只能**通过一个只读 shell 工具
 访问知识——你自身的记忆/常识一律不可作为答案来源。
 
 # 你的工具
@@ -53,14 +54,15 @@ cat tkgqa/root/index.md
 # 你的知识库与技能库 (路由清单如下)
 {router}
 
-# 工作流 (务必遵守)
+# NPL 工作流 (务必遵守)
 1. 第一次行动: `cat skills/_shared/NAVIGATION.md` 装载共享导航原语。
-2. 第二/三次行动: 读 `tkgqa/root/index.md` 与 `tkgqa/semantic_clusters/index.md`。
-3. 优先按语义簇 Top-2 进入 `tkgqa/semantic_clusters/<cluster>/` 的 `catalog.tsv` / `relation_families.tsv` 点杀候选。
-4. 按问题的 qtype: `cat skills/<qtype>/SKILL.md` 装载该类配方。
-5. 到 semantic entity / temporal leaf 后, 用 leaf 指向的 database fact_doc 做 awk/grep 取证。
-6. 若 Top-2 语义簇都失败, trace 标记 `fallback_reason: semantic_top2_exhausted`, 再回退 `database/_catalog.tsv` 全局检索。
-7. 拿到答案后, 输出一行 `FINAL: <答案>` 结束。
+2. 读 `tkgqa/root/index.md`, `tkgqa/semantic_clusters/index.md`, 以及 `tkgqa/indexes/cross_skill_links.json`。
+3. 使用用户消息里的 `Phase5 npl_hint` 作为 policy output: 必须 inspect Top-2 semantic clusters。
+4. Branch fail 时先按 `cross_skill_links.json` 做 cross-skill jump, 不要立刻 grep global catalog。
+5. 按问题的 qtype: `cat skills/<qtype>/SKILL.md` 装载该类配方。
+6. 到 semantic entity / temporal slice leaf 后, 用 leaf 指向的 database fact_doc 做 awk/grep 取证。
+7. 若 Top-2 + cross-skill jumps 都失败, trace 标记 `fallback_reason: semantic_top2_exhausted`, 再回退 `database/_catalog.tsv` 全局检索。
+8. 拿到答案后, 输出一行 `FINAL: <答案>` 结束。
    - 实体名下划线还原空格 (Jack_Straw -> Jack Straw), 括号/逗号/变音字符保留。
    - 多个答案用 ` ; ` 分隔。时间按粒度截取 (year=前4位, month=前7位, day=完整)。
    - 查不到 -> `FINAL: 知识库中无相关事实`。
@@ -112,6 +114,7 @@ def _chat(messages, retries=4):
 def semantic_route_hint(question):
     try:
         routed = route_query(question, mode=os.environ.get("SEMANTIC_ROUTING_MODE", "lexical"), top_k=2)
+        npl = NavigationPolicy(inspect_k=2).decide(question, routed)
         cluster_dirs = [semantic_cluster_dirname(cluster_for_id(cid)) for cid in routed.get("semantic_clusters", [])]
         routing_path = {
             "semantic_cluster": cluster_dirs[0] if cluster_dirs else None,
@@ -121,6 +124,8 @@ def semantic_route_hint(question):
         }
         routed["semantic_cluster_dirs"] = cluster_dirs
         routed["routing_path"] = routing_path
+        routed["npl_decision"] = npl.get("decision", {})
+        routed["npl_trace"] = npl.get("trace", {})
         routed["metrics"] = {
             "top_level_routing_accuracy": None,
             "semantic_cluster_hit": None,
@@ -135,6 +140,8 @@ def semantic_route_hint(question):
             "relation_clusters": [],
             "temporal_candidates": [],
             "routing_scores": {},
+            "npl_decision": {},
+            "npl_trace": {},
             "routing_path": {
                 "semantic_cluster": None,
                 "entity_candidate": None,
@@ -153,7 +160,7 @@ def agent_solve(question, qtype, answer_type, time_level, max_cmds=11):
     semantic_hint = semantic_route_hint(question)
     user = (f"问题: {question}\nqtype: {qtype}\nanswer_type: {answer_type}\n"
             f"time_level: {time_level}\n"
-            f"Phase3 semantic_route_hint:\n{json.dumps(semantic_hint, ensure_ascii=False, indent=2)}\n"
+            f"Phase5 npl_hint:\n{json.dumps(semantic_hint, ensure_ascii=False, indent=2)}\n"
             f"请按工作流导航作答。")
     messages = [{'role': 'system', 'content': SYSTEM}, {'role': 'user', 'content': user}]
     trace = [{'semantic_route': semantic_hint, 'routing_path': semantic_hint.get('routing_path'),
