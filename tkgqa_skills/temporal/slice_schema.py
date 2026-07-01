@@ -183,6 +183,85 @@ def temporal_slice_tsv_rows(slices: Iterable[TemporalSlice]) -> List[Tuple]:
     return [s.to_tsv_row() for s in slices]
 
 
+def fallback_policy_for_slice(slice_obj: TemporalSlice) -> str:
+    return (
+        "If this slice yields no evidence, inspect adjacent temporal slices that overlap the query intent. "
+        "For first/last, before_last, and after_first global ordering tasks, bypass slice-only evidence "
+        "and fall back to the parent entity full data.txt."
+    )
+
+
+def when_to_use_slice(slice_obj: TemporalSlice) -> str:
+    if slice_obj.granularity == "year":
+        return f"Use when the query explicitly names {slice_obj.start_date[:4]} or asks for events within that year."
+    if slice_obj.granularity == "multi_year_window":
+        return (
+            f"Use when the query year/range falls inside {slice_obj.label}, including before/after pivots "
+            "whose candidate evidence is expected in this window."
+        )
+    return (
+        f"Use for long temporal entities when event density suggests {slice_obj.label} is the smallest useful "
+        "navigation window for the query."
+    )
+
+
+def render_entity_temporal_slices_index(entity_name: str, slices: Sequence[TemporalSlice],
+                                        strategy: str) -> str:
+    lines = [
+        f"# Temporal Slices: {entity_name}",
+        "",
+        f"- strategy: {normalize_temporal_strategy(strategy)}",
+        f"- slices: {len(slices)}",
+        "",
+        "## Navigation Policy",
+        "",
+        "- Prefer temporal slices for bounded year/range questions.",
+        "- Use the legacy `../temporal/<year>/index.md` path when a caller expects year-level compatibility.",
+        "- For first/last global extrema, use the parent entity `data.txt` rather than any slice.",
+        "",
+        "| slice_id | label | range | event_count | index |",
+        "|---|---|---|---:|---|",
+    ]
+    for s in slices:
+        lines.append(
+            f"| {s.slice_id} | {s.label} | {s.start_date}..{s.end_date} | "
+            f"{s.event_count:,} | {s.slice_id}/index.md |"
+        )
+    return "\n".join(lines) + "\n"
+
+
+def render_entity_temporal_slice_leaf(entity_name: str, slice_obj: TemporalSlice) -> str:
+    dominant_relations = ", ".join(slice_obj.dominant_relations) if slice_obj.dominant_relations else "(none)"
+    dominant_neighbors = ", ".join(slice_obj.dominant_neighbors) if slice_obj.dominant_neighbors else "(none)"
+    return "\n".join([
+        f"# Temporal Slice: {entity_name} / {slice_obj.label}",
+        "",
+        f"- slice_id: {slice_obj.slice_id}",
+        f"- label: {slice_obj.label}",
+        f"- time_range: {slice_obj.start_date}..{slice_obj.end_date}",
+        f"- granularity: {slice_obj.granularity}",
+        f"- strategy: {slice_obj.strategy}",
+        f"- event_count: {slice_obj.event_count:,}",
+        f"- dominant_relations: {dominant_relations}",
+        f"- dominant_neighbors: {dominant_neighbors}",
+        f"- fact_doc: `{slice_obj.fact_doc}`",
+        f"- filter_hint: `{slice_obj.filter_hint}`",
+        "",
+        "## When To Use",
+        "",
+        when_to_use_slice(slice_obj),
+        "",
+        "## Navigation Policy",
+        "",
+        slice_obj.navigation_policy,
+        "",
+        "## Fallback Policy",
+        "",
+        fallback_policy_for_slice(slice_obj),
+        "",
+    ])
+
+
 def render_temporal_schema_index(year_counts: Dict[str, int], selected_strategy: str,
                                  slices: Sequence[TemporalSlice]) -> str:
     selected_strategy = normalize_temporal_strategy(selected_strategy)

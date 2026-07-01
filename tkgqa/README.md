@@ -64,6 +64,9 @@ tkgqa/
       relation_families.tsv
       <entity>/
         index.md
+        temporal_slices/
+          index.md
+          <slice_id>/index.md
         temporal/
           <year>/index.md
 
@@ -87,6 +90,7 @@ tkgqa/
     entity_index.tsv
     semantic_cluster_index.tsv
     temporal_slice_schema.tsv
+    entity_temporal_slices.tsv
     relation_cluster_index.tsv
     temporal_index.tsv
 ```
@@ -128,6 +132,10 @@ python scripts/navigation_smoke.py "What did the US Military do in 2024?"
 The schema is defined in `tkgqa_skills/temporal/slice_schema.py` and materialized
 to `tkgqa/temporal_schema/index.md` plus
 `tkgqa/indexes/temporal_slice_schema.tsv`.
+
+Entity-level temporal decomposition is materialized under each semantic entity
+skill as `temporal_slices/<slice_id>/index.md`. Legacy year leaves under
+`temporal/<year>/index.md` are still generated for compatibility.
 
 ---
 
