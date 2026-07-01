@@ -5,11 +5,11 @@ from typing import Dict, List, Tuple
 from tkgqa_skills.routing.cluster_taxonomy import (
     SEMANTIC_CLUSTERS,
     combined_cluster_scores,
-    extract_temporal_candidates,
     normalize_scores,
     rank_cluster_scores,
     signal_match_score,
 )
+from tkgqa_skills.temporal.slice_schema import extract_temporal_candidates_structured
 
 
 @dataclass
@@ -17,7 +17,7 @@ class SemanticRoutingResult:
     semantic_clusters: List[str]
     entity_candidates: List[str]
     relation_clusters: List[str]
-    temporal_candidates: List[str]
+    temporal_candidates: List[Dict[str, str]]
     routing_scores: Dict[str, float]
     raw_scores: Dict[str, float]
 
@@ -53,7 +53,7 @@ class SemanticRouter:
     def route(self, query: str) -> SemanticRoutingResult:
         entity_candidates = self.extract_entity_candidates(query)
         relation_candidates = self.extract_relation_candidates(query)
-        temporal_candidates = extract_temporal_candidates(query)
+        temporal_candidates = extract_temporal_candidates_structured(query)
 
         raw_scores = combined_cluster_scores(query, self.mode, include_entity=True, include_relation=True)
 

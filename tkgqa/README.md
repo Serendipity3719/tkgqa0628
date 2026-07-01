@@ -83,6 +83,12 @@ tkgqa/
       index.md
       entities.tsv
 
+  temporal_slices/
+    index.md
+    <slice_id>/
+      index.md
+      entities.tsv
+
   temporal_schema/
     index.md
 
@@ -136,6 +142,10 @@ to `tkgqa/temporal_schema/index.md` plus
 Entity-level temporal decomposition is materialized under each semantic entity
 skill as `temporal_slices/<slice_id>/index.md`. Legacy year leaves under
 `temporal/<year>/index.md` are still generated for compatibility.
+
+Global temporal navigation is materialized as `tkgqa/temporal_slices/`.
+`tkgqa/indexes/temporal_index.tsv` is slice-aware and records candidate
+entities, semantic clusters, dominant relation families, and slice index paths.
 
 ---
 

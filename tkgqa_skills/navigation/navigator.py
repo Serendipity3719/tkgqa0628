@@ -83,15 +83,43 @@ class SkillNavigator:
         return rows[0]
 
     def _temporal_leaf(self, cluster_dir: str, entity_row: Optional[Dict[str, str]],
-                       temporal_candidates: List[str]) -> Optional[str]:
+                       temporal_candidates: List[Any]) -> Optional[str]:
         if not entity_row:
             return None
-        years = [t for t in temporal_candidates if t.isdigit() and len(t) == 4]
-        if not years:
-            return None
         entity_path = os.path.join(cluster_dir, entity_row.get("database_path", "").split("/")[-1])
-        leaf = os.path.join(entity_path, "temporal", years[0], "index.md")
-        return leaf.replace("\\", "/")
+        for candidate in temporal_candidates:
+            if isinstance(candidate, dict):
+                if candidate.get("type") == "global_extrema":
+                    return None
+                slice_id = candidate.get("slice_id")
+                if slice_id:
+                    leaf = os.path.join(entity_path, "temporal_slices", slice_id, "index.md")
+                    if os.path.isfile(leaf):
+                        return leaf.replace("\\", "/")
+                value = candidate.get("value", "")
+                if value.isdigit() and len(value) == 4:
+                    leaf = os.path.join(entity_path, "temporal", value, "index.md")
+                    if os.path.isfile(leaf):
+                        return leaf.replace("\\", "/")
+            elif isinstance(candidate, str) and candidate.isdigit() and len(candidate) == 4:
+                leaf = os.path.join(entity_path, "temporal", candidate, "index.md")
+                if os.path.isfile(leaf):
+                    return leaf.replace("\\", "/")
+        return None
+
+    def _temporal_reason(self, temporal_candidates: List[Any], temporal_leaf: Optional[str]) -> Optional[str]:
+        if not temporal_leaf:
+            for candidate in temporal_candidates:
+                if isinstance(candidate, dict) and candidate.get("type") == "global_extrema":
+                    return candidate.get("reason")
+            return None
+        for candidate in temporal_candidates:
+            if isinstance(candidate, dict):
+                slice_id = candidate.get("slice_id")
+                value = candidate.get("value")
+                if (slice_id and slice_id in temporal_leaf) or (value and value in temporal_leaf):
+                    return candidate.get("reason")
+        return "temporal candidate matched available leaf"
 
     def _candidate_doc(self, entity_row: Optional[Dict[str, str]], temporal_leaf: Optional[str]) -> List[str]:
         if not entity_row:
@@ -107,12 +135,16 @@ class SkillNavigator:
         return getattr(routing_result, attr_key, default)
 
     def _build_path(self, cluster_id: str, cluster_dir: str, entity_row: Optional[Dict[str, str]],
-                    relation_row: Optional[Dict[str, str]], temporal_leaf: Optional[str]) -> Dict[str, Optional[str]]:
+                    relation_row: Optional[Dict[str, str]], temporal_leaf: Optional[str],
+                    temporal_reason: Optional[str]) -> Dict[str, Optional[str]]:
         return {
             "semantic_cluster": semantic_cluster_dirname(cluster_for_id(cluster_id)),
             "entity_candidate": entity_row.get("canonical_name") if entity_row else None,
             "relation_cluster": relation_row.get("family") if relation_row else None,
             "temporal_leaf": temporal_leaf,
+            "temporal_slice": temporal_leaf.split("/temporal_slices/")[1].split("/")[0]
+            if temporal_leaf and "/temporal_slices/" in temporal_leaf else None,
+            "temporal_reason": temporal_reason,
         }
 
     def navigate(self, query_or_routing_result, query: str = "") -> NavigationResult:
@@ -143,7 +175,9 @@ class SkillNavigator:
             entity_row = self._match_entity(cluster_dir, entity_candidates)
             relation_row = self._match_relation(cluster_dir, relation_candidates)
             temporal_leaf = self._temporal_leaf(cluster_dir, entity_row, temporal_candidates)
-            routing_path = self._build_path(cluster_id, cluster_dir, entity_row, relation_row, temporal_leaf)
+            temporal_reason = self._temporal_reason(temporal_candidates, temporal_leaf)
+            routing_path = self._build_path(cluster_id, cluster_dir, entity_row, relation_row,
+                                            temporal_leaf, temporal_reason)
             docs = self._candidate_doc(entity_row, temporal_leaf)
             hit = bool(entity_row or relation_row or temporal_leaf)
             attempts.append({
@@ -165,6 +199,8 @@ class SkillNavigator:
                 "entity_candidate": entity_candidates[0] if entity_candidates else None,
                 "relation_cluster": relation_candidates[0] if relation_candidates else None,
                 "temporal_leaf": temporal_candidates[0] if temporal_candidates else None,
+                "temporal_slice": None,
+                "temporal_reason": None,
             }
 
         trace = {

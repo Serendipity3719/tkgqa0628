@@ -12,7 +12,7 @@ class RoutingResult:
     semantic_clusters: List[str]
     entity_candidates: List[str]
     relation_clusters: List[str]
-    temporal_candidates: List[str]
+    temporal_candidates: List[Dict[str, str]]
     routing_scores: Dict[str, float]
 
 class SkillRouter:
@@ -33,11 +33,16 @@ class SkillRouter:
 
     def route(self, query: str) -> RoutingResult:
         semantic = self.semantic_router.route(query)
+        temporal_skills = [
+            item.get("value") or item.get("operator") or item.get("slice_id")
+            for item in semantic.temporal_candidates
+            if item.get("value") or item.get("operator") or item.get("slice_id")
+        ]
 
         return RoutingResult(
             entity_skills=semantic.entity_candidates,
             relation_skills=semantic.relation_clusters,
-            temporal_skills=semantic.temporal_candidates,
+            temporal_skills=temporal_skills,
             scores=semantic.routing_scores,
             semantic_clusters=semantic.semantic_clusters,
             entity_candidates=semantic.entity_candidates,

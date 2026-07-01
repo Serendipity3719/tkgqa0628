@@ -16,8 +16,16 @@ tkgqa/
     catalog.tsv              本簇候选实体。列: canonical_name \t database_path \t count \t min_date \t max_date
     relation_families.tsv    本簇候选关系族。列: family \t canonical_direction \t member_codes
     <entity>/index.md
+    <entity>/temporal_slices/index.md
+    <entity>/temporal_slices/<slice_id>/index.md
     <entity>/temporal/<年>/index.md
+  temporal_slices/index.md
+  temporal_slices/<slice_id>/index.md
+  temporal_slices/<slice_id>/entities.tsv
+  temporal_schema/index.md
   indexes/semantic_cluster_index.tsv
+  indexes/temporal_index.tsv
+  indexes/entity_temporal_slices.tsv
 
 database/
   _catalog.tsv            实体规范名 -> 安全目录路径。列: name \t dir_path \t count \t min_date \t max_date
@@ -62,12 +70,33 @@ grep -i "Military" "tkgqa/semantic_clusters/cluster_004_military_security_actors
 grep -i "military_force" "tkgqa/semantic_clusters/cluster_004_military_security_actors/relation_families.tsv"
 ```
 
-5. 若问题含明确年份, 进入 entity temporal leaf:
+5. 若问题含明确年份/区间, 优先进入 entity temporal slice:
+```bash
+cat "tkgqa/semantic_clusters/cluster_004_military_security_actors/<entity>/temporal_slices/2021_2024/index.md"
+```
+
+6. 兼容旧 year leaf 的调用才使用:
 ```bash
 cat "tkgqa/semantic_clusters/cluster_004_military_security_actors/<entity>/temporal/2024/index.md"
 ```
 
-6. leaf 中的 `fact_doc` 指向最终 `database/.../by_year/<年>.txt` 或 `database/.../data.txt`。
+7. leaf 中的 `fact_doc` 指向最终 `database/.../data.txt`; 结合 `filter_hint` 做时间过滤。
+
+### Phase 4 Temporal Slice 规则
+
+- 有明确年份: 先选包含该年份的 `temporal_slices/<slice_id>/index.md`。例如 2014 通常落在 `2013_2016`。
+- 有 `between 2010 and 2012` / `from 2010 to 2012`: 先选覆盖起止范围的 slice, 不够再查相邻 slice。
+- 有 `after 2014` / `before 2016`: 先找 pivot 年份所在 slice, 若无证据再向后/向前相邻 slice backtrack。
+- `first_last` / `before_last` / `after_first`: 禁止只读 slice, 必须用 parent entity 的全量 `data.txt`。
+- 长实体: 先读 `<entity>/temporal_slices/index.md`, 不要直接读全量 entity index 或 data.txt。
+
+全局时间先行时, 先读:
+```bash
+cat tkgqa/temporal_slices/index.md
+cat tkgqa/temporal_slices/2013_2016/index.md
+```
+
+再从 `entities.tsv` 跳到对应 semantic entity skill。
 
 ### ⛔ 禁止的默认动作
 
@@ -91,7 +120,9 @@ grep -i "..." database/_catalog.tsv
   "semantic_cluster": "cluster_004_military_security_actors",
   "entity_candidate": "...",
   "relation_cluster": "...",
-  "temporal_leaf": "..."
+  "temporal_leaf": "...",
+  "temporal_slice": "2013_2016",
+  "temporal_reason": "query year 2014 falls inside slice"
 }
 ```
 

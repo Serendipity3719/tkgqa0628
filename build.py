@@ -37,6 +37,8 @@ from tkgqa_skills.routing.cluster_taxonomy import (
 from tkgqa_skills.temporal.slice_schema import (
     SUPPORTED_TEMPORAL_STRATEGIES,
     build_temporal_slices,
+    render_global_temporal_slice_leaf,
+    render_global_temporal_slices_index,
     render_entity_temporal_slice_leaf,
     render_entity_temporal_slices_index,
     render_temporal_schema_index,
@@ -299,7 +301,7 @@ def reset_hierarchy_dir(hier_dir):
     """清理生成物，但保留 tkgqa/README.md 等手写文件。"""
     os.makedirs(hier_dir, exist_ok=True)
     for child in ['root', 'entity_clusters', 'semantic_clusters', 'relation_clusters',
-                  'temporal', 'temporal_schema', 'indexes']:
+                  'temporal', 'temporal_slices', 'temporal_schema', 'indexes']:
         p = os.path.join(hier_dir, child)
         if os.path.isdir(p):
             shutil.rmtree(p)
@@ -424,6 +426,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         '| semantic_clusters | ontology-like entity/relation routing | ../semantic_clusters/index.md |',
         '| relation_clusters | legacy relation-family routing | ../relation_clusters/index.md |',
         '| temporal | year-first routing | ../temporal/index.md |',
+        '| temporal_slices | global drift-aware temporal slice routing | ../temporal_slices/index.md |',
         '| temporal_schema | Phase 4 slice schema and strategy contract | ../temporal_schema/index.md |',
         '| indexes | machine-readable cross indexes | ../indexes/ |',
         '',
@@ -431,13 +434,15 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         '',
         f'- entities: {len(catalog_rows):,} -> semantic cluster -> entity -> year',
         f'- relation families: {len(fam_rows):,} -> relation cluster -> family -> relation code',
-        f'- years: {len(temporal_index):,} yearly slices -> entity candidates',
+        f'- years: {len(temporal_index):,} legacy yearly slices -> entity candidates',
+        f'- temporal slices: {temporal_schema_stats["temporal_schema_slices"]:,} global windows -> entities/clusters/relations',
         '',
     ]
     write_md(os.path.join(hier_dir, 'root', 'index.md'), '\n'.join(root_lines))
 
     entity_index_rows = []
     entity_temporal_slice_rows = []
+    global_temporal_slice_entities = defaultdict(list)
     cluster_summary_rows = []
     for cluster in SEMANTIC_CLUSTERS:
         rows = sorted(semantic_cluster_entities.get(cluster.cluster_id, []), key=lambda r: (-r[2], r[0]))
@@ -542,6 +547,7 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
                 render_entity_temporal_slices_index(canonical, entity_slices, temporal_decomposition),
             )
             for slice_obj in entity_slices:
+                dominant_families = [assign_family(r) for r in slice_obj.dominant_relations]
                 write_md(
                     os.path.join(entity_dir, 'temporal_slices', slice_obj.slice_id, 'index.md'),
                     render_entity_temporal_slice_leaf(canonical, slice_obj),
@@ -563,6 +569,32 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
                     slice_obj.fact_doc,
                     slice_obj.filter_hint,
                     slice_obj.navigation_policy,
+                ))
+                slice_path = os.path.join(
+                    'semantic_clusters', cluster_slug, safe, 'temporal_slices', slice_obj.slice_id
+                ).replace('\\', '/')
+                global_temporal_slice_entities[slice_obj.slice_id].append({
+                    'canonical_name': canonical,
+                    'semantic_cluster_id': cluster.cluster_id,
+                    'semantic_cluster_name': cluster.name,
+                    'entity_skill_path': os.path.join('semantic_clusters', cluster_slug, safe).replace('\\', '/'),
+                    'slice_path': slice_path,
+                    'label': slice_obj.label,
+                    'start_date': slice_obj.start_date,
+                    'end_date': slice_obj.end_date,
+                    'event_count': str(slice_obj.event_count),
+                    'dominant_relations': ' '.join(dominant_families),
+                    'fact_doc': slice_obj.fact_doc,
+                    'filter_hint': slice_obj.filter_hint,
+                })
+                semantic_index_rows.append((
+                    cluster.cluster_id,
+                    cluster.name,
+                    'temporal_slice',
+                    slice_obj.slice_id,
+                    slice_path,
+                    slice_obj.event_count,
+                    canonical,
                 ))
 
             for year in years:
@@ -611,6 +643,61 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
         ],
         '',
     ]))
+
+    global_temporal_slice_rows = []
+    for slice_id in sorted(global_temporal_slice_entities):
+        entries = sorted(global_temporal_slice_entities[slice_id],
+                         key=lambda r: (-int(r['event_count']), r['canonical_name']))
+        first = entries[0]
+        semantic_clusters = sorted({e['semantic_cluster_id'] for e in entries})
+        relation_counter = Counter()
+        for e in entries:
+            for fam in e['dominant_relations'].split():
+                if fam:
+                    relation_counter[fam] += int(e['event_count'])
+        dominant_relations = ' '.join(fam for fam, _c in relation_counter.most_common(10))
+        total_events = sum(int(e['event_count']) for e in entries)
+        row = {
+            'slice_id': slice_id,
+            'label': first['label'],
+            'start_date': first['start_date'],
+            'end_date': first['end_date'],
+            'candidate_entities': str(len(entries)),
+            'events': str(total_events),
+            'semantic_clusters': ' '.join(semantic_clusters),
+            'dominant_relations': dominant_relations,
+        }
+        global_temporal_slice_rows.append(row)
+        slice_dir = os.path.join(hier_dir, 'temporal_slices', slice_id)
+        write_tsv(
+            os.path.join(slice_dir, 'entities.tsv'),
+            '# canonical_name\tsemantic_cluster_id\tsemantic_cluster_name\tentity_skill_path\tslice_path\tlabel\tstart_date\tend_date\tevent_count\tdominant_relation_families\tfact_doc\tfilter_hint',
+            [
+                (
+                    e['canonical_name'],
+                    e['semantic_cluster_id'],
+                    e['semantic_cluster_name'],
+                    e['entity_skill_path'],
+                    e['slice_path'],
+                    e['label'],
+                    e['start_date'],
+                    e['end_date'],
+                    e['event_count'],
+                    e['dominant_relations'],
+                    e['fact_doc'],
+                    e['filter_hint'],
+                )
+                for e in entries
+            ],
+        )
+        write_md(
+            os.path.join(slice_dir, 'index.md'),
+            render_global_temporal_slice_leaf(row),
+        )
+    write_md(
+        os.path.join(hier_dir, 'temporal_slices', 'index.md'),
+        render_global_temporal_slices_index(global_temporal_slice_rows, temporal_decomposition),
+    )
 
     rel_summary_rows = []
     for cluster in sorted(relation_clusters):
@@ -701,14 +788,28 @@ def materialize_hierarchical_skill_tree(hier_dir, out_dir, records, name_to_path
     )
     write_tsv(
         os.path.join(hier_dir, 'indexes', 'temporal_index.tsv'),
-        '# year\tcandidate_entities\tevents',
-        year_summary_rows,
+        '# slice_id\tlabel\tstart_date\tend_date\tcandidate_entities\tevents\tsemantic_clusters\tdominant_relation_families\tindex_path',
+        [
+            (
+                row['slice_id'],
+                row['label'],
+                row['start_date'],
+                row['end_date'],
+                row['candidate_entities'],
+                row['events'],
+                row['semantic_clusters'],
+                row['dominant_relations'],
+                f"temporal_slices/{row['slice_id']}/index.md",
+            )
+            for row in global_temporal_slice_rows
+        ],
     )
 
     return {
         'semantic_clusters': len(SEMANTIC_CLUSTERS),
         'relation_clusters': len(relation_clusters),
         'temporal_clusters': len(temporal_index),
+        'global_temporal_slices': len(global_temporal_slice_rows),
         'temporal_strategy': temporal_schema_stats['temporal_strategy'],
         'temporal_schema_slices': temporal_schema_stats['temporal_schema_slices'],
         'entities': len(catalog_rows),
@@ -926,6 +1027,7 @@ def main():
               f'({hier_stats["semantic_clusters"]} semantic clusters, '
               f'{hier_stats["relation_clusters"]} relation clusters, '
               f'{hier_stats["temporal_clusters"]} temporal clusters, '
+              f'{hier_stats["global_temporal_slices"]} global temporal slices, '
               f'routing={args.semantic_routing}, '
               f'temporal={hier_stats["temporal_strategy"]}/{hier_stats["temporal_schema_slices"]} slices)')
     print(f'  耗时       : {dt:.1f}s')
@@ -960,6 +1062,10 @@ README_LAYOUT = """TKGQA 文件系统知识库 —— 布局说明 (给 Agent)
         <entity>/temporal/<年>/index.md  叶子 skill，指向 fact_doc
     relation_clusters/    event/transaction/conflict 关系簇 -> relation family（兼容索引）
     temporal/<年>/         年份簇 -> 候选实体 -> semantic entity temporal leaf
+    temporal_slices/       全局 drift-aware 时间切片 -> 候选实体/语义簇/关系族
+      index.md
+      <slice_id>/index.md
+      <slice_id>/entities.tsv
     temporal_schema/       Phase 4 TemporalSlice schema 和策略说明
       index.md
     indexes/              machine-readable cross indexes
@@ -1026,6 +1132,12 @@ Phase 4 Temporal Decomposition Schema:
     tkgqa/semantic_clusters/<cluster>/<entity>/temporal_slices/<slice_id>/index.md
     tkgqa/indexes/entity_temporal_slices.tsv
   旧 `temporal/<year>/index.md` 继续生成，供现有 agent 和 Phase 3 验证路径兼容。
+  全局切片输出:
+    tkgqa/temporal_slices/index.md
+    tkgqa/temporal_slices/<slice_id>/index.md
+    tkgqa/temporal_slices/<slice_id>/entities.tsv
+  `tkgqa/indexes/temporal_index.tsv` 现在按 slice 记录 candidate entities、semantic clusters、
+  dominant relation families 和全局 slice index path。
 
 重要约定:
   * 实体名与关系编码在库内一律用下划线。测试集标准答案用【空格】，

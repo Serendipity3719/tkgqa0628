@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Sequence, Tuple
 
@@ -183,6 +184,77 @@ def temporal_slice_tsv_rows(slices: Iterable[TemporalSlice]) -> List[Tuple]:
     return [s.to_tsv_row() for s in slices]
 
 
+def slice_id_for_year(year: int, strategy: str = "fixed-window") -> str:
+    strategy = normalize_temporal_strategy(strategy)
+    if strategy == "fixed-year":
+        return f"{year:04d}"
+    if strategy == "adaptive-event":
+        return f"{year:04d}"
+    for start, end in [(2010, 2012), (2013, 2016), (2017, 2020), (2021, 2024)]:
+        if start <= year <= end:
+            return f"{start:04d}" if start == end else f"{start:04d}_{end:04d}"
+    return f"{year:04d}"
+
+
+def extract_temporal_candidates_structured(text: str, strategy: str = "fixed-window") -> List[Dict[str, str]]:
+    q = re.sub(r"\s+", " ", str(text).lower()).strip()
+    years = [int(y) for y in re.findall(r"(?:19|20)\d{2}", q)]
+    candidates: List[Dict[str, str]] = []
+
+    for year in dict.fromkeys(years):
+        candidates.append({
+            "type": "explicit_year",
+            "value": str(year),
+            "slice_id": slice_id_for_year(year, strategy),
+            "reason": f"query explicitly mentions year {year}",
+        })
+
+    range_match = re.search(r"\bbetween\s+((?:19|20)\d{2})\s+(?:and|to|-)\s+((?:19|20)\d{2})\b", q)
+    if not range_match:
+        range_match = re.search(r"\bfrom\s+((?:19|20)\d{2})\s+(?:to|through|-)\s+((?:19|20)\d{2})\b", q)
+    if range_match:
+        start, end = sorted((int(range_match.group(1)), int(range_match.group(2))))
+        candidates.append({
+            "type": "date_range",
+            "value": f"{start}-{end}",
+            "start_year": str(start),
+            "end_year": str(end),
+            "slice_id": slice_id_for_year(start, strategy),
+            "reason": f"query range {start}-{end} starts in slice {slice_id_for_year(start, strategy)}",
+        })
+
+    operator_signals = {
+        "before": ["before", "prior to", "earlier than"],
+        "after": ["after", "following", "later than"],
+    }
+    for op, signals in operator_signals.items():
+        if any(signal in q for signal in signals):
+            anchor = str(years[0]) if years else ""
+            candidates.append({
+                "type": "relative_operator",
+                "operator": op,
+                "value": anchor or op,
+                "slice_id": slice_id_for_year(int(anchor), strategy) if anchor else "",
+                "reason": f"query uses {op} temporal operator" + (f" anchored at {anchor}" if anchor else ""),
+            })
+
+    extrema_signals = {
+        "first": ["first", "earliest", "initial"],
+        "last": ["last", "latest", "most recent"],
+    }
+    for op, signals in extrema_signals.items():
+        if any(signal in q for signal in signals):
+            candidates.append({
+                "type": "global_extrema",
+                "operator": op,
+                "value": op,
+                "slice_id": "",
+                "reason": f"{op} requires full entity data.txt, not a temporal slice",
+            })
+
+    return candidates
+
+
 def fallback_policy_for_slice(slice_obj: TemporalSlice) -> str:
     return (
         "If this slice yields no evidence, inspect adjacent temporal slices that overlap the query intent. "
@@ -260,6 +332,50 @@ def render_entity_temporal_slice_leaf(entity_name: str, slice_obj: TemporalSlice
         fallback_policy_for_slice(slice_obj),
         "",
     ])
+
+
+def render_global_temporal_slices_index(slice_rows: Sequence[Dict[str, str]], strategy: str) -> str:
+    lines = [
+        "# Global Temporal Slice Index",
+        "",
+        f"- strategy: {normalize_temporal_strategy(strategy)}",
+        f"- slices: {len(slice_rows)}",
+        "",
+        "## Navigation Policy",
+        "",
+        "- Use this index when the query gives a temporal condition before a reliable entity anchor.",
+        "- Jump from a global slice to candidate semantic clusters and entity temporal slices.",
+        "- For first/last global extrema, do not stop at a slice; use the entity full data.txt.",
+        "",
+        "| slice_id | label | range | entities | events | index |",
+        "|---|---|---|---:|---:|---|",
+    ]
+    for row in slice_rows:
+        lines.append(
+            f"| {row['slice_id']} | {row['label']} | {row['start_date']}..{row['end_date']} | "
+            f"{row['candidate_entities']} | {row['events']} | {row['slice_id']}/index.md |"
+        )
+    return "\n".join(lines) + "\n"
+
+
+def render_global_temporal_slice_leaf(row: Dict[str, str]) -> str:
+    return "\n".join([
+        f"# Global Temporal Slice: {row['label']}",
+        "",
+        f"- slice_id: {row['slice_id']}",
+        f"- time_range: {row['start_date']}..{row['end_date']}",
+        f"- candidate_entities: {row['candidate_entities']}",
+        f"- events: {row['events']}",
+        f"- semantic_clusters: {row['semantic_clusters']}",
+        f"- dominant_relation_families: {row['dominant_relations']}",
+        "",
+        "## Navigation Policy",
+        "",
+        "- Use `entities.tsv` to choose entity candidates active in this time slice.",
+        "- Prefer the entity's `temporal_slices/<slice_id>/index.md` leaf before reading fact documents.",
+        "- If the query is first/last, bypass this slice and use the entity full `data.txt`.",
+        "",
+    ]) + "\n"
 
 
 def render_temporal_schema_index(year_counts: Dict[str, int], selected_strategy: str,
