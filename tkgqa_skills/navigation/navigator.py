@@ -18,11 +18,11 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
 try:
-    from tkgqa_skills.policy import DecisionTrace, NavigationPolicyEngine, PolicyDecision, PolicyInput
+    from tkgqa_skills.policy.navigation_policy import NavigationPolicy as NavigationPolicyEngine
+    from tkgqa_skills.policy.policy_schema import DecisionTrace, PolicyDecision, PolicyInput
 except Exception:  # pragma: no cover - compatibility for package layouts.
     try:
-        from tkgqa_skills.policy.engine import NavigationPolicyEngine
-        from tkgqa_skills.policy.schema import DecisionTrace, PolicyDecision, PolicyInput
+        from tkgqa_skills.policy import DecisionTrace, NavigationPolicyEngine, PolicyDecision, PolicyInput
     except Exception:  # pragma: no cover - local fallback keeps this module importable.
         NavigationPolicyEngine = None  # type: ignore
         PolicyDecision = None  # type: ignore
@@ -208,16 +208,16 @@ class NavigationPolicyNavigator:
         inspect_k: int = 2,
     ) -> None:
         self.knowledge_root = Path(knowledge_root or ".").resolve()
+        self.inspect_k = max(2, int(inspect_k))
         if policy_engine is not None:
             self.policy_engine = policy_engine
         elif NavigationPolicyEngine is not None:
             try:
-                self.policy_engine = NavigationPolicyEngine()
-            except TypeError:
                 self.policy_engine = NavigationPolicyEngine(inspect_k=self.inspect_k)
+            except TypeError:
+                self.policy_engine = NavigationPolicyEngine()
         else:
             self.policy_engine = None
-        self.inspect_k = max(2, int(inspect_k))
         self.cross_skill_links = self._load_cross_skill_links()
 
     def navigate(self, query: str, **features: Any) -> NavigationResult:
@@ -385,7 +385,7 @@ class NavigationPolicyNavigator:
             {
                 "step": "entity_candidates_ranked",
                 "cluster": cluster_id,
-                "candidates": [path.name for _, path in entity_candidates[:5]],
+                "candidates": [self._entity_name(path) for _, path in entity_candidates[:5]],
             },
         )
 
@@ -502,6 +502,8 @@ class NavigationPolicyNavigator:
         return list(dict.fromkeys(hints))
 
     def _entity_name(self, path: Path) -> str:
+        if path.name.lower() == "index.md":
+            return path.parent.name
         for parent in path.parents:
             if parent.name.startswith("entity") or parent.name.startswith("ent_"):
                 return parent.name

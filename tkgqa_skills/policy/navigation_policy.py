@@ -11,6 +11,12 @@ from tkgqa_skills.policy.policy_schema import (
     policy_input_from_routing,
     routing_result_to_dict,
 )
+from tkgqa_skills.routing.cluster_taxonomy import SEMANTIC_CLUSTER_BY_ID
+
+try:
+    from tkgqa_skills.routing.semantic_router import SemanticRouter
+except Exception:  # pragma: no cover - keep policy importable in partial installs.
+    SemanticRouter = None  # type: ignore
 
 class NavigationPolicy:
     """
@@ -34,6 +40,69 @@ class NavigationPolicy:
             "semantic_cluster": 1.0,
         }
         self.cluster_backtracking_count = 0
+        self.entity_stopwords = {
+            "what", "which", "who", "whom", "whose", "when", "where", "why", "how",
+            "could", "would", "can", "did", "does", "do", "tell", "please",
+        }
+
+    def _cluster_slug(self, cluster_id: str) -> str:
+        """Return the physical semantic-cluster directory name when known."""
+        cluster_id = str(cluster_id)
+        if cluster_id in SEMANTIC_CLUSTER_BY_ID:
+            cluster = SEMANTIC_CLUSTER_BY_ID[cluster_id]
+            return f"{cluster.cluster_id}_{cluster.name}"
+        return cluster_id
+
+    def _ensure_semantic_routing(self, query: str, routing: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Populate P(cluster | query)-style scores for direct query planning.
+
+        Upstream callers may pass a full SemanticRoutingResult.  The navigator,
+        however, can call the policy with only a query/tokens payload; in that
+        case we run the same semantic router here so selected_clusters and
+        cluster_scores are never empty merely because routing was omitted.
+        """
+        routing = dict(routing or {})
+        has_scores = bool(routing.get("routing_scores") or routing.get("scores"))
+        has_clusters = bool(routing.get("semantic_clusters"))
+        if (has_scores and has_clusters) or SemanticRouter is None:
+            return routing
+
+        routed = SemanticRouter(top_k=max(self.inspect_k, 2)).route(query).as_dict()
+        merged = dict(routed)
+        merged.update({k: v for k, v in routing.items() if v not in (None, [], {})})
+        return merged
+
+    def _clean_entity_candidates(self, candidates: List[str]) -> List[str]:
+        cleaned = []
+        for candidate in candidates or []:
+            text = str(candidate).strip()
+            if not text or text.lower() in self.entity_stopwords:
+                continue
+            cleaned.append(text)
+        return list(dict.fromkeys(cleaned))
+
+    def _temporal_target(self, item: Any) -> str:
+        if not isinstance(item, dict):
+            return str(item)
+        kind = item.get("type") or "temporal"
+        value = item.get("value") or item.get("operator") or ""
+        slice_id = item.get("slice_id") or ""
+        if item.get("operator"):
+            label = f"{item['operator']}:{value}"
+        elif kind == "explicit_year" and value:
+            label = f"year:{value}"
+        elif value:
+            label = str(value)
+        else:
+            label = str(item)
+        return f"{label}@{slice_id}" if slice_id else label
+
+    def _policy_input_from_routing(self, query: str, routing: Dict[str, Any],
+                                   available_indexes: Dict[str, str] = None) -> PolicyInput:
+        policy_input = policy_input_from_routing(query, routing, available_indexes)
+        policy_input.entity_candidates = self._clean_entity_candidates(policy_input.entity_candidates)
+        return policy_input
 
     def score_skill(self, skill_name: str, routing_result) -> float:
         """Compute soft score for a candidate skill."""
@@ -160,17 +229,31 @@ class NavigationPolicy:
     def _as_policy_input(self, query_or_input, routing_result=None,
                          available_indexes: Dict[str, str] = None) -> PolicyInput:
         if isinstance(query_or_input, PolicyInput):
-            return query_or_input
+            routing = self._ensure_semantic_routing(query_or_input.query, query_or_input.semantic_routing_result)
+            return PolicyInput(
+                query=query_or_input.query,
+                semantic_routing_result=routing,
+                entity_candidates=self._clean_entity_candidates(
+                    query_or_input.entity_candidates or routing.get("entity_candidates") or routing.get("entity_skills") or []
+                ),
+                relation_candidates=query_or_input.relation_candidates or routing.get("relation_clusters") or routing.get("relation_skills") or [],
+                temporal_candidates=query_or_input.temporal_candidates or routing.get("temporal_candidates") or routing.get("temporal_skills") or [],
+                available_indexes=query_or_input.available_indexes or available_indexes or {},
+            )
         if routing_result is None:
             routing = routing_result_to_dict(query_or_input)
-            return policy_input_from_routing(routing.get("query", ""), routing, available_indexes)
-        return policy_input_from_routing(str(query_or_input or ""), routing_result, available_indexes)
+            query = routing.get("query") or routing.get("query_text") or str(query_or_input or "")
+            routing = self._ensure_semantic_routing(query, routing)
+            return self._policy_input_from_routing(query, routing, available_indexes)
+        query = str(query_or_input or "")
+        routing = self._ensure_semantic_routing(query, routing_result_to_dict(routing_result))
+        return self._policy_input_from_routing(query, routing, available_indexes)
 
     def _cluster_scores(self, policy_input: PolicyInput) -> Dict[str, float]:
         routing = policy_input.semantic_routing_result
         scores = routing.get("routing_scores", {}) or routing.get("scores", {}) or {}
         return {
-            str(cluster_id): float(score)
+            self._cluster_slug(str(cluster_id)): float(score)
             for cluster_id, score in scores.items()
             if str(cluster_id).startswith("cluster_")
         }
@@ -182,7 +265,7 @@ class NavigationPolicy:
             ranked = sorted(scores.items(), key=lambda item: (-item[1], item[0]))
             return [cluster_id for cluster_id, _score in ranked[:k]]
         clusters = policy_input.semantic_routing_result.get("semantic_clusters", [])
-        return list(clusters[:k])
+        return [self._cluster_slug(cluster_id) for cluster_id in list(clusters[:k])]
 
     def plan_drilldown(self, policy_input: PolicyInput,
                        selected_clusters: List[str]) -> List[DrilldownStep]:
@@ -215,17 +298,12 @@ class NavigationPolicy:
                 rationale="Bind relation family candidates inside selected cluster relation_families.tsv.",
             ))
         if policy_input.temporal_candidates:
-            temporal_targets = []
-            for item in policy_input.temporal_candidates[: self.inspect_k]:
-                if isinstance(item, dict):
-                    temporal_targets.append(item.get("slice_id") or item.get("value") or item.get("operator") or str(item))
-                else:
-                    temporal_targets.append(str(item))
+            temporal_targets = [self._temporal_target(item) for item in policy_input.temporal_candidates[: self.inspect_k]]
             steps.append(DrilldownStep(
                 level="temporal_slice",
                 action="select_slice",
                 target=";".join(t for t in temporal_targets if t),
-                rationale="Use temporal slice candidates before reading fact documents, except for global extrema.",
+                rationale="Preserve temporal operators such as after/before with their anchor year for downstream execution.",
             ))
         steps.append(DrilldownStep(
             level="fact_doc",
@@ -319,10 +397,7 @@ class NavigationPolicy:
             "semantic_clusters": decision.selected_clusters,
             "entities": policy_input.entity_candidates[:decision.inspect_k],
             "relations": policy_input.relation_candidates[:decision.inspect_k],
-            "temporal": [
-                item.get("slice_id") or item.get("value") or item.get("operator") if isinstance(item, dict) else str(item)
-                for item in policy_input.temporal_candidates[:decision.inspect_k]
-            ],
+            "temporal": [self._temporal_target(item) for item in policy_input.temporal_candidates[:decision.inspect_k]],
         }
         return DecisionTrace(
             query=policy_input.query,
