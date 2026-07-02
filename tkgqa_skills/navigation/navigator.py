@@ -435,6 +435,10 @@ class NavigationPolicyNavigator:
     def _find_cluster_paths(self, cluster_id: str) -> List[Path]:
         candidates: List[Path] = []
         common_roots = [
+            self.knowledge_root / "tkgqa" / "semantic_clusters",
+            self.knowledge_root / "tkgqa" / "hierarchy" / "semantic_clusters",
+            self.knowledge_root / "hierarchy" / "semantic_clusters",
+            self.knowledge_root / "semantic_clusters",
             self.knowledge_root,
             self.knowledge_root / "data",
             self.knowledge_root / "dataset",
@@ -442,7 +446,6 @@ class NavigationPolicyNavigator:
             self.knowledge_root / "knowledge",
             self.knowledge_root / "tkg",
             self.knowledge_root / "tkg_data",
-            self.knowledge_root / "semantic_clusters",
         ]
         for root in common_roots:
             direct = root / cluster_id
